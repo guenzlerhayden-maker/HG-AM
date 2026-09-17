@@ -282,6 +282,14 @@
 .manifest--light {
   --manifest-mark-size: var(--icon-sm);
   --manifest-pad: var(--space-3);
+  /* The label column is sized for YEARS in the other two sections ("2015-18"
+     fits 5.5rem comfortably). Hobby labels are words, and "Photography" ran
+     straight through the column into its own sentence. Widening the column
+     here rather than letting the label wrap keeps every row's text starting on
+     the same vertical line, which is the alignment the whole block depends on.
+     A token rebind on the modifier, not a new rule - this is what the local
+     tokens on .manifest are for. */
+  --manifest-year-col: 7.5rem;
 }
 
 .manifest--light .manifest__fact {
@@ -707,4 +715,40 @@
   border-inline-start: 3px solid var(--color-accent);
   background-color: var(--color-surface-sunken);
   padding: var(--space-4) var(--space-5);
+}
+
+
+/* ============================================================================
+   WATCH TRIO
+   ----------------------------------------------------------------------------
+   Three plates inside a manifest fact cell.
+
+   The plates live in the FACT column rather than replacing the mark, which is
+   deliberate: the row keeps the same three-column grid as every other hobby
+   entry, so the mark, the label and the text all still line up across the
+   block. Widening the mark column for this one row would have broken the
+   alignment that makes the three manifest sections read as one system - and
+   that alignment is the whole point of the primitive.
+
+   Always three across, never auto-fit. A trio that reflows to 2 + 1 stops
+   reading as a set, and "one set rather than three retailer photos" is the
+   entire job here. They shrink instead of wrapping.
+
+   The images carry the paper background baked in, so the hairline is what
+   gives each plate an edge - the same treatment the flags get, which is why
+   flags and plates read as the same kind of object.
+   ========================================================================== */
+
+.watch-trio {
+  display: grid;
+  grid-template-columns: repeat(3, minmax(0, 9rem));
+  gap: var(--space-3);
+  margin-block-end: var(--space-4);
+}
+
+.watch-trio__plate {
+  inline-size: 100%;
+  block-size: auto;
+  aspect-ratio: 1;
+  border: var(--rule-width) solid var(--color-rule);
 }
