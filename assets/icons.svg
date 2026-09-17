@@ -1,0 +1,79 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!--
+  ICON SPRITE - every icon in the system, defined once.
+
+  Referenced from a page with:
+    <svg class="globe"><use href="assets/icons.svg#pa-globe"/></svg>
+
+  This resolves because the site is served over HTTP (python http.server
+  locally, GitHub Pages in production) and the file is same-origin. External
+  use references DO fail under the file: protocol, so opening a page by
+  double-clicking it will silently render no icons. One more reason to always
+  preview through the local server.
+
+  CAREFUL: this file is parsed as XML, not HTML. Two consequences:
+    1. A double hyphen is ILLEGAL inside an XML comment. Custom properties are
+       therefore written below WITHOUT their leading hyphens (globe-fill, not
+       the real spelling). In the markup itself they are spelled normally,
+       because attribute values are not comments.
+    2. XML parsing is fatal, not forgiving. One malformed character and the
+       entire sprite fails to load and every icon on every page disappears.
+       An inline sprite goes through the lenient HTML parser and would have
+       tolerated the same mistake.
+
+  Two things survive the external boundary, and they are what let one symbol
+  serve every variant:
+    - currentColor, so strokes take the colour of whatever the icon sits in
+    - CSS custom properties (globe-fill, globe-stroke, globe-detail), which
+      inherit into the shadow tree that use creates
+  Ordinary CSS selectors do NOT cross that boundary, which is why the variants
+  are built from custom properties rather than descendant rules.
+-->
+<svg xmlns="http://www.w3.org/2000/svg">
+  <defs>
+    <symbol id="pa-globe" viewBox="0 0 100 100">
+      <!-- The disc. Fill defaults to none, so the symbol is line art unless a
+           variant sets globe-fill. That one property is what lets a single
+           definition serve both the fine schedule mark and the solid badge
+           used on an aircraft tail. -->
+      <circle cx="50" cy="50" r="46" style="fill: var(--globe-fill, none)"/>
+      <g fill="none" stroke="currentColor" style="stroke-width: var(--globe-stroke, 3)"
+         stroke-linecap="round">
+        <!-- Outer circle: the 90 degree meridian. -->
+        <circle cx="50" cy="50" r="46"/>
+        <!-- MERIDIANS, as ellipses with rx = 46 * cos(longitude). Four of
+             them rather than two: the original mark is dense, and a sparse
+             wireframe reads as a stock globe icon instead of as this one.
+             22.5 / 45 / 67.5 degrees, plus the centre line at rx 0. -->
+        <line x1="50" y1="4" x2="50" y2="96"/>
+        <ellipse cx="50" cy="50" rx="17.6" ry="46"/>
+        <ellipse cx="50" cy="50" rx="32.5" ry="46"/>
+        <ellipse cx="50" cy="50" rx="42.5" ry="46"/>
+        <!-- LATITUDES, as sagging ARCS rather than straight chords. This is
+             the correction that matters most. Straight chords are what you get
+             viewing a sphere exactly head-on, and they read as a wireframe.
+             The real mark is drawn as though seen from slightly below the
+             equator, so every latitude bows downward in the middle. Each is a
+             quadratic curve whose control point sits at twice the desired sag
+             below the endpoints, so Q 50 37 on a line at y=27 sags by exactly
+             5. The equator stays straight, which is what carries the wordmark
+             band on the badge version.
+
+             The polar pair sits at roughly 51 degrees rather than a strict 60,
+             and sags by 3 rather than 5. Strict geometry put them at y 10.2
+             and 89.8 with a full sag, which crowded the outer circle and made
+             the mark look molten at the bottom. The original is not strictly
+             geometric either: it is drawn to look right, and optical spacing
+             beats arithmetic whenever the two disagree. -->
+        <line x1="4" y1="50" x2="96" y2="50"/>
+        <path d="M 10.2 27 Q 50 37 89.8 27"/>
+        <path d="M 10.2 73 Q 50 83 89.8 73"/>
+        <!-- The polar pair, dropped at small sizes via globe-detail. -->
+        <g style="display: var(--globe-detail, inline)">
+          <path d="M 21.4 14 Q 50 20 78.6 14"/>
+          <path d="M 21.4 86 Q 50 92 78.6 86"/>
+        </g>
+      </g>
+    </symbol>
+  </defs>
+</svg>

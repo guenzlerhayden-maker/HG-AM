@@ -15,75 +15,16 @@
 <!-- The skip link is the first thing in the tab order on every page. -->
 <a class="skip-link" href="#main">Skip to content</a>
 
-<!-- ===========================================================================
-     SVG SPRITE
-     ---------------------------------------------------------------------------
-     Every icon in the system is defined once, here, and referenced with <use>.
-
-     WHY THE SPRITE IS INLINE IN THE PAGE rather than in assets/icons.svg:
-     an external <use href="assets/icons.svg#id"> reference has uneven support
-     across browsers, and when it fails it fails silently - the icon simply does
-     not render. Inlining is the option that works everywhere, costs no extra
-     request, and cannot flash. The price is that this block is duplicated on
-     each page, which is the same tradeoff accepted for the nav markup: at four
-     pages the duplication is cheaper than the machinery to avoid it.
-
-     HIDDEN WITH .visually-hidden, NOT display:none - a display:none sprite
-     breaks <use> references in some browsers. Clipping it is the safe way.
-=========================================================================== -->
-<svg class="visually-hidden" aria-hidden="true" focusable="false" xmlns="http://www.w3.org/2000/svg">
-  <defs>
-    <symbol id="pa-globe" viewBox="0 0 100 100">
-      <!-- The disc. Fill defaults to none, so the symbol is line art unless a
-           variant sets --globe-fill. That single property is what lets one
-           definition serve both the fine schedule mark and the solid badge on
-           an aircraft tail. -->
-      <circle cx="50" cy="50" r="46" style="fill: var(--globe-fill, none)"/>
-      <g fill="none" stroke="currentColor" style="stroke-width: var(--globe-stroke, 3)"
-         stroke-linecap="round">
-        <!-- Outer circle = the 90-degree meridian. -->
-        <circle cx="50" cy="50" r="46"/>
-        <!-- MERIDIANS, as ellipses with rx = 46 * cos(longitude).
-             Four of them rather than two: the original mark is dense, and a
-             sparse wireframe reads as a stock globe icon instead of as this
-             one. 22.5 / 45 / 67.5 degrees, plus the centre line at rx 0. -->
-        <line x1="50" y1="4" x2="50" y2="96"/>
-        <ellipse cx="50" cy="50" rx="17.6" ry="46"/>
-        <ellipse cx="50" cy="50" rx="32.5" ry="46"/>
-        <ellipse cx="50" cy="50" rx="42.5" ry="46"/>
-        <!-- LATITUDES, as sagging ARCS rather than straight chords.
-             This is the correction that matters most. Straight chords are what
-             you get viewing a sphere exactly head-on, and they read as a
-             wireframe. The real mark is drawn as though seen from slightly
-             below the equator, so every latitude bows downward in the middle.
-             Each is a quadratic curve whose control point sits 2x the desired
-             sag below the endpoints - so `Q 50 37` on a line at y=27 sags by
-             exactly 5. The equator stays straight, which is what carries the
-             wordmark band on the badge version.
-
-             The polar pair sits at ~51 degrees rather than a strict 60, and
-             sags by 3 rather than 5. Strict geometry put them at y 10.2/89.8
-             with a full sag, which crowded the outer circle and made the whole
-             mark look molten at the bottom. The original is not strictly
-             geometric either - it is drawn to look right, and optical spacing
-             beats arithmetic whenever the two disagree. -->
-        <line x1="4" y1="50" x2="96" y2="50"/>
-        <path d="M 10.2 27 Q 50 37 89.8 27"/>
-        <path d="M 10.2 73 Q 50 83 89.8 73"/>
-        <!-- The +-60 latitudes, dropped at small sizes via --globe-detail. -->
-        <g style="display: var(--globe-detail, inline)">
-          <path d="M 21.4 14 Q 50 20 78.6 14"/>
-          <path d="M 21.4 86 Q 50 92 78.6 86"/>
-        </g>
-      </g>
-    </symbol>
-  </defs>
-</svg>
+<!-- Icons live in assets/icons.svg and are referenced with
+     <use href="assets/icons.svg#pa-globe"/>. One definition, five pages.
+     Note this only resolves over HTTP - opening these files directly from the
+     file system will silently render no icons. Always preview via the local
+     server (see .claude/launch.json). -->
 
 <nav class="site-nav" aria-label="Main">
   <div class="container site-nav__inner">
     <a class="site-nav__brand" href="index.html" aria-label="Home">
-      <svg class="globe globe--md globe--solid-invert globe--simple" aria-hidden="true"><use href="#pa-globe"/></svg>
+      <svg class="globe globe--md globe--solid-invert globe--simple" aria-hidden="true"><use href="assets/icons.svg#pa-globe"/></svg>
     </a>
     <ul class="site-nav__list">
       <li class="site-nav__item">
@@ -121,7 +62,7 @@
        design - a wallet is mostly blank card stock. -->
   <header class="cover cover--jacket">
     <div class="container">
-      <svg class="globe globe--xl globe--solid" aria-hidden="true"><use href="#pa-globe"/></svg>
+      <svg class="globe globe--xl globe--solid" aria-hidden="true"><use href="assets/icons.svg#pa-globe"/></svg>
       <p class="t-label cover__eyebrow" style="margin-block-start: var(--space-6)">Passenger ticket and baggage check</p>
       <h1 class="t-mega cover__title" style="margin-block-start: var(--space-3)">Placeholder</h1>
       <div class="cover__meta" style="margin-block-start: var(--space-6)">
@@ -163,7 +104,7 @@
         <p class="t-caption"><a href="styleguide.html">Style guide</a></p>
       </div>
     </div>
-    <svg class="globe globe--md globe--simple" aria-hidden="true"><use href="#pa-globe"/></svg>
+    <svg class="globe globe--md globe--simple" aria-hidden="true"><use href="assets/icons.svg#pa-globe"/></svg>
   </div>
 </footer>
 

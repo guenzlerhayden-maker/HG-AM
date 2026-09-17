@@ -22,74 +22,15 @@
 </head>
 <body>
 
-<!-- ===========================================================================
-     SVG SPRITE
-     ---------------------------------------------------------------------------
-     Every icon in the system is defined once, here, and referenced with <use>.
-
-     WHY THE SPRITE IS INLINE IN THE PAGE rather than in assets/icons.svg:
-     an external <use href="assets/icons.svg#id"> reference has uneven support
-     across browsers, and when it fails it fails silently - the icon simply does
-     not render. Inlining is the option that works everywhere, costs no extra
-     request, and cannot flash. The price is that this block is duplicated on
-     each page, which is the same tradeoff accepted for the nav markup: at four
-     pages the duplication is cheaper than the machinery to avoid it.
-
-     HIDDEN WITH .visually-hidden, NOT display:none - a display:none sprite
-     breaks <use> references in some browsers. Clipping it is the safe way.
-=========================================================================== -->
-<svg class="visually-hidden" aria-hidden="true" focusable="false" xmlns="http://www.w3.org/2000/svg">
-  <defs>
-    <symbol id="pa-globe" viewBox="0 0 100 100">
-      <!-- The disc. Fill defaults to none, so the symbol is line art unless a
-           variant sets --globe-fill. That single property is what lets one
-           definition serve both the fine schedule mark and the solid badge on
-           an aircraft tail. -->
-      <circle cx="50" cy="50" r="46" style="fill: var(--globe-fill, none)"/>
-      <g fill="none" stroke="currentColor" style="stroke-width: var(--globe-stroke, 3)"
-         stroke-linecap="round">
-        <!-- Outer circle = the 90-degree meridian. -->
-        <circle cx="50" cy="50" r="46"/>
-        <!-- MERIDIANS, as ellipses with rx = 46 * cos(longitude).
-             Four of them rather than two: the original mark is dense, and a
-             sparse wireframe reads as a stock globe icon instead of as this
-             one. 22.5 / 45 / 67.5 degrees, plus the centre line at rx 0. -->
-        <line x1="50" y1="4" x2="50" y2="96"/>
-        <ellipse cx="50" cy="50" rx="17.6" ry="46"/>
-        <ellipse cx="50" cy="50" rx="32.5" ry="46"/>
-        <ellipse cx="50" cy="50" rx="42.5" ry="46"/>
-        <!-- LATITUDES, as sagging ARCS rather than straight chords.
-             This is the correction that matters most. Straight chords are what
-             you get viewing a sphere exactly head-on, and they read as a
-             wireframe. The real mark is drawn as though seen from slightly
-             below the equator, so every latitude bows downward in the middle.
-             Each is a quadratic curve whose control point sits 2x the desired
-             sag below the endpoints - so `Q 50 37` on a line at y=27 sags by
-             exactly 5. The equator stays straight, which is what carries the
-             wordmark band on the badge version.
-
-             The polar pair sits at ~51 degrees rather than a strict 60, and
-             sags by 3 rather than 5. Strict geometry put them at y 10.2/89.8
-             with a full sag, which crowded the outer circle and made the whole
-             mark look molten at the bottom. The original is not strictly
-             geometric either - it is drawn to look right, and optical spacing
-             beats arithmetic whenever the two disagree. -->
-        <line x1="4" y1="50" x2="96" y2="50"/>
-        <path d="M 10.2 27 Q 50 37 89.8 27"/>
-        <path d="M 10.2 73 Q 50 83 89.8 73"/>
-        <!-- The +-60 latitudes, dropped at small sizes via --globe-detail. -->
-        <g style="display: var(--globe-detail, inline)">
-          <path d="M 21.4 14 Q 50 20 78.6 14"/>
-          <path d="M 21.4 86 Q 50 92 78.6 86"/>
-        </g>
-      </g>
-    </symbol>
-  </defs>
-</svg>
+<!-- Icons live in assets/icons.svg and are referenced with
+     <use href="assets/icons.svg#pa-globe"/>. One definition, five pages.
+     Note this only resolves over HTTP - opening these files directly from the
+     file system will silently render no icons. Always preview via the local
+     server (see .claude/launch.json). -->
 
 <header class="band band--invert sg-masthead">
   <div class="container">
-    <svg class="globe globe--xl sg-masthead__mark" aria-hidden="true"><use href="#pa-globe"/></svg>
+    <svg class="globe globe--xl sg-masthead__mark" aria-hidden="true"><use href="assets/icons.svg#pa-globe"/></svg>
     <p class="t-label sg-section__label" style="color: var(--pa-powder)">Design System &mdash; Step 1 of 4</p>
     <h1 class="t-display">Living Style Guide</h1>
     <p class="t-body t-measure" style="margin-block-start: var(--space-5); color: var(--pa-powder)">
@@ -497,19 +438,19 @@
     <p class="t-label" style="margin-block-end: var(--space-3)">Line form &mdash; the schedule mark</p>
     <div class="sg-globe-row">
       <div class="sg-globe-cell">
-        <svg class="globe globe--xl" aria-hidden="true"><use href="#pa-globe"/></svg>
+        <svg class="globe globe--xl" aria-hidden="true"><use href="assets/icons.svg#pa-globe"/></svg>
         <p class="t-label">XL 88px</p>
       </div>
       <div class="sg-globe-cell">
-        <svg class="globe globe--lg" aria-hidden="true"><use href="#pa-globe"/></svg>
+        <svg class="globe globe--lg" aria-hidden="true"><use href="assets/icons.svg#pa-globe"/></svg>
         <p class="t-label">LG 44px</p>
       </div>
       <div class="sg-globe-cell">
-        <svg class="globe globe--md globe--simple" aria-hidden="true"><use href="#pa-globe"/></svg>
+        <svg class="globe globe--md globe--simple" aria-hidden="true"><use href="assets/icons.svg#pa-globe"/></svg>
         <p class="t-label">MD 28px &middot; simple</p>
       </div>
       <div class="sg-globe-cell">
-        <svg class="globe globe--sm globe--simple" aria-hidden="true"><use href="#pa-globe"/></svg>
+        <svg class="globe globe--sm globe--simple" aria-hidden="true"><use href="assets/icons.svg#pa-globe"/></svg>
         <p class="t-label">SM 20px &middot; simple</p>
       </div>
     </div>
@@ -517,34 +458,34 @@
     <p class="t-label" style="margin-block: var(--space-6) var(--space-3)">Badge form &mdash; the tail mark</p>
     <div class="sg-globe-row">
       <div class="sg-globe-cell">
-        <svg class="globe globe--xl globe--solid" aria-hidden="true"><use href="#pa-globe"/></svg>
+        <svg class="globe globe--xl globe--solid" aria-hidden="true"><use href="assets/icons.svg#pa-globe"/></svg>
         <p class="t-label">Solid on paper</p>
       </div>
       <div class="sg-globe-cell">
-        <svg class="globe globe--lg globe--solid" aria-hidden="true"><use href="#pa-globe"/></svg>
+        <svg class="globe globe--lg globe--solid" aria-hidden="true"><use href="assets/icons.svg#pa-globe"/></svg>
         <p class="t-label">LG</p>
       </div>
       <div class="sg-globe-cell">
-        <svg class="globe globe--md globe--solid globe--simple" aria-hidden="true"><use href="#pa-globe"/></svg>
+        <svg class="globe globe--md globe--solid globe--simple" aria-hidden="true"><use href="assets/icons.svg#pa-globe"/></svg>
         <p class="t-label">MD &middot; simple</p>
       </div>
     </div>
 
     <div class="sg-globe-row sg-globe-row--invert" style="margin-block-start: var(--space-5)">
       <div class="sg-globe-cell">
-        <svg class="globe globe--xl globe--solid-invert" aria-hidden="true"><use href="#pa-globe"/></svg>
+        <svg class="globe globe--xl globe--solid-invert" aria-hidden="true"><use href="assets/icons.svg#pa-globe"/></svg>
         <p class="t-label t-invert">Badge, inverted</p>
       </div>
       <div class="sg-globe-cell">
-        <svg class="globe globe--xl" aria-hidden="true"><use href="#pa-globe"/></svg>
+        <svg class="globe globe--xl" aria-hidden="true"><use href="assets/icons.svg#pa-globe"/></svg>
         <p class="t-label t-invert">Line, on navy</p>
       </div>
       <div class="sg-globe-cell">
-        <svg class="globe globe--lg globe--hairline" aria-hidden="true"><use href="#pa-globe"/></svg>
+        <svg class="globe globe--lg globe--hairline" aria-hidden="true"><use href="assets/icons.svg#pa-globe"/></svg>
         <p class="t-label t-invert">Hairline</p>
       </div>
       <div class="sg-globe-cell">
-        <svg class="globe globe--lg globe--heavy" aria-hidden="true"><use href="#pa-globe"/></svg>
+        <svg class="globe globe--lg globe--heavy" aria-hidden="true"><use href="assets/icons.svg#pa-globe"/></svg>
         <p class="t-label t-invert">Heavy</p>
       </div>
     </div>
@@ -569,9 +510,9 @@
       will be nudging it on every page.
     </p>
     <div style="padding: var(--space-6); border: var(--rule-width) solid var(--color-rule)">
-      <p class="lockup lockup--lg">Pan&nbsp;Am <svg class="globe" aria-hidden="true"><use href="#pa-globe"/></svg></p>
-      <p class="lockup" style="margin-block-start: var(--space-5)">Pan&nbsp;Am <svg class="globe" aria-hidden="true"><use href="#pa-globe"/></svg></p>
-      <p class="lockup lockup--sm" style="margin-block-start: var(--space-5)">Pan&nbsp;Am <svg class="globe globe--simple" aria-hidden="true"><use href="#pa-globe"/></svg></p>
+      <p class="lockup lockup--lg">Pan&nbsp;Am <svg class="globe" aria-hidden="true"><use href="assets/icons.svg#pa-globe"/></svg></p>
+      <p class="lockup" style="margin-block-start: var(--space-5)">Pan&nbsp;Am <svg class="globe" aria-hidden="true"><use href="assets/icons.svg#pa-globe"/></svg></p>
+      <p class="lockup lockup--sm" style="margin-block-start: var(--space-5)">Pan&nbsp;Am <svg class="globe globe--simple" aria-hidden="true"><use href="assets/icons.svg#pa-globe"/></svg></p>
     </div>
 
     <p class="sg-note" style="margin-block-start: var(--space-5)">
@@ -625,27 +566,27 @@
     </p>
     <div class="manifest manifest--strip" style="margin-block-end: var(--space-8)">
       <div class="manifest__item">
-        <svg class="globe manifest__mark globe--simple" aria-hidden="true"><use href="#pa-globe"/></svg>
+        <svg class="globe manifest__mark globe--simple" aria-hidden="true"><use href="assets/icons.svg#pa-globe"/></svg>
         <p class="t-label t-data manifest__year">1998</p>
         <p class="manifest__fact">Placeholder fact</p>
       </div>
       <div class="manifest__item">
-        <svg class="globe manifest__mark globe--simple" aria-hidden="true"><use href="#pa-globe"/></svg>
+        <svg class="globe manifest__mark globe--simple" aria-hidden="true"><use href="assets/icons.svg#pa-globe"/></svg>
         <p class="t-label t-data manifest__year">2011</p>
         <p class="manifest__fact">Placeholder fact</p>
       </div>
       <div class="manifest__item">
-        <svg class="globe manifest__mark globe--simple" aria-hidden="true"><use href="#pa-globe"/></svg>
+        <svg class="globe manifest__mark globe--simple" aria-hidden="true"><use href="assets/icons.svg#pa-globe"/></svg>
         <p class="t-label t-data manifest__year">2015</p>
         <p class="manifest__fact">Placeholder fact</p>
       </div>
       <div class="manifest__item">
-        <svg class="globe manifest__mark globe--simple" aria-hidden="true"><use href="#pa-globe"/></svg>
+        <svg class="globe manifest__mark globe--simple" aria-hidden="true"><use href="assets/icons.svg#pa-globe"/></svg>
         <p class="t-label t-data manifest__year">2019</p>
         <p class="manifest__fact">Placeholder fact</p>
       </div>
       <div class="manifest__item">
-        <svg class="globe manifest__mark globe--simple" aria-hidden="true"><use href="#pa-globe"/></svg>
+        <svg class="globe manifest__mark globe--simple" aria-hidden="true"><use href="assets/icons.svg#pa-globe"/></svg>
         <p class="t-label t-data manifest__year">2024</p>
         <p class="manifest__fact">Placeholder fact</p>
       </div>
@@ -660,17 +601,17 @@
     </p>
     <div class="manifest manifest--list" style="margin-block-end: var(--space-8)">
       <div class="manifest__item">
-        <svg class="globe manifest__mark globe--simple" aria-hidden="true"><use href="#pa-globe"/></svg>
+        <svg class="globe manifest__mark globe--simple" aria-hidden="true"><use href="assets/icons.svg#pa-globe"/></svg>
         <p class="t-label t-data manifest__year">2015&ndash;18</p>
         <p class="manifest__fact">One sentence, in the voice of a manifest entry rather than a job description.</p>
       </div>
       <div class="manifest__item">
-        <svg class="globe manifest__mark globe--simple" aria-hidden="true"><use href="#pa-globe"/></svg>
+        <svg class="globe manifest__mark globe--simple" aria-hidden="true"><use href="assets/icons.svg#pa-globe"/></svg>
         <p class="t-label t-data manifest__year">2018&ndash;21</p>
         <p class="manifest__fact">One sentence, in the voice of a manifest entry rather than a job description.</p>
       </div>
       <div class="manifest__item">
-        <svg class="globe manifest__mark globe--simple" aria-hidden="true"><use href="#pa-globe"/></svg>
+        <svg class="globe manifest__mark globe--simple" aria-hidden="true"><use href="assets/icons.svg#pa-globe"/></svg>
         <p class="t-label t-data manifest__year">2021&ndash;</p>
         <p class="manifest__fact">One sentence, in the voice of a manifest entry rather than a job description.</p>
       </div>
@@ -685,17 +626,17 @@
     </p>
     <div class="manifest manifest--list manifest--light">
       <div class="manifest__item">
-        <svg class="globe manifest__mark globe--simple" aria-hidden="true"><use href="#pa-globe"/></svg>
+        <svg class="globe manifest__mark globe--simple" aria-hidden="true"><use href="assets/icons.svg#pa-globe"/></svg>
         <p class="t-label manifest__year">Hobby</p>
         <p class="manifest__fact">One quiet line.</p>
       </div>
       <div class="manifest__item">
-        <svg class="globe manifest__mark globe--simple" aria-hidden="true"><use href="#pa-globe"/></svg>
+        <svg class="globe manifest__mark globe--simple" aria-hidden="true"><use href="assets/icons.svg#pa-globe"/></svg>
         <p class="t-label manifest__year">Hobby</p>
         <p class="manifest__fact">One quiet line.</p>
       </div>
       <div class="manifest__item">
-        <svg class="globe manifest__mark globe--simple" aria-hidden="true"><use href="#pa-globe"/></svg>
+        <svg class="globe manifest__mark globe--simple" aria-hidden="true"><use href="assets/icons.svg#pa-globe"/></svg>
         <p class="t-label manifest__year">Hobby</p>
         <p class="manifest__fact">One quiet line.</p>
       </div>
@@ -726,7 +667,7 @@
 
       <div class="sg-doc">
         <div class="cover cover--jacket">
-          <svg class="globe globe--solid-invert" aria-hidden="true" style="inline-size:3.5rem;block-size:3.5rem"><use href="#pa-globe"/></svg>
+          <svg class="globe globe--solid-invert" aria-hidden="true" style="inline-size:3.5rem;block-size:3.5rem"><use href="assets/icons.svg#pa-globe"/></svg>
           <p class="t-display cover__title">Clipper<br>Class</p>
           <p class="t-label" style="color: var(--color-surface-invert)">Passenger ticket and baggage check</p>
         </div>
@@ -750,7 +691,7 @@
 
       <div class="sg-doc">
         <div class="cover cover--schedule">
-          <p class="lockup lockup--sm">Notes <svg class="globe globe--simple" aria-hidden="true"><use href="#pa-globe"/></svg></p>
+          <p class="lockup lockup--sm">Notes <svg class="globe globe--simple" aria-hidden="true"><use href="assets/icons.svg#pa-globe"/></svg></p>
           <table class="datatable">
             <thead><tr><th>Entry</th><th>Filed</th></tr></thead>
             <tbody>
@@ -853,7 +794,7 @@
   <div class="container">
     <div class="cluster" style="justify-content: space-between">
       <div class="cluster">
-        <svg class="globe globe--md globe--simple" aria-hidden="true" style="color: var(--pa-powder)"><use href="#pa-globe"/></svg>
+        <svg class="globe globe--md globe--simple" aria-hidden="true" style="color: var(--pa-powder)"><use href="assets/icons.svg#pa-globe"/></svg>
         <p class="t-label t-invert">Living style guide &middot; Step 1 of 4</p>
       </div>
       <p class="t-caption" style="color: var(--pa-powder)">Next: the site shell &mdash; nav, cover, footer.</p>
