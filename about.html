@@ -84,6 +84,11 @@
         Every year, flag and sentence below is scaffolding, not copy. The flags are
         crossed boxes rather than real countries, so nothing here can be mistaken for
         finished content. The structure, spacing and icon treatment are real.
+        <strong>The watch imagery and the three stamps are the exception</strong> &mdash; those
+        are real assets, but every fact inside a stamp is drafted and
+        <strong>unverified</strong>. Founding years and &ldquo;made for&rdquo; framing need
+        checking before any of it is treated as final; each stamp carries an HTML comment
+        saying what specifically is in doubt.
       </p>
     </div>
 
@@ -176,15 +181,87 @@
           <p class="t-label manifest__year">Watches</p>
           <div class="manifest__fact">
             <div class="watch-trio">
-              <img class="watch-trio__plate" src="assets/images/watches/jlc-reverso.webp"
-                   alt="Jaeger-LeCoultre Reverso in yellow gold with a red guilloche dial"
-                   width="800" height="800" loading="lazy" decoding="async">
-              <img class="watch-trio__plate" src="assets/images/watches/rolex-polar-explorer-ii.webp"
-                   alt="Rolex Explorer II with a white polar dial and orange 24-hour hand"
-                   width="800" height="800" loading="lazy" decoding="async">
-              <img class="watch-trio__plate" src="assets/images/watches/glashutte-original.webp"
-                   alt="Glashutte Original chronograph with a green dial and cushion case"
-                   width="800" height="800" loading="lazy" decoding="async">
+              <details class="watch">
+                <summary class="watch__summary">
+                  <img class="watch-trio__plate" src="assets/images/watches/jlc-reverso.webp"
+                       alt="Jaeger-LeCoultre Reverso in yellow gold with a red guilloche dial" width="800" height="800" loading="lazy" decoding="async">
+                  <span class="watch__toggle t-label">Stamp</span>
+                </summary>
+                <!-- FACT-CHECK BEFORE TREATING AS FINAL COPY:
+                     Two candidate years: 1833 (Jaeger-LeCoultre) vs 1931 (the Reverso). Confirm which one belongs in a stamp. The polo origin story is widely repeated and worth confirming against a primary source. -->
+                <div class="stamp stamp--unverified" style="--stamp-tilt: -1.5deg" data-unverified="true">
+                  <p class="t-label stamp__unverified">Unverified</p>
+                  <dl class="stamp__fields">
+                    <div class="stamp__row">
+                      <dt class="t-label">Origin</dt>
+                      <dd>Switzerland &mdash; Vall&eacute;e de Joux</dd>
+                    </div>
+                    <div class="stamp__row">
+                      <dt class="t-label">Founded</dt>
+                      <dd class="t-data">1833</dd>
+                      <dd class="t-caption">Maison founded. The Reverso itself dates to 1931.</dd>
+                    </div>
+                    <div class="stamp__row">
+                      <dt class="t-label">Made for</dt>
+                      <dd>Polo. The case pivots in its carrier so the crystal can be turned face-down against a mallet strike.</dd>
+                    </div>
+                  </dl>
+                </div>
+              </details>
+              <details class="watch">
+                <summary class="watch__summary">
+                  <img class="watch-trio__plate" src="assets/images/watches/rolex-polar-explorer-ii.webp"
+                       alt="Rolex Explorer II with a white polar dial and orange 24-hour hand" width="800" height="800" loading="lazy" decoding="async">
+                  <span class="watch__toggle t-label">Stamp</span>
+                </summary>
+                <!-- FACT-CHECK BEFORE TREATING AS FINAL COPY:
+                     Origin is genuinely contested: the firm was founded in LONDON in 1905 as Wilsdorf &amp; Davis, took the Rolex name in 1908 and moved to Geneva in 1919. Calling it Swiss in a country-of-origin field is defensible but not simple. Also: "Polar" is a nickname for the white dial, NOT a claim about polar expeditions &mdash; do not let the stamp imply otherwise. Explorer II introduced 1971. -->
+                <div class="stamp stamp--unverified" style="--stamp-tilt: 1.25deg" data-unverified="true">
+                  <p class="t-label stamp__unverified">Unverified</p>
+                  <dl class="stamp__fields">
+                    <div class="stamp__row">
+                      <dt class="t-label">Origin</dt>
+                      <dd>Switzerland &mdash; Geneva</dd>
+                    </div>
+                    <div class="stamp__row">
+                      <dt class="t-label">Founded</dt>
+                      <dd class="t-data">1905</dd>
+                      <dd class="t-caption">Founded in London; Geneva from 1919.</dd>
+                    </div>
+                    <div class="stamp__row">
+                      <dt class="t-label">Made for</dt>
+                      <dd>Caving. A fixed 24-hour bezel and a second hour hand to tell day from night underground.</dd>
+                    </div>
+                  </dl>
+                </div>
+              </details>
+              <details class="watch">
+                <summary class="watch__summary">
+                  <img class="watch-trio__plate" src="assets/images/watches/glashutte-original.webp"
+                       alt="Glashutte Original chronograph with a green dial and cushion case" width="800" height="800" loading="lazy" decoding="async">
+                  <span class="watch__toggle t-label">Stamp</span>
+                </summary>
+                <!-- FACT-CHECK BEFORE TREATING AS FINAL COPY:
+                     THREE candidate years, all defensible: 1845 (watchmaking begins in Glash&uuml;tte), 1951 (GUB formed from the nationalised workshops), 1994 (the Glash&uuml;tte Original brand name). Pick deliberately. Also confirm the exact model in the photo &mdash; it appears to be a Seventies Chronograph Panorama Date, which would change the "made for" line if wrong. -->
+                <div class="stamp stamp--unverified" style="--stamp-tilt: -1deg" data-unverified="true">
+                  <p class="t-label stamp__unverified">Unverified</p>
+                  <dl class="stamp__fields">
+                    <div class="stamp__row">
+                      <dt class="t-label">Origin</dt>
+                      <dd>Germany &mdash; Glash&uuml;tte, Saxony</dd>
+                    </div>
+                    <div class="stamp__row">
+                      <dt class="t-label">Founded</dt>
+                      <dd class="t-data">1845</dd>
+                      <dd class="t-caption">Watchmaking in the town. The brand name is far younger.</dd>
+                    </div>
+                    <div class="stamp__row">
+                      <dt class="t-label">Made for</dt>
+                      <dd>Precision timing. A chronograph built to measure elapsed intervals, not to be worn underwater.</dd>
+                    </div>
+                  </dl>
+                </div>
+              </details>
             </div>
             <p>Three Cravings: JLC Reverso, Rolex Polar Explorer II, Glash&uuml;tte Original.</p>
           </div>

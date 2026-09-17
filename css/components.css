@@ -741,7 +741,7 @@
 
 .watch-trio {
   display: grid;
-  grid-template-columns: repeat(3, minmax(0, 9rem));
+  grid-template-columns: repeat(3, minmax(0, 14rem));
   gap: var(--space-3);
   margin-block-end: var(--space-4);
 }
@@ -751,4 +751,138 @@
   block-size: auto;
   aspect-ratio: 1;
   border: var(--rule-width) solid var(--color-rule);
+}
+
+
+/* ============================================================================
+   WATCH DISCLOSURE + STAMP
+   ----------------------------------------------------------------------------
+   Click a plate, its stamp opens underneath it.
+
+   BUILT ON <details>/<summary>, WITH NO JAVASCRIPT. The summary IS the plate,
+   so the image is the control. That buys keyboard operation, the correct
+   screen-reader semantics and a working control with JS disabled, none of
+   which a div-and-click-handler gets without being hand-built and usually
+   getting it wrong. This project has about six lines of JS in total and a
+   bespoke disclosure widget is not worth being the seventh.
+
+   The three are deliberately NOT an exclusive accordion (no shared name
+   attribute), because the point of a trio is comparison: you should be able to
+   open all three and read them side by side.
+   ========================================================================== */
+
+.watch__summary {
+  display: grid;
+  gap: var(--space-2);
+  cursor: pointer;
+  /* Both lines are needed to remove the default disclosure triangle: the
+     standard property and the WebKit pseudo-element. */
+  list-style: none;
+}
+
+.watch__summary::-webkit-details-marker { display: none; }
+
+.watch__summary:focus-visible {
+  outline: 2px solid var(--color-focus);
+  outline-offset: 3px;
+}
+
+/* The affordance. Without it a plate looks like a plain image and nobody
+   discovers the stamp. */
+.watch__toggle {
+  color: var(--color-text-muted);
+  transition: color var(--duration-fast) var(--easing-standard);
+}
+
+.watch__toggle::after {
+  content: " +";
+  font-variant-numeric: tabular-nums;
+}
+
+.watch[open] .watch__toggle::after { content: " \00d7"; }
+
+.watch__summary:hover .watch__toggle,
+.watch[open] .watch__toggle { color: var(--color-text-brand); }
+
+.watch[open] .watch-trio__plate { border-color: var(--color-rule-strong); }
+
+
+/* --- The stamp -------------------------------------------------------------
+   A passport stamp is a double-ruled box, slightly off-square, in one ink,
+   with the field labels set smaller than the values. All four of those are
+   already in the system, so the stamp is mostly composition rather than new
+   design: the double rule is the rule hierarchy, the labels are .t-label, and
+   the ink is the brand navy.
+
+   NAVY, NOT RED. The instinct was a red stamp, but design rule 01 caps red at
+   two uses per page and About already spends both on the nav active state and
+   the placeholder notice. Navy is also the more period-correct choice, since
+   Pan Am was blue-and-white almost exclusively. The system catching this is
+   the system working. */
+
+.stamp {
+  --stamp-ink: var(--color-text-brand);
+  position: relative;
+  margin-block-start: var(--space-3);
+  padding: var(--space-4);
+  border: var(--rule-width-medium) solid var(--stamp-ink);
+  color: var(--stamp-ink);
+  background-color: var(--color-surface);
+  /* Tilt is per instance and small. A real stamp is never quite square to the
+     page, but anything past a couple of degrees starts colliding with the
+     neighbouring column and reads as a mistake rather than as a stamp. */
+  transform: rotate(var(--stamp-tilt, -1.5deg));
+}
+
+/* The inner rule. A second border on one element, for free. */
+.stamp::before {
+  content: "";
+  position: absolute;
+  inset: 3px;
+  border: var(--rule-width) solid var(--stamp-ink);
+  opacity: 0.5;
+  pointer-events: none;
+}
+
+.stamp__fields {
+  display: grid;
+  gap: var(--space-3);
+  margin: 0;
+}
+
+.stamp__row { display: grid; gap: 2px; }
+
+.stamp__row dt { color: var(--stamp-ink); opacity: 0.75; }
+
+.stamp__row dd {
+  margin: 0;
+  font-size: var(--font-size-caption);
+  line-height: 1.45;
+}
+
+.stamp__row dd.t-data { font-size: var(--font-size-subhead); font-weight: var(--font-weight-bold); }
+
+/* --- Unverified marker -----------------------------------------------------
+   Deliberately loud, and deliberately the one place red is allowed to exceed
+   the page budget: this is scaffolding that must not ship unnoticed. Removing
+   these marks after fact-checking restores the page to two reds. */
+
+/* The stamp itself stays NAVY even while unverified, so what you are reviewing
+   is the actual finished design rather than a warning-coloured mock of it.
+   Only the badge is red. Recolouring the whole stamp hid the real thing. */
+
+.stamp__unverified {
+  display: inline-block;
+  margin-block-end: var(--space-3);
+  padding: 2px var(--space-2);
+  border: var(--rule-width) solid var(--color-accent);
+  color: var(--color-accent);
+}
+
+@media (max-width: 640px) {
+  /* Stacked below 640px. Three 89px columns on a phone would leave the stamps
+     unreadable, and an unreadable stamp is worse than a scrolled one. The set
+     still reads as a set running vertically. */
+  .watch-trio { grid-template-columns: minmax(0, 14rem); }
+  .stamp { transform: none; }
 }
