@@ -37,7 +37,7 @@
            definition serve both the fine schedule mark and the solid badge
            used on an aircraft tail. -->
       <circle cx="50" cy="50" r="46" style="fill: var(--globe-fill, none)"/>
-      <g fill="none" stroke="currentColor" style="stroke-width: var(--globe-stroke, 3)"
+      <g fill="none" stroke="currentColor" style="stroke-width: var(--globe-stroke, var(--mark-stroke, 3))"
          stroke-linecap="round">
         <!-- Outer circle: the 90 degree meridian. -->
         <circle cx="50" cy="50" r="46"/>
@@ -73,6 +73,78 @@
           <path d="M 21.4 14 Q 50 20 78.6 14"/>
           <path d="M 21.4 86 Q 50 92 78.6 86"/>
         </g>
+      </g>
+    </symbol>
+
+    <!--
+      MANIFEST ICONS
+      Every icon below shares the globe geometry box (100x100) and, crucially,
+      reads the SAME stroke variable as the globe: mark-stroke. Matching stroke
+      weight across the globe and every manifest icon is the single detail that
+      makes the flag row, the experience manifest and the hobbies row read as
+      one designed system rather than three unrelated widgets. It is also the
+      detail most often skipped, because each icon looks fine in isolation.
+
+      Set mark-stroke once on a container and every mark inside it retunes
+      together. The globe reads globe-stroke first and falls back to
+      mark-stroke, so it can still be overridden on its own when it needs to be.
+    -->
+
+    <symbol id="pa-waypoint" viewBox="0 0 100 100">
+      <g fill="none" stroke="currentColor" style="stroke-width: var(--mark-stroke, 3)">
+        <circle cx="50" cy="50" r="34"/>
+        <circle cx="50" cy="50" r="10" fill="currentColor" stroke="none"/>
+      </g>
+    </symbol>
+
+    <symbol id="pa-sector" viewBox="0 0 100 100">
+      <g fill="none" stroke="currentColor" style="stroke-width: var(--mark-stroke, 3)"
+         stroke-linecap="round" stroke-linejoin="round">
+        <line x1="16" y1="50" x2="84" y2="50"/>
+        <circle cx="16" cy="50" r="8" fill="currentColor" stroke="none"/>
+        <path d="M 62 32 L 84 50 L 62 68"/>
+      </g>
+    </symbol>
+
+    <symbol id="pa-document" viewBox="0 0 100 100">
+      <g fill="none" stroke="currentColor" style="stroke-width: var(--mark-stroke, 3)">
+        <rect x="22" y="14" width="56" height="72"/>
+        <line x1="34" y1="38" x2="66" y2="38"/>
+        <line x1="34" y1="52" x2="66" y2="52"/>
+        <line x1="34" y1="66" x2="54" y2="66"/>
+      </g>
+    </symbol>
+
+    <symbol id="pa-clock" viewBox="0 0 100 100">
+      <g fill="none" stroke="currentColor" style="stroke-width: var(--mark-stroke, 3)"
+         stroke-linecap="round" stroke-linejoin="round">
+        <circle cx="50" cy="50" r="36"/>
+        <path d="M 50 26 L 50 50 L 68 60"/>
+      </g>
+    </symbol>
+
+    <symbol id="pa-tag" viewBox="0 0 100 100">
+      <g fill="none" stroke="currentColor" style="stroke-width: var(--mark-stroke, 3)"
+         stroke-linejoin="round">
+        <path d="M 32 16 L 80 16 L 80 84 L 32 84 L 20 50 Z"/>
+        <circle cx="40" cy="50" r="6"/>
+      </g>
+    </symbol>
+
+    <symbol id="pa-signal" viewBox="0 0 100 100">
+      <g fill="none" stroke="currentColor" style="stroke-width: var(--mark-stroke, 3)"
+         stroke-linecap="round">
+        <circle cx="50" cy="70" r="9" fill="currentColor" stroke="none"/>
+        <path d="M 30 54 A 28 28 0 0 1 70 54"/>
+        <path d="M 18 40 A 46 46 0 0 1 82 40"/>
+      </g>
+    </symbol>
+
+    <symbol id="pa-book" viewBox="0 0 100 100">
+      <g fill="none" stroke="currentColor" style="stroke-width: var(--mark-stroke, 3)"
+         stroke-linejoin="round">
+        <path d="M 16 24 L 48 32 L 48 80 L 16 72 Z"/>
+        <path d="M 84 24 L 52 32 L 52 80 L 84 72 Z"/>
       </g>
     </symbol>
   </defs>

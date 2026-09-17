@@ -226,6 +226,9 @@
    the minimum width an item needs in order to stay readable. */
 
 .manifest--strip {
+  /* Marks in a strip carry more weight than marks in a list: a strip is read
+     as a row of objects, a list as a column of text with a marker. */
+  --manifest-mark-size: var(--icon-lg);
   display: grid;
   grid-template-columns: repeat(auto-fit, minmax(9.5rem, 1fr));
   gap: 0 var(--space-5);
@@ -662,4 +665,46 @@
   padding-block-start: var(--space-5);
   border-block-start: var(--rule-width-medium) solid var(--color-surface-invert);
   inline-size: 100%;
+}
+
+
+/* ============================================================================
+   MANIFEST BLOCK
+   ----------------------------------------------------------------------------
+   A titled manifest section: label, heading, heavy rule, then the rows.
+
+   This is the ONLY new CSS the About page required, and it is composition
+   rather than layout - the heading, the label and the rule are all existing
+   classes, and this just sets the rhythm between them. The manifest primitive
+   from step 1 handled all three row treatments unchanged, which is what it was
+   built for.
+   ========================================================================== */
+
+.manifest-block + .manifest-block {
+  margin-block-start: var(--space-9);
+}
+
+.manifest-block__head {
+  display: flex;
+  flex-wrap: wrap;
+  align-items: baseline;
+  justify-content: space-between;
+  gap: var(--space-3);
+  margin-block-end: var(--space-3);
+}
+
+/* Locks every mark in the block - flags, icons, globes - to one stroke weight.
+   Setting it here rather than per icon is what keeps the three rows reading as
+   one system when someone later adds a fourth. */
+.manifest-block {
+  --mark-stroke: 3.5;
+}
+
+/* A page-level notice that the content is scaffolding, not copy. Deliberately
+   loud: placeholder text that looks plausible is worse than no text at all,
+   because it ships. */
+.placeholder-notice {
+  border-inline-start: 3px solid var(--color-accent);
+  background-color: var(--color-surface-sunken);
+  padding: var(--space-4) var(--space-5);
 }

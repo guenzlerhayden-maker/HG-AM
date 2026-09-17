@@ -1,0 +1,12 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!-- Placeholder flag. Crossed box is the long-standing convention for "asset
+     not supplied yet", so it cannot be mistaken for a real flag at a glance.
+     Replace with real 4:3 flags from lipis/flag-icons (MIT) once the countries
+     are known. The .flag wrapper in components.css constrains whatever goes
+     here, so no file needs editing on swap. -->
+<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 40 30">
+  <rect width="40" height="30" fill="#DCE8F2"/>
+  <g stroke="#1D3F6E" stroke-width="1" opacity="0.4">
+    <path d="M0 0 L40 30 M40 0 L0 30"/>
+  </g>
+</svg>

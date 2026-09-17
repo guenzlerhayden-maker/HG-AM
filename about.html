@@ -56,10 +56,9 @@
 </nav>
 
 <main class="page__main" id="main">
-
   <!-- ABOUT is the MANIFEST document type: a boarding pass. Navy header band,
        then ruled fields. Dense and administrative, because this is the page
-       that actually carries data. -->
+       that actually carries the data. -->
   <header class="cover cover--manifest">
     <div class="cover__band">
       <div class="container">
@@ -69,21 +68,133 @@
     </div>
     <div class="container">
       <div class="cover__fields">
-        <div class="cover__field"><p class="t-label t-muted">Origin</p><p class="t-subhead t-data">&mdash;&mdash;</p></div>
-        <div class="cover__field"><p class="t-label t-muted">Transfer</p><p class="t-subhead t-data">&mdash;&mdash;</p></div>
-        <div class="cover__field"><p class="t-label t-muted">Sectors</p><p class="t-subhead t-data">&mdash;&mdash;</p></div>
-        <div class="cover__field"><p class="t-label t-muted">Status</p><p class="t-subhead">Draft</p></div>
+        <div class="cover__field"><p class="t-label t-muted">Places</p><p class="t-subhead t-data">05</p></div>
+        <div class="cover__field"><p class="t-label t-muted">Sectors</p><p class="t-subhead t-data">05</p></div>
+        <div class="cover__field"><p class="t-label t-muted">Interests</p><p class="t-subhead t-data">04</p></div>
+        <div class="cover__field"><p class="t-label t-muted">Status</p><p class="t-subhead">Placeholder</p></div>
       </div>
     </div>
   </header>
 
   <div class="container section">
-    <p class="t-label t-muted">Step 2 &mdash; shell only</p>
-    <p class="t-body t-measure" style="margin-block-start: var(--space-3)">
-      The manifest rows &mdash; places, experience, hobbies &mdash; are step&nbsp;3. The fields above are empty on purpose.
-    </p>
-  </div>
 
+    <div class="placeholder-notice" style="margin-block-end: var(--space-9)">
+      <p class="t-label" style="color: var(--color-accent)">Placeholder content</p>
+      <p class="t-caption t-measure" style="margin-block-start: var(--space-2)">
+        Every year, flag and sentence below is scaffolding, not copy. The flags are
+        crossed boxes rather than real countries, so nothing here can be mistaken for
+        finished content. The structure, spacing and icon treatment are real.
+      </p>
+    </div>
+
+    <!-- 01 - PLACES. The strip arrangement: items side by side, parts stacked. -->
+    <section class="manifest-block">
+      <div class="manifest-block__head">
+        <h2 class="t-heading">Places</h2>
+        <p class="t-label t-muted">01 &mdash; Chronological</p>
+      </div>
+      <hr class="rule rule--heavy">
+      <ul class="manifest manifest--strip">
+        <li class="manifest__item">
+          <img class="flag" src="assets/flags/_placeholder.svg" alt="" width="40" height="30">
+          <p class="t-label t-data manifest__year">1998</p>
+          <p class="manifest__fact">Born</p>
+        </li>
+        <li class="manifest__item">
+          <img class="flag" src="assets/flags/_placeholder.svg" alt="" width="40" height="30">
+          <p class="t-label t-data manifest__year">2004</p>
+          <p class="manifest__fact">Relocated</p>
+        </li>
+        <li class="manifest__item">
+          <img class="flag" src="assets/flags/_placeholder.svg" alt="" width="40" height="30">
+          <p class="t-label t-data manifest__year">2015</p>
+          <p class="manifest__fact">Immigrated</p>
+        </li>
+        <li class="manifest__item">
+          <img class="flag" src="assets/flags/_placeholder.svg" alt="" width="40" height="30">
+          <p class="t-label t-data manifest__year">2019</p>
+          <p class="manifest__fact">Naturalised</p>
+        </li>
+        <li class="manifest__item">
+          <img class="flag" src="assets/flags/_placeholder.svg" alt="" width="40" height="30">
+          <p class="t-label t-data manifest__year">2023</p>
+          <p class="manifest__fact">Current residence</p>
+        </li>
+      </ul>
+    </section>
+
+    <!-- 02 - EXPERIENCE. Same primitive, list arrangement, neutral icon in
+         place of the flag. No job titles, no duty bullets: the year sorts, the
+         sentence says what happened. -->
+    <section class="manifest-block">
+      <div class="manifest-block__head">
+        <h2 class="t-heading">Experience</h2>
+        <p class="t-label t-muted">02 &mdash; Sectors flown</p>
+      </div>
+      <hr class="rule rule--heavy">
+      <ul class="manifest manifest--list">
+        <li class="manifest__item">
+          <svg class="globe manifest__mark" aria-hidden="true"><use href="assets/icons.svg#pa-sector"/></svg>
+          <p class="t-label t-data manifest__year">2015&ndash;18</p>
+          <p class="manifest__fact">One sentence saying what the work actually involved, written as a statement rather than a job title.</p>
+        </li>
+        <li class="manifest__item">
+          <svg class="globe manifest__mark" aria-hidden="true"><use href="assets/icons.svg#pa-document"/></svg>
+          <p class="t-label t-data manifest__year">2018&ndash;20</p>
+          <p class="manifest__fact">One sentence. The year column does the sorting, so the sentence is free to just say what happened.</p>
+        </li>
+        <li class="manifest__item">
+          <svg class="globe manifest__mark" aria-hidden="true"><use href="assets/icons.svg#pa-signal"/></svg>
+          <p class="t-label t-data manifest__year">2020&ndash;23</p>
+          <p class="manifest__fact">One sentence, in the register of a manifest entry: flat, specific, and past tense.</p>
+        </li>
+        <li class="manifest__item">
+          <svg class="globe manifest__mark" aria-hidden="true"><use href="assets/icons.svg#pa-clock"/></svg>
+          <p class="t-label t-data manifest__year">2023&ndash;25</p>
+          <p class="manifest__fact">One sentence. No duties, no bullet list, no title leading the line.</p>
+        </li>
+        <li class="manifest__item">
+          <svg class="globe manifest__mark" aria-hidden="true"><use href="assets/icons.svg#pa-tag"/></svg>
+          <p class="t-label t-data manifest__year">2025&ndash;</p>
+          <p class="manifest__fact">One sentence for the current entry, with an open-ended year to match.</p>
+        </li>
+      </ul>
+    </section>
+
+    <!-- 03 - HOBBIES. Same primitive again, one register quieter. The ONLY
+         differences are a smaller mark and muted text - the grid, the rules,
+         the label treatment and the spacing are untouched. -->
+    <section class="manifest-block">
+      <div class="manifest-block__head">
+        <h2 class="t-heading">Hobbies</h2>
+        <p class="t-label t-muted">03 &mdash; Off duty</p>
+      </div>
+      <hr class="rule rule--heavy">
+      <ul class="manifest manifest--list manifest--light">
+        <li class="manifest__item">
+          <svg class="globe manifest__mark" aria-hidden="true"><use href="assets/icons.svg#pa-book"/></svg>
+          <p class="t-label manifest__year">Reading</p>
+          <p class="manifest__fact">One quiet line.</p>
+        </li>
+        <li class="manifest__item">
+          <svg class="globe manifest__mark" aria-hidden="true"><use href="assets/icons.svg#pa-signal"/></svg>
+          <p class="t-label manifest__year">Listening</p>
+          <p class="manifest__fact">One quiet line.</p>
+        </li>
+        <li class="manifest__item">
+          <svg class="globe manifest__mark" aria-hidden="true"><use href="assets/icons.svg#pa-waypoint"/></svg>
+          <p class="t-label manifest__year">Walking</p>
+          <p class="manifest__fact">One quiet line.</p>
+        </li>
+        <li class="manifest__item">
+          <svg class="globe manifest__mark" aria-hidden="true"><use href="assets/icons.svg#pa-clock"/></svg>
+          <p class="t-label manifest__year">Making</p>
+          <p class="manifest__fact">One quiet line.</p>
+        </li>
+      </ul>
+    </section>
+
+  </div>
 </main>
 
 <footer class="site-footer">
