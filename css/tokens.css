@@ -1,0 +1,217 @@
+/* ============================================================================
+   TOKENS
+   ----------------------------------------------------------------------------
+   This file defines the design system's VOCABULARY and nothing else.
+   It paints nothing. There are no selectors here that produce visible output.
+
+   Why that discipline matters: if tokens.css never paints, you can always read
+   it as a single flat list of "what values exist in this system." The moment
+   you let one rule in here set a background, it stops being a dictionary and
+   starts being a stylesheet, and you lose the ability to answer "what colors
+   does this site have?" by reading one short file.
+   ========================================================================== */
+
+:root {
+
+  /* ==========================================================================
+     TIER 1 - RAW PALETTE
+     The literal colors. Named after what they ARE, not what they do.
+     Nothing outside this file should ever reference a hex code directly.
+     ======================================================================== */
+
+  /* The navy of the 1957 Chermayeff & Geismar globe mark. Primary brand color. */
+  --pa-globe-blue: #1D3F6E;
+
+  /* Cabin / ticket-jacket powder blue. A SURFACE color - see design rule 2. */
+  --pa-powder:     #A8C6DF;
+
+  /* Powder tinted up. For surfaces that should not read as a colored block. */
+  --pa-sky:        #DCE8F2;
+
+  /* Warm off-white. The single most important token in the system.
+     Pure #FFF page backgrounds read as "modern SaaS product." Warm paper stock
+     reads as 1960s ticket card. Everything else in the palette is doing period
+     work, and a cold white background would quietly undo all of it. */
+  --pa-paper:      #F4F1EA;
+
+  /* True white, reserved for cards/tickets sitting ON paper, so they lift. */
+  --pa-white:      #FFFFFF;
+
+  /* Near-black body text. Not #000: pure black on a warm ground optically
+     vibrates and looks harsher than it measures. */
+  --pa-ink:        #14181D;
+
+  /* Desaturated navy-grey for secondary text. Stays in the blue family so
+     muted text reads as "quieter," not as "different material." */
+  --pa-ink-muted:  #4E5A68;
+
+  /* The ONLY accent. Pan Am's identity was blue-and-white almost exclusively;
+     red appeared as stamps and cancellation marks. See design rule 1. */
+  --pa-stamp-red:  #B3242B;
+
+
+  /* ==========================================================================
+     TIER 2 - SEMANTIC ROLES
+     What colors DO. Everything downstream references these, never Tier 1.
+
+     Why two tiers: you restyle by rebinding roles, not by find-replacing hex
+     codes across four files. A dark mode, a print sheet, or a seasonal variant
+     becomes a ~10-line block that rebinds these, and nothing else changes.
+     ======================================================================== */
+
+  --color-surface:         var(--pa-paper);
+  --color-surface-raised:  var(--pa-white);
+  --color-surface-sunken:  var(--pa-sky);
+  --color-surface-field:   var(--pa-powder);
+  --color-surface-invert:  var(--pa-globe-blue);
+
+  --color-text:            var(--pa-ink);
+  --color-text-muted:      var(--pa-ink-muted);
+  --color-text-invert:     var(--pa-white);
+  --color-text-brand:      var(--pa-globe-blue);
+
+  --color-accent:          var(--pa-stamp-red);
+
+  /* Hairlines are tinted navy at low alpha rather than neutral grey. A grey
+     rule on warm paper reads as dirt; a navy rule at 22% reads as printed. */
+  --color-rule:            rgb(29 63 110 / 0.22);
+  --color-rule-strong:     rgb(29 63 110 / 0.45);
+  --color-rule-invert:     rgb(255 255 255 / 0.28);
+
+  --color-focus:           var(--pa-stamp-red);
+
+
+  /* ==========================================================================
+     TYPE
+     ======================================================================== */
+
+  /* Pan Am's 1957 identity was one of the first major corporate uses of
+     Helvetica. This stack gets Helvetica-or-metrically-identical on every
+     platform for ZERO network requests and ZERO layout shift:
+       macOS   -> Helvetica Neue
+       Windows -> Arial           (metrically identical to Helvetica)
+       Linux   -> Liberation Sans (metrically identical to Arial)
+     A font already on the machine always beats one you download. */
+  --font-sans: "Helvetica Neue", Helvetica, Arial, "Liberation Sans", sans-serif;
+
+  /* Mono is used only for token names and specimen data in the style guide. */
+  --font-mono: ui-monospace, "SF Mono", "Cascadia Mono", Menlo, Consolas, monospace;
+
+  /* --- Size steps, ~1.25 (major third) modular scale ------------------------
+     The two largest steps use clamp() so they scale CONTINUOUSLY between a
+     floor and a ceiling. No breakpoint jumps, no breakpoint list to maintain.
+     Media queries are reserved for LAYOUT changes (column counts), where a
+     discrete switch is actually what you want. */
+  /* MEGA is the cover step, and it is meant to be uncomfortable. On the Pan Am
+     cargo schedule cover the title spans the full sheet and all but touches
+     both edges. Type at that scale is not a bigger heading - it is a graphic
+     element that happens to be readable, and it is most of why Swiss airline
+     print still looks confident sixty years on. 13vw means it genuinely tracks
+     the viewport rather than topping out early. */
+  --font-size-mega:    clamp(2.5rem, 11vw, 11rem);
+  --font-size-display: clamp(3rem, 8vw, 6.5rem);
+  --font-size-heading: clamp(2rem, 4vw, 3.25rem);
+  --font-size-subhead: 1.375rem;
+  --font-size-body:    1rem;
+  --font-size-caption: 0.875rem;
+  --font-size-label:   0.6875rem;
+
+  --font-weight-regular: 400;
+  --font-weight-bold:    700;
+
+  /* Leading BELOW 1 at cover sizes. Large type has proportionally far too much
+     air between lines at any "normal" line-height, and letting lines nearly
+     touch is what makes a cover read as one solid mass of type rather than as
+     a stack of separate sentences. */
+  --leading-mega:  0.88;
+  --leading-tight: 0.95;
+  --leading-snug:  1.15;
+  --leading-base:  1.6;
+
+  /* Tracking is the highest-leverage lever in this whole system.
+     Negative on display, strongly positive on labels. That OPPOSITION is what
+     makes type look deliberately set rather than merely sized. */
+  /* Tracking tightens as size grows. Letterforms carry more optical space at
+     large sizes, so type set at a cover scale with default tracking looks
+     loose and weak. Negative tracking is what makes it look SET. */
+  --tracking-mega:    -0.04em;
+  --tracking-display: -0.03em;
+  --tracking-heading: -0.015em;
+  --tracking-base:     0;
+  --tracking-label:    0.12em;
+
+  /* Comfortable line length for prose. ~66 characters is the classic target. */
+  --measure: 66ch;
+
+
+  /* ==========================================================================
+     SPACING
+     4px base, non-linear ramp.
+
+     Why non-linear: useful spacing values CLUSTER at the small end (you need
+     4/8/12/16 as distinct choices) and SPREAD at the large end (nobody needs
+     both 96 and 104). A strictly linear ramp wastes half its steps.
+
+     Why numeric names over t-shirt sizes: --space-5 has an obvious neighbor in
+     both directions. --space-lg does not tell you whether --space-xl is next,
+     or whether someone will eventually add --space-lg-plus.
+     ======================================================================== */
+
+  --space-1:  0.25rem;  /*   4px */
+  --space-2:  0.5rem;   /*   8px */
+  --space-3:  0.75rem;  /*  12px */
+  --space-4:  1rem;     /*  16px */
+  --space-5:  1.5rem;   /*  24px */
+  --space-6:  2rem;     /*  32px */
+  --space-7:  3rem;     /*  48px */
+  --space-8:  4rem;     /*  64px */
+  --space-9:  6rem;     /*  96px */
+  --space-10: 8rem;     /* 128px */
+
+
+  /* ==========================================================================
+     LAYOUT & GRID
+     ======================================================================== */
+
+  --container-max:  1200px;
+  --grid-columns:   12;
+  --grid-gutter:    var(--space-5);
+
+  /* Near-zero radius. This identity is geometric and printed; rounded corners
+     read as software UI and fight everything else the palette is doing. */
+  --radius-0: 0;
+  --radius-1: 2px;
+
+  /* RULE HIERARCHY.
+     Giving every rule the same weight is what made step 1 read as polite
+     rather than authoritative. Swiss airline print uses thick/thin contrast
+     constantly: a heavy rule opens and closes a table, a medium rule separates
+     the header, hairlines divide the rows. The CONTRAST between weights is the
+     graphic device - three weights used deliberately beat one weight used
+     everywhere. */
+  --rule-width:        1px;   /* hairline - between data rows */
+  --rule-width-medium: 2px;   /* separates a header from its data */
+  --rule-width-heavy:  4px;   /* opens and closes a block */
+
+
+  /* ==========================================================================
+     ICONS
+     Sized on the type scale so a globe sits optically level with adjacent
+     text instead of at some arbitrary pixel value.
+     ======================================================================== */
+
+  --icon-sm: 1.25rem;  /* 20px - inline with caption text */
+  --icon-md: 1.75rem;  /* 28px - manifest rows, nav */
+  --icon-lg: 2.75rem;  /* 44px - section marks */
+  --icon-xl: 5.5rem;   /* 88px - cover treatment */
+
+
+  /* ==========================================================================
+     MOTION
+     Kept minimal. Period print identities do not animate; the only motion here
+     is interaction feedback.
+     ======================================================================== */
+
+  --duration-fast: 120ms;
+  --easing-standard: cubic-bezier(0.2, 0, 0.13, 1);
+}

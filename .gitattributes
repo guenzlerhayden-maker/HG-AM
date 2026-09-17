@@ -1,0 +1,4 @@
+# Normalise line endings in the repository to LF, regardless of what Windows
+# writes in the working tree. Without this, every file touched on a Windows
+# machine shows up as 100% changed in a diff and real changes get buried.
+* text=auto eol=lf

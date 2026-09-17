@@ -1,0 +1,169 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<title>About</title>
+<meta name="description" content="Manifest page shell.">
+<link rel="stylesheet" href="css/tokens.css">
+<link rel="stylesheet" href="css/base.css">
+<link rel="stylesheet" href="css/layout.css">
+<link rel="stylesheet" href="css/components.css">
+</head>
+<body class="page">
+
+<!-- The skip link is the first thing in the tab order on every page. -->
+<a class="skip-link" href="#main">Skip to content</a>
+
+<!-- ===========================================================================
+     SVG SPRITE
+     ---------------------------------------------------------------------------
+     Every icon in the system is defined once, here, and referenced with <use>.
+
+     WHY THE SPRITE IS INLINE IN THE PAGE rather than in assets/icons.svg:
+     an external <use href="assets/icons.svg#id"> reference has uneven support
+     across browsers, and when it fails it fails silently - the icon simply does
+     not render. Inlining is the option that works everywhere, costs no extra
+     request, and cannot flash. The price is that this block is duplicated on
+     each page, which is the same tradeoff accepted for the nav markup: at four
+     pages the duplication is cheaper than the machinery to avoid it.
+
+     HIDDEN WITH .visually-hidden, NOT display:none - a display:none sprite
+     breaks <use> references in some browsers. Clipping it is the safe way.
+=========================================================================== -->
+<svg class="visually-hidden" aria-hidden="true" focusable="false" xmlns="http://www.w3.org/2000/svg">
+  <defs>
+    <symbol id="pa-globe" viewBox="0 0 100 100">
+      <!-- The disc. Fill defaults to none, so the symbol is line art unless a
+           variant sets --globe-fill. That single property is what lets one
+           definition serve both the fine schedule mark and the solid badge on
+           an aircraft tail. -->
+      <circle cx="50" cy="50" r="46" style="fill: var(--globe-fill, none)"/>
+      <g fill="none" stroke="currentColor" style="stroke-width: var(--globe-stroke, 3)"
+         stroke-linecap="round">
+        <!-- Outer circle = the 90-degree meridian. -->
+        <circle cx="50" cy="50" r="46"/>
+        <!-- MERIDIANS, as ellipses with rx = 46 * cos(longitude).
+             Four of them rather than two: the original mark is dense, and a
+             sparse wireframe reads as a stock globe icon instead of as this
+             one. 22.5 / 45 / 67.5 degrees, plus the centre line at rx 0. -->
+        <line x1="50" y1="4" x2="50" y2="96"/>
+        <ellipse cx="50" cy="50" rx="17.6" ry="46"/>
+        <ellipse cx="50" cy="50" rx="32.5" ry="46"/>
+        <ellipse cx="50" cy="50" rx="42.5" ry="46"/>
+        <!-- LATITUDES, as sagging ARCS rather than straight chords.
+             This is the correction that matters most. Straight chords are what
+             you get viewing a sphere exactly head-on, and they read as a
+             wireframe. The real mark is drawn as though seen from slightly
+             below the equator, so every latitude bows downward in the middle.
+             Each is a quadratic curve whose control point sits 2x the desired
+             sag below the endpoints - so `Q 50 37` on a line at y=27 sags by
+             exactly 5. The equator stays straight, which is what carries the
+             wordmark band on the badge version.
+
+             The polar pair sits at ~51 degrees rather than a strict 60, and
+             sags by 3 rather than 5. Strict geometry put them at y 10.2/89.8
+             with a full sag, which crowded the outer circle and made the whole
+             mark look molten at the bottom. The original is not strictly
+             geometric either - it is drawn to look right, and optical spacing
+             beats arithmetic whenever the two disagree. -->
+        <line x1="4" y1="50" x2="96" y2="50"/>
+        <path d="M 10.2 27 Q 50 37 89.8 27"/>
+        <path d="M 10.2 73 Q 50 83 89.8 73"/>
+        <!-- The +-60 latitudes, dropped at small sizes via --globe-detail. -->
+        <g style="display: var(--globe-detail, inline)">
+          <path d="M 21.4 14 Q 50 20 78.6 14"/>
+          <path d="M 21.4 86 Q 50 92 78.6 86"/>
+        </g>
+      </g>
+    </symbol>
+  </defs>
+</svg>
+
+<nav class="site-nav" aria-label="Main">
+  <div class="container site-nav__inner">
+    <a class="site-nav__brand" href="index.html" aria-label="Home">
+      <svg class="globe globe--md globe--solid-invert globe--simple" aria-hidden="true"><use href="#pa-globe"/></svg>
+    </a>
+    <ul class="site-nav__list">
+      <li class="site-nav__item">
+        <a class="site-nav__link" href="index.html">
+          <span class="site-nav__num">01</span>
+          <span class="t-label">Home</span>
+        </a>
+      </li>
+      <li class="site-nav__item">
+        <a class="site-nav__link" href="about.html" aria-current="page">
+          <span class="site-nav__num">02</span>
+          <span class="t-label">About</span>
+        </a>
+      </li>
+      <li class="site-nav__item">
+        <a class="site-nav__link" href="writing.html">
+          <span class="site-nav__num">03</span>
+          <span class="t-label">Writing</span>
+        </a>
+      </li>
+      <li class="site-nav__item">
+        <a class="site-nav__link" href="contact.html">
+          <span class="site-nav__num">04</span>
+          <span class="t-label">Contact</span>
+        </a>
+      </li>
+    </ul>
+  </div>
+</nav>
+
+<main class="page__main" id="main">
+
+  <!-- ABOUT is the MANIFEST document type: a boarding pass. Navy header band,
+       then ruled fields. Dense and administrative, because this is the page
+       that actually carries data. -->
+  <header class="cover cover--manifest">
+    <div class="cover__band">
+      <div class="container">
+        <p class="t-label cover__eyebrow">Passenger manifest</p>
+        <h1 class="t-display" style="margin-block-start: var(--space-3)">About</h1>
+      </div>
+    </div>
+    <div class="container">
+      <div class="cover__fields">
+        <div class="cover__field"><p class="t-label t-muted">Origin</p><p class="t-subhead t-data">&mdash;&mdash;</p></div>
+        <div class="cover__field"><p class="t-label t-muted">Transfer</p><p class="t-subhead t-data">&mdash;&mdash;</p></div>
+        <div class="cover__field"><p class="t-label t-muted">Sectors</p><p class="t-subhead t-data">&mdash;&mdash;</p></div>
+        <div class="cover__field"><p class="t-label t-muted">Status</p><p class="t-subhead">Draft</p></div>
+      </div>
+    </div>
+  </header>
+
+  <div class="container section">
+    <p class="t-label t-muted">Step 2 &mdash; shell only</p>
+    <p class="t-body t-measure" style="margin-block-start: var(--space-3)">
+      The manifest rows &mdash; places, experience, hobbies &mdash; are step&nbsp;3. The fields above are empty on purpose.
+    </p>
+  </div>
+
+</main>
+
+<footer class="site-footer">
+  <div class="container site-footer__inner">
+    <div class="site-footer__fields">
+      <div class="site-footer__field">
+        <p class="t-label t-muted">Issued</p>
+        <p class="t-caption t-data">2026</p>
+      </div>
+      <div class="site-footer__field">
+        <p class="t-label t-muted">Revision</p>
+        <p class="t-caption t-data">01</p>
+      </div>
+      <div class="site-footer__field">
+        <p class="t-label t-muted">Reference</p>
+        <p class="t-caption"><a href="styleguide.html">Style guide</a></p>
+      </div>
+    </div>
+    <svg class="globe globe--md globe--simple" aria-hidden="true"><use href="#pa-globe"/></svg>
+  </div>
+</footer>
+
+</body>
+</html>

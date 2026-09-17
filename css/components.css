@@ -1,0 +1,665 @@
+/* ============================================================================
+   COMPONENTS
+   ----------------------------------------------------------------------------
+   Named, reusable things. Step 1 defines two: the globe mark and the manifest
+   primitive. Nav, cover and footer arrive in step 2.
+   ========================================================================== */
+
+
+/* ============================================================================
+   GLOBE
+   ----------------------------------------------------------------------------
+   An original geometric construction in homage to the 1957 Pan Am mark, not a
+   traced reproduction. Fine for a personal site; worth a second look before
+   any commercial use, since the mark is still held.
+
+   HOW THE GEOMETRY WORKS (viewBox 0 0 100 100, center 50,50, radius 46):
+
+   Latitudes project to horizontal CHORDS when a sphere is viewed head-on.
+   A latitude at angle f sits at y = 50 - 46*sin(f) with half-width 46*cos(f).
+     equator f=0   -> y 50,    half-width 46
+     f = +-30      -> y 27/73, half-width 39.8
+     f = +-60      -> y 10/90, half-width 23
+
+   Meridians project to ELLIPSES sharing the vertical radius of the globe, with
+   horizontal radius 46*cos(longitude). That is the actual trick that makes a
+   flat circle read as a sphere. Each ellipse draws the front AND back halves
+   of one meridian pair, which is both geometrically honest and exactly the
+   look of the original mark.
+     longitude 0   -> rx 0    (a straight vertical line)
+     longitude 30  -> rx 39.8
+     longitude 60  -> rx 23
+     longitude 90  -> rx 46   (the outer circle itself)
+   ========================================================================== */
+
+.globe {
+  inline-size: var(--icon-md);
+  block-size: var(--icon-md);
+  /* The symbol strokes with currentColor, so the globe simply takes the color
+     of whatever it sits in. One definition serves navy-on-paper and
+     white-on-navy with no second file. */
+  color: var(--color-text-brand);
+  flex: none;
+}
+
+.globe--sm { inline-size: var(--icon-sm); block-size: var(--icon-sm); }
+.globe--md { inline-size: var(--icon-md); block-size: var(--icon-md); }
+.globe--lg { inline-size: var(--icon-lg); block-size: var(--icon-lg); }
+.globe--xl { inline-size: var(--icon-xl); block-size: var(--icon-xl); }
+
+/* Drops the +-60 latitudes so the mark stays legible at small sizes, where
+   five latitude arcs turn into mud.
+
+   WHY THIS IS DONE WITH A CUSTOM PROPERTY rather than a normal selector:
+   <use> clones the symbol into a shadow tree, and ordinary CSS selectors from
+   an outside stylesheet cannot reach inside it. A rule like
+   `.globe--simple .globe__detail { display: none }` silently does nothing.
+   Custom properties DO inherit across that boundary, so the symbol declares
+   style="display: var(--globe-detail, inline)" and we flip the variable here.
+   This is the standard escape hatch for styling <use> content. */
+.globe--simple { --globe-detail: none; }
+
+/* Same mechanism for stroke weight. */
+.globe--hairline { --globe-stroke: 2; }
+.globe--heavy    { --globe-stroke: 4.5; }
+
+
+/* --- SOLID: the badge form --------------------------------------------------
+   The mark has always had two lives. On aircraft tails and ticket jackets it
+   is a SOLID navy disc with white lines - a badge, readable at 200 metres. On
+   printed schedules it is fine line art sitting quietly beside the wordmark.
+   They are the same geometry at two different jobs, and a system that only
+   ships the line version cannot do the confident half.
+
+   Both come from ONE symbol. The disc is a circle whose fill reads
+   --globe-fill (default: none), and the lines always stroke with currentColor.
+   So the solid variant just fills the disc and flips the text color; no second
+   symbol, no second file. */
+
+.globe--solid {
+  --globe-fill: var(--color-surface-invert);
+  --globe-stroke: 3.5;
+  color: var(--color-text-invert);
+}
+
+/* On a navy ground the badge inverts: pale disc, navy lines. */
+.globe--solid-invert {
+  --globe-fill: var(--pa-powder);
+  --globe-stroke: 3.5;
+  color: var(--color-surface-invert);
+}
+
+
+/* ============================================================================
+   LOCKUP
+   ----------------------------------------------------------------------------
+   Wordmark plus globe, set as one unit. On the Pan Am cargo schedule the
+   wordmark is large, tightly tracked, and the globe sits to its right at
+   roughly cap height - NOT at some arbitrary icon size.
+
+   That cap-height relationship is the whole trick, and it is why the globe is
+   sized in `em` here rather than from the --icon-* scale: tie it to the font
+   size of the lockup and it stays optically correct at every size, with no
+   per-instance fiddling.
+   ========================================================================== */
+
+.lockup {
+  display: flex;
+  align-items: center;
+  gap: 0.28em;
+  font-size: var(--lockup-size, 2.5rem);
+  font-weight: var(--font-weight-bold);
+  line-height: 1;
+  letter-spacing: -0.035em;
+  color: var(--color-text-brand);
+  text-decoration: none;
+}
+
+.lockup .globe {
+  inline-size: 0.92em;
+  block-size: 0.92em;
+  color: inherit;
+}
+
+.lockup--sm { --lockup-size: 1.35rem; }
+.lockup--lg { --lockup-size: clamp(3rem, 7vw, 5.5rem); }
+
+
+/* ============================================================================
+   DATA TABLE
+   ----------------------------------------------------------------------------
+   The thick/thin rule grammar from the cargo schedule: a heavy rule opens the
+   block, a medium rule closes the header, hairlines divide the rows, a heavy
+   rule closes it. The CONTRAST between the three weights is the graphic
+   device. One weight used everywhere reads as a web table; three weights used
+   deliberately read as printed matter.
+   ========================================================================== */
+
+.datatable {
+  inline-size: 100%;
+  border-collapse: collapse;
+  border-block-start: var(--rule-width-heavy) solid var(--color-text-brand);
+  border-block-end: var(--rule-width-heavy) solid var(--color-text-brand);
+}
+
+.datatable th {
+  text-align: start;
+  padding-block: var(--space-2);
+  padding-inline-end: var(--space-5);
+  border-block-end: var(--rule-width-medium) solid var(--color-text-brand);
+  font-size: var(--font-size-label);
+  font-weight: var(--font-weight-bold);
+  letter-spacing: var(--tracking-label);
+  text-transform: uppercase;
+  vertical-align: bottom;
+}
+
+.datatable td {
+  padding-block: var(--space-3);
+  padding-inline-end: var(--space-5);
+  border-block-start: var(--rule-width) solid var(--color-rule);
+  vertical-align: top;
+  font-size: var(--font-size-caption);
+  font-variant-numeric: tabular-nums;
+}
+
+/* The first row sits directly under the medium header rule, so it must not
+   also draw its own hairline. */
+.datatable tbody tr:first-child td { border-block-start: 0; }
+
+
+/* ============================================================================
+   MANIFEST
+   ----------------------------------------------------------------------------
+   The row primitive that the flag row, experience manifest and hobbies row on
+   the About page all inherit from. Defining it HERE, before any content
+   exists, is what will make those three sections read as one designed system
+   rather than as three widgets that happen to share a typeface.
+
+   The abstraction is a CELL, not a row. Every entry is
+       [ mark ] [ year ] [ one-line fact ]
+   and the two modifiers only change how those three parts are arranged.
+
+     .manifest--strip   items side by side, parts stacked   (the flag row)
+     .manifest--list    items stacked, parts side by side   (experience, hobbies)
+
+   Because both modifiers read the same local tokens below, changing the mark
+   size or the rule color updates all three sections at once. That shared
+   inheritance is the entire point.
+   ========================================================================== */
+
+.manifest {
+  /* Local tokens. Every rule in this component reads these, so a modifier can
+     retune the whole component by rebinding three values. */
+  --manifest-mark-size: var(--icon-md);
+  --manifest-year-col:  5.5rem;
+  --manifest-gap:       var(--space-4);
+  --manifest-rule:      var(--color-rule);
+  --manifest-pad:       var(--space-4);
+}
+
+/* The shared parts ---------------------------------------------------------- */
+
+.manifest__mark {
+  inline-size: var(--manifest-mark-size);
+  block-size: var(--manifest-mark-size);
+  color: var(--color-text-brand);
+  flex: none;
+}
+
+/* Year carries .t-label AND .t-data in the markup: label for the boarding-pass
+   treatment, data for tabular figures so a column of years aligns exactly. */
+.manifest__year {
+  color: var(--color-text-muted);
+  white-space: nowrap;
+}
+
+.manifest__fact {
+  font-size: var(--font-size-body);
+  line-height: var(--leading-base);
+}
+
+
+/* Modifier: STRIP - horizontal row of marks, caption stacked beneath each ----
+   auto-fit plus minmax lets the strip reflow from six across to two across
+   with no breakpoints at all. The grid works out how many fit; you only state
+   the minimum width an item needs in order to stay readable. */
+
+.manifest--strip {
+  display: grid;
+  grid-template-columns: repeat(auto-fit, minmax(9.5rem, 1fr));
+  gap: 0 var(--space-5);
+}
+
+.manifest--strip .manifest__item {
+  display: grid;
+  gap: var(--space-2);
+  justify-items: start;
+  padding-block: var(--manifest-pad);
+  /* Rule on the TOP of every item, never the bottom. Same reasoning as the
+     stack owl: a top rule on each item produces a ruled field that closes
+     cleanly, with no stray trailing line hanging under the last one. */
+  border-block-start: var(--rule-width) solid var(--manifest-rule);
+}
+
+
+/* Modifier: LIST - stacked rows, parts inline ------------------------------- */
+
+.manifest--list .manifest__item {
+  display: grid;
+  grid-template-columns: var(--manifest-mark-size) var(--manifest-year-col) 1fr;
+  gap: var(--manifest-gap);
+  align-items: start;
+  padding-block: var(--manifest-pad);
+  border-block-start: var(--rule-width) solid var(--manifest-rule);
+}
+
+/* Optical nudges: a mark aligned to the hard top edge of the grid sits
+   slightly high against the cap height of the text beside it. */
+.manifest--list .manifest__mark { margin-block-start: 0.15em; }
+.manifest--list .manifest__year { padding-block-start: 0.35em; }
+
+@media (max-width: 600px) {
+  /* Below 600px the three-column row is too tight. Drop the fact onto its own
+     line under the mark and year, which keeps the field-label grammar intact
+     instead of squeezing all three parts into a narrow column. */
+  .manifest--list .manifest__item {
+    grid-template-columns: var(--manifest-mark-size) 1fr;
+  }
+  .manifest--list .manifest__fact { grid-column: 2; }
+}
+
+
+/* Modifier: LIGHT - used for the hobbies row --------------------------------
+   Deliberately the SMALLEST possible change: a smaller mark and quieter text.
+   The grid, the rules, the label treatment and the spacing are all untouched,
+   so the row reads as the same system in a lower register rather than as a
+   different component. */
+
+.manifest--light {
+  --manifest-mark-size: var(--icon-sm);
+  --manifest-pad: var(--space-3);
+}
+
+.manifest--light .manifest__fact {
+  font-size: var(--font-size-caption);
+  color: var(--color-text-muted);
+}
+
+
+/* --- Flag wrapper ----------------------------------------------------------
+   Library flags are full-color and detailed, which fights a deliberately
+   restrained palette. The fix is a WRAPPER, never editing the source SVGs:
+   fixed small size, a navy hairline, and a touch of desaturation.
+
+   Constraining a foreign asset from the outside keeps it swappable and
+   updatable. Editing the asset itself means redoing that work on every update,
+   and means nobody can tell which files you changed.
+
+   Flags arrive in step 3. The treatment is defined here so it is part of the
+   system rather than something invented later on the About page. */
+
+.flag {
+  inline-size: var(--manifest-mark-size);
+  block-size: auto;
+  aspect-ratio: 4 / 3;
+  object-fit: cover;
+  border: var(--rule-width) solid var(--color-rule-strong);
+  filter: saturate(0.88);
+}
+
+
+/* ============================================================================
+   COVERS - the document types
+   ----------------------------------------------------------------------------
+   Pan Am did not print one layout four times. A ticket jacket, a cargo
+   schedule, a boarding pass and a baggage tag look nothing alike, yet nobody
+   could mistake which airline issued them. What holds them together is the
+   globe, Helvetica, the rule grammar and the palette - NOT a shared layout.
+
+   So each page here gets its own document type rather than a common template:
+
+     --jacket    Home     ticket jacket: powder field, badge globe, wordmark
+     --manifest  About    boarding pass: navy header band, dense ruled fields
+     --schedule  Writing  cargo schedule: lockup, table, huge bottom-set title
+     --tag       Contact  baggage tag: narrow, punched, heavy rules
+
+   They share every token. They share no structure. That is the whole idea, and
+   it is the difference between a design system and a template.
+   ========================================================================== */
+
+/* NO overflow: hidden here. It was on this rule, and it was quietly clipping
+   the Home cover title at 375px - the page reported no horizontal scroll
+   because the overflow was being hidden rather than not happening. A clip like
+   that turns a layout bug into an invisible one, which is far worse than a
+   scrollbar that tells you something is wrong. Clipping belongs on the one
+   component that needs it, never on a shared base. */
+.cover { position: relative; }
+
+
+/* --- JACKET: the ticket wallet ---------------------------------------------
+   A single flat field of powder blue with the badge globe sitting large and
+   off-centre, the way it sits on a wallet. Confidence here comes from having
+   almost nothing on the page. */
+
+.cover--jacket {
+  background-color: var(--color-surface-field);
+  padding: var(--space-8) var(--space-7);
+  display: grid;
+  gap: var(--space-6);
+  justify-items: start;
+}
+
+.cover--jacket .cover__title { color: var(--color-surface-invert); }
+
+
+/* --- MANIFEST: the boarding pass -------------------------------------------
+   A navy header band, then ruled fields under it. Dense and administrative on
+   purpose - this is the page carrying the actual data. */
+
+.cover--manifest { background-color: var(--color-surface); }
+
+.cover--manifest .cover__band {
+  background-color: var(--color-surface-invert);
+  color: var(--color-text-invert);
+  padding: var(--space-6) var(--space-7);
+}
+
+.cover--manifest .cover__fields {
+  display: grid;
+  grid-template-columns: repeat(auto-fit, minmax(7rem, 1fr));
+  border-block-end: var(--rule-width-heavy) solid var(--color-text-brand);
+}
+
+/* Field cells divided by vertical hairlines, like a printed form. The rule is
+   on the inline-start of every cell except the first, which is what :not()
+   buys you - no trailing rule to strip afterwards. */
+.cover--manifest .cover__field {
+  padding: var(--space-4) var(--space-4);
+  border-block-start: var(--rule-width-medium) solid var(--color-text-brand);
+}
+
+.cover--manifest .cover__field:not(:first-child) {
+  border-inline-start: var(--rule-width) solid var(--color-rule);
+}
+
+
+/* --- SCHEDULE: the cargo schedule cover ------------------------------------
+   Lockup at the top, a dense data table under it, then an enormous title
+   anchored to the bottom edge. The empty middle is doing as much work as the
+   type: the contrast between a tiny 8pt table and a 150px title is the entire
+   composition. */
+
+.cover--schedule {
+  background-color: var(--color-surface);
+  padding: var(--space-7);
+  display: grid;
+  gap: var(--space-7);
+  /* The middle row absorbs the slack, which pins the title to the bottom no
+     matter how tall the block gets. */
+  grid-template-rows: auto auto 1fr auto;
+  min-block-size: 26rem;
+}
+
+.cover--schedule .cover__title {
+  color: var(--color-text);
+  align-self: end;
+}
+
+
+/* --- TAG: the baggage tag --------------------------------------------------
+   Narrow, heavy rules top and bottom, a punched hole. The one place the stamp
+   red is allowed to carry a whole element. */
+
+.cover--tag {
+  background-color: var(--color-surface-raised);
+  border-block: var(--rule-width-heavy) solid var(--color-text-brand);
+  padding: var(--space-6) var(--space-6) var(--space-6) var(--space-8);
+  display: grid;
+  gap: var(--space-3);
+  justify-items: start;
+  position: relative;
+  max-inline-size: 26rem;
+}
+
+/* The punch hole, drawn rather than imaged: a ring is just a border on a
+   round element, and it costs one pseudo-element instead of a file. */
+.cover--tag::before {
+  content: "";
+  position: absolute;
+  inset-block-start: 50%;
+  inset-inline-start: var(--space-4);
+  inline-size: 1.1rem;
+  block-size: 1.1rem;
+  transform: translateY(-50%);
+  border: var(--rule-width-medium) solid var(--color-rule-strong);
+  border-radius: 50%;
+}
+
+
+/* ============================================================================
+   SKIP LINK
+   ----------------------------------------------------------------------------
+   The first thing in the tab order, invisible until it receives focus. A
+   keyboard user landing on any page can jump straight past the nav instead of
+   tabbing through every link on every page.
+
+   It is positioned off-screen rather than display:none, because a hidden
+   element cannot receive focus at all - which would make the link useless.
+   ========================================================================== */
+
+.skip-link {
+  position: absolute;
+  /* Hidden by translating it off its OWN height (-200%), not by a percentage
+     offset like inset-block-start: -100%. A percentage offset resolves against
+     the CONTAINING BLOCK, so it only happens to work while that block is the
+     viewport - drop this inside any positioned ancestor and the link can peek
+     back into view. -200% of the element is self-referential and stays correct
+     however long the label gets or wherever the link ends up. */
+  inset-block-start: var(--space-4);
+  inset-inline-start: var(--space-4);
+  transform: translateY(-200%);
+  transition: transform var(--duration-fast) var(--easing-standard);
+  z-index: 100;
+  padding: var(--space-3) var(--space-5);
+  background-color: var(--color-accent);
+  color: var(--color-text-invert);
+  font-size: var(--font-size-label);
+  font-weight: var(--font-weight-bold);
+  letter-spacing: var(--tracking-label);
+  text-transform: uppercase;
+  text-decoration: none;
+}
+
+.skip-link:focus {
+  transform: translateY(0);
+}
+
+
+/* ============================================================================
+   SITE NAV - the departures board
+   ----------------------------------------------------------------------------
+   What actually makes something read as a departures board is not the split
+   flaps. It is: a dark field, very small widely tracked uppercase, hairline
+   VERTICAL column dividers, and a flight-number column set in tabular figures.
+   Four cheap signals, and together they do more than any amount of texture.
+
+   It is sticky because a board hangs above the concourse - it stays put while
+   you walk under it.
+   ========================================================================== */
+
+.site-nav {
+  position: sticky;
+  inset-block-start: 0;
+  z-index: 20;
+  background-color: var(--color-surface-invert);
+  color: var(--color-text-invert);
+  /* A heavy rule under the board separates it from the page as a printed bar
+     rather than as a floating UI element with a shadow. */
+  border-block-end: var(--rule-width-heavy) solid var(--pa-powder);
+}
+
+.site-nav__inner {
+  display: flex;
+  flex-wrap: wrap;
+  align-items: stretch;
+  justify-content: space-between;
+  gap: var(--space-4);
+  /* The board runs to the edges of the container with no vertical padding, so
+     the column dividers can run the full height of the bar. Padding here would
+     leave the rules floating short of the edges and kill the effect. */
+  padding-inline: var(--space-5);
+}
+
+.site-nav__brand {
+  display: flex;
+  align-items: center;
+  padding-block: var(--space-4);
+  color: var(--color-text-invert);
+  text-decoration: none;
+}
+
+.site-nav__list {
+  display: flex;
+  flex-wrap: wrap;
+  margin: 0;
+}
+
+.site-nav__link {
+  display: grid;
+  gap: 2px;
+  align-content: center;
+  block-size: 100%;
+  padding: var(--space-3) var(--space-5);
+  color: var(--color-text-invert);
+  text-decoration: none;
+  /* Divider on the inline-start of every item, plus one on the last item's
+     end, closes the row of columns cleanly at both ends. */
+  border-inline-start: var(--rule-width) solid var(--color-rule-invert);
+  transition: background-color var(--duration-fast) var(--easing-standard);
+}
+
+.site-nav__item:last-child .site-nav__link {
+  border-inline-end: var(--rule-width) solid var(--color-rule-invert);
+}
+
+.site-nav__link:hover,
+.site-nav__link:focus-visible {
+  background-color: rgb(255 255 255 / 0.1);
+  color: var(--color-text-invert);
+}
+
+/* The flight-number column. Tabular figures so 01 and 04 occupy identical
+   width and the numbers stack into a true column. */
+.site-nav__num {
+  font-size: 0.625rem;
+  font-weight: var(--font-weight-bold);
+  font-variant-numeric: tabular-nums;
+  color: var(--pa-powder);
+  letter-spacing: 0.08em;
+}
+
+/* ACTIVE STATE via [aria-current="page"], not an .active class.
+   The attribute is what tells a screen reader which page you are on, so it has
+   to be there regardless. Styling it directly means the fact lives in exactly
+   one place. A parallel .active class would be the same fact recorded twice,
+   and the two would eventually disagree. */
+.site-nav__link[aria-current="page"] {
+  background-color: var(--color-accent);
+}
+
+.site-nav__link[aria-current="page"] .site-nav__num {
+  color: var(--color-text-invert);
+}
+
+@media (max-width: 640px) {
+  /* The brand takes its own full-width row and the board runs edge to edge
+     beneath it, which is closer to a real board than a cramped single line. */
+  .site-nav__inner { padding-inline: 0; }
+  .site-nav__brand { inline-size: 100%; padding-inline: var(--space-5); }
+  .site-nav__list  { inline-size: 100%; }
+  .site-nav__item  { flex: 1 1 auto; }
+  .site-nav__link  { padding-inline: var(--space-4); }
+}
+
+
+/* ============================================================================
+   SITE FOOTER
+   ----------------------------------------------------------------------------
+   Deliberately quiet. A footer that competes with the page is a footer that
+   makes every page end twice. One hairline, caption type, and a single field
+   in the manifest grammar so it still belongs to the system.
+   ========================================================================== */
+
+.site-footer {
+  margin-block-start: auto;
+  border-block-start: var(--rule-width-medium) solid var(--color-text-brand);
+  padding-block: var(--space-6);
+  background-color: var(--color-surface);
+}
+
+.site-footer__inner {
+  display: flex;
+  flex-wrap: wrap;
+  align-items: baseline;
+  justify-content: space-between;
+  gap: var(--space-5);
+}
+
+.site-footer__fields {
+  display: flex;
+  flex-wrap: wrap;
+  gap: var(--space-6);
+}
+
+.site-footer__field {
+  display: grid;
+  gap: 2px;
+}
+
+
+/* ============================================================================
+   PAGE SHELL
+   ----------------------------------------------------------------------------
+   body as a flex column with main growing is what pins the footer to the
+   bottom of short pages without it ever overlapping content on long ones.
+   This is the whole "sticky footer" problem, solved in three declarations.
+   ========================================================================== */
+
+.page {
+  display: flex;
+  flex-direction: column;
+  min-block-size: 100vh;
+}
+
+.page__main {
+  flex: 1 0 auto;
+}
+
+
+/* --- Cover shared parts ----------------------------------------------------
+   Defined once here so all four document types agree on their internals even
+   though they agree on nothing structural. */
+
+.cover__eyebrow {
+  color: var(--color-text-muted);
+}
+
+.cover--jacket .cover__eyebrow  { color: var(--color-surface-invert); }
+.cover--manifest .cover__eyebrow { color: var(--pa-powder); }
+
+/* The jacket runs tall because it is a wallet, not a banner. Vertical space is
+   what sells the emptiness as deliberate rather than unfinished. */
+.cover--jacket {
+  min-block-size: 30rem;
+  align-content: center;
+}
+
+.cover--jacket .cover__meta {
+  display: flex;
+  flex-wrap: wrap;
+  gap: var(--space-6);
+  padding-block-start: var(--space-5);
+  border-block-start: var(--rule-width-medium) solid var(--color-surface-invert);
+  inline-size: 100%;
+}

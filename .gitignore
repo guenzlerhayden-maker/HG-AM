@@ -1,0 +1,24 @@
+# --- OS / editor cruft ------------------------------------------------------
+# This project lives inside a OneDrive-synced folder on Windows, so the
+# sync-and-thumbnail droppings are worth ignoring explicitly.
+Thumbs.db
+ehthumbs.db
+desktop.ini
+.DS_Store
+*~
+*.swp
+
+# --- Claude Code ------------------------------------------------------------
+# .claude/launch.json IS committed on purpose: it is the dev-server config and
+# anyone cloning this should get it. Only machine-local state is ignored.
+.claude/settings.local.json
+.claude/state/
+
+# --- Scratch ----------------------------------------------------------------
+# Temporary inspection pages (e.g. _globecheck.html) are throwaway by
+# convention: anything prefixed with an underscore is not part of the site.
+_*.html
+
+# NOTE: there is deliberately no node_modules/ or dist/ entry. This project has
+# no build step and no dependencies - everything in the repo is the site as it
+# ships. If that ever changes, this file changes with it.

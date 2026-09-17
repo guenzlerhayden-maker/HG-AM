@@ -1,0 +1,890 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<title>Design System &mdash; Living Style Guide</title>
+<meta name="description" content="The living style guide for a Pan Am-inspired personal site: color tokens, type scale, spacing, grid, and the globe mark.">
+<meta name="robots" content="noindex">
+
+<!-- Stylesheet order IS the architecture. Each file may safely override the
+     one before it, which is why none of them need !important or deep nesting.
+       tokens     - names values, paints nothing
+       base       - reset + element defaults + type scale
+       layout     - containers, grid, stack, bands
+       components - globe, manifest
+       styleguide - this page only -->
+<link rel="stylesheet" href="css/tokens.css">
+<link rel="stylesheet" href="css/base.css">
+<link rel="stylesheet" href="css/layout.css">
+<link rel="stylesheet" href="css/components.css">
+<link rel="stylesheet" href="css/styleguide.css">
+</head>
+<body>
+
+<!-- ===========================================================================
+     SVG SPRITE
+     ---------------------------------------------------------------------------
+     Every icon in the system is defined once, here, and referenced with <use>.
+
+     WHY THE SPRITE IS INLINE IN THE PAGE rather than in assets/icons.svg:
+     an external <use href="assets/icons.svg#id"> reference has uneven support
+     across browsers, and when it fails it fails silently - the icon simply does
+     not render. Inlining is the option that works everywhere, costs no extra
+     request, and cannot flash. The price is that this block is duplicated on
+     each page, which is the same tradeoff accepted for the nav markup: at four
+     pages the duplication is cheaper than the machinery to avoid it.
+
+     HIDDEN WITH .visually-hidden, NOT display:none - a display:none sprite
+     breaks <use> references in some browsers. Clipping it is the safe way.
+=========================================================================== -->
+<svg class="visually-hidden" aria-hidden="true" focusable="false" xmlns="http://www.w3.org/2000/svg">
+  <defs>
+    <symbol id="pa-globe" viewBox="0 0 100 100">
+      <!-- The disc. Fill defaults to none, so the symbol is line art unless a
+           variant sets --globe-fill. That single property is what lets one
+           definition serve both the fine schedule mark and the solid badge on
+           an aircraft tail. -->
+      <circle cx="50" cy="50" r="46" style="fill: var(--globe-fill, none)"/>
+      <g fill="none" stroke="currentColor" style="stroke-width: var(--globe-stroke, 3)"
+         stroke-linecap="round">
+        <!-- Outer circle = the 90-degree meridian. -->
+        <circle cx="50" cy="50" r="46"/>
+        <!-- MERIDIANS, as ellipses with rx = 46 * cos(longitude).
+             Four of them rather than two: the original mark is dense, and a
+             sparse wireframe reads as a stock globe icon instead of as this
+             one. 22.5 / 45 / 67.5 degrees, plus the centre line at rx 0. -->
+        <line x1="50" y1="4" x2="50" y2="96"/>
+        <ellipse cx="50" cy="50" rx="17.6" ry="46"/>
+        <ellipse cx="50" cy="50" rx="32.5" ry="46"/>
+        <ellipse cx="50" cy="50" rx="42.5" ry="46"/>
+        <!-- LATITUDES, as sagging ARCS rather than straight chords.
+             This is the correction that matters most. Straight chords are what
+             you get viewing a sphere exactly head-on, and they read as a
+             wireframe. The real mark is drawn as though seen from slightly
+             below the equator, so every latitude bows downward in the middle.
+             Each is a quadratic curve whose control point sits 2x the desired
+             sag below the endpoints - so `Q 50 37` on a line at y=27 sags by
+             exactly 5. The equator stays straight, which is what carries the
+             wordmark band on the badge version.
+
+             The polar pair sits at ~51 degrees rather than a strict 60, and
+             sags by 3 rather than 5. Strict geometry put them at y 10.2/89.8
+             with a full sag, which crowded the outer circle and made the whole
+             mark look molten at the bottom. The original is not strictly
+             geometric either - it is drawn to look right, and optical spacing
+             beats arithmetic whenever the two disagree. -->
+        <line x1="4" y1="50" x2="96" y2="50"/>
+        <path d="M 10.2 27 Q 50 37 89.8 27"/>
+        <path d="M 10.2 73 Q 50 83 89.8 73"/>
+        <!-- The +-60 latitudes, dropped at small sizes via --globe-detail. -->
+        <g style="display: var(--globe-detail, inline)">
+          <path d="M 21.4 14 Q 50 20 78.6 14"/>
+          <path d="M 21.4 86 Q 50 92 78.6 86"/>
+        </g>
+      </g>
+    </symbol>
+  </defs>
+</svg>
+
+<header class="band band--invert sg-masthead">
+  <div class="container">
+    <svg class="globe globe--xl sg-masthead__mark" aria-hidden="true"><use href="#pa-globe"/></svg>
+    <p class="t-label sg-section__label" style="color: var(--pa-powder)">Design System &mdash; Step 1 of 4</p>
+    <h1 class="t-display">Living Style Guide</h1>
+    <p class="t-body t-measure" style="margin-block-start: var(--space-5); color: var(--pa-powder)">
+      The vocabulary and the rules for a Pan&nbsp;Am&ndash;inspired personal site.
+      This page is not scaffolding to delete once the site is built &mdash; it is
+      how you check the system still holds together afterwards, and how you get
+      back into the project in six months.
+    </p>
+  </div>
+</header>
+
+<nav class="sg-index" aria-label="Style guide sections">
+  <div class="container">
+    <ul class="sg-index__list">
+      <li class="sg-index__item"><a class="sg-index__link t-label" href="#color">Color</a></li>
+      <li class="sg-index__item"><a class="sg-index__link t-label" href="#type">Type</a></li>
+      <li class="sg-index__item"><a class="sg-index__link t-label" href="#space">Space</a></li>
+      <li class="sg-index__item"><a class="sg-index__link t-label" href="#grid">Grid</a></li>
+      <li class="sg-index__item"><a class="sg-index__link t-label" href="#globe">Globe</a></li>
+      <li class="sg-index__item"><a class="sg-index__link t-label" href="#manifest">Manifest</a></li>
+      <li class="sg-index__item"><a class="sg-index__link t-label" href="#docs">Documents</a></li>
+      <li class="sg-index__item"><a class="sg-index__link t-label" href="#rules">Rules</a></li>
+    </ul>
+  </div>
+</nav>
+
+<main>
+
+<!-- ======================= COLOR ======================= -->
+<section class="sg-section" id="color">
+  <div class="container">
+    <p class="t-label sg-section__label">01</p>
+    <h2 class="t-heading sg-section__title">Color</h2>
+    <p class="sg-note" style="margin-block-end: var(--space-7)">
+      Two tiers. Tier&nbsp;1 is the raw palette, named for what each color <em>is</em>.
+      Tier&nbsp;2 binds those to semantic roles, named for what each color <em>does</em>.
+      Everything downstream references the roles, never the hex values &mdash; so a
+      dark mode or a print sheet is a ten-line rebind rather than a rewrite.
+    </p>
+
+    <div class="sg-swatches">
+
+      <div class="sg-swatch">
+        <div class="sg-swatch__chip" style="background-color: var(--pa-globe-blue)"></div>
+        <div class="sg-swatch__body">
+          <p class="sg-token">--pa-globe-blue</p>
+          <p class="sg-swatch__hex">#1D3F6E</p>
+          <p class="sg-swatch__why">The navy of the 1957 globe mark. Primary brand color: nav bar, display type, the globe itself.</p>
+        </div>
+      </div>
+
+      <div class="sg-swatch">
+        <div class="sg-swatch__chip" style="background-color: var(--pa-powder)"></div>
+        <div class="sg-swatch__body">
+          <p class="sg-token">--pa-powder</p>
+          <p class="sg-swatch__hex">#A8C6DF</p>
+          <p class="sg-swatch__why">Cabin and ticket-jacket blue. A <strong>surface</strong> color for large calm fields. Never a text color &mdash; see rule&nbsp;2.</p>
+        </div>
+      </div>
+
+      <div class="sg-swatch">
+        <div class="sg-swatch__chip" style="background-color: var(--pa-sky)"></div>
+        <div class="sg-swatch__body">
+          <p class="sg-token">--pa-sky</p>
+          <p class="sg-swatch__hex">#DCE8F2</p>
+          <p class="sg-swatch__why">Powder tinted up, for surfaces that need separation without reading as a colored block.</p>
+        </div>
+      </div>
+
+      <div class="sg-swatch">
+        <div class="sg-swatch__chip" style="background-color: var(--pa-paper)"></div>
+        <div class="sg-swatch__body">
+          <p class="sg-token">--pa-paper</p>
+          <p class="sg-swatch__hex">#F4F1EA</p>
+          <p class="sg-swatch__why"><strong>The most important token here.</strong> A pure white page reads as modern software. Warm paper stock reads as 1960s ticket card, and carries the period work the rest of the palette is doing.</p>
+        </div>
+      </div>
+
+      <div class="sg-swatch">
+        <div class="sg-swatch__chip" style="background-color: var(--pa-white)"></div>
+        <div class="sg-swatch__body">
+          <p class="sg-token">--pa-white</p>
+          <p class="sg-swatch__hex">#FFFFFF</p>
+          <p class="sg-swatch__why">Held in reserve for cards and tickets sitting <em>on</em> paper, so they lift off it.</p>
+        </div>
+      </div>
+
+      <div class="sg-swatch">
+        <div class="sg-swatch__chip" style="background-color: var(--pa-ink)"></div>
+        <div class="sg-swatch__body">
+          <p class="sg-token">--pa-ink</p>
+          <p class="sg-swatch__hex">#14181D</p>
+          <p class="sg-swatch__why">Body text. Not pure black: #000 on a warm ground optically vibrates and reads harsher than it measures.</p>
+        </div>
+      </div>
+
+      <div class="sg-swatch">
+        <div class="sg-swatch__chip" style="background-color: var(--pa-ink-muted)"></div>
+        <div class="sg-swatch__body">
+          <p class="sg-token">--pa-ink-muted</p>
+          <p class="sg-swatch__hex">#4E5A68</p>
+          <p class="sg-swatch__why">Secondary text. Desaturated navy rather than grey, so quieter text reads as quieter, not as a different material.</p>
+        </div>
+      </div>
+
+      <div class="sg-swatch">
+        <div class="sg-swatch__chip" style="background-color: var(--pa-stamp-red)"></div>
+        <div class="sg-swatch__body">
+          <p class="sg-token">--pa-stamp-red</p>
+          <p class="sg-swatch__hex">#B3242B</p>
+          <p class="sg-swatch__why">The only accent. Pan&nbsp;Am was blue-and-white almost exclusively; red appeared as stamps and cancellation marks. Strictly rationed &mdash; see rule&nbsp;1.</p>
+        </div>
+      </div>
+
+    </div>
+
+    <h3 class="t-subhead" style="margin-block: var(--space-8) var(--space-4)">Contrast, measured</h3>
+    <p class="sg-note" style="margin-block-end: var(--space-5)">
+      WCAG&nbsp;AA needs 4.5:1 for normal text and 3:1 for large text. These are the
+      real ratios for every pairing the system permits &mdash; plus the one it forbids.
+    </p>
+
+    <div class="sg-contrast">
+      <div class="sg-contrast__row" style="background-color: var(--pa-paper); color: var(--pa-ink)">
+        <span>Ink on paper &mdash; body text</span>
+        <span class="sg-swatch__hex">15.8:1</span>
+        <span class="sg-pass">AAA</span>
+      </div>
+      <div class="sg-contrast__row" style="background-color: var(--pa-globe-blue); color: var(--pa-white); border-color: var(--color-rule-invert)">
+        <span>White on globe blue &mdash; nav, inverted bands</span>
+        <span class="sg-swatch__hex" style="color: var(--pa-powder)">10.6:1</span>
+        <span class="sg-pass" style="background-color: rgb(255 255 255 / 0.15); color: #fff">AAA</span>
+      </div>
+      <div class="sg-contrast__row" style="background-color: var(--pa-powder); color: var(--pa-ink)">
+        <span>Ink on powder &mdash; cover field</span>
+        <span class="sg-swatch__hex">10.0:1</span>
+        <span class="sg-pass">AAA</span>
+      </div>
+      <div class="sg-contrast__row" style="background-color: var(--pa-paper); color: var(--pa-ink-muted)">
+        <span>Muted ink on paper &mdash; captions</span>
+        <span class="sg-swatch__hex">6.2:1</span>
+        <span class="sg-pass">AA</span>
+      </div>
+      <div class="sg-contrast__row" style="background-color: var(--pa-paper); color: var(--pa-stamp-red)">
+        <span>Stamp red on paper &mdash; active state</span>
+        <span class="sg-swatch__hex">5.8:1</span>
+        <span class="sg-pass">AA</span>
+      </div>
+      <div class="sg-contrast__row" style="background-color: var(--pa-paper); color: var(--pa-powder)">
+        <span>Powder as <em>text</em> on paper &mdash; the mistake this palette invites</span>
+        <span class="sg-swatch__hex" style="color: var(--color-text-muted)">1.6:1</span>
+        <span class="sg-fail">FAILS</span>
+      </div>
+    </div>
+  </div>
+</section>
+
+<!-- ======================= TYPE ======================= -->
+<section class="sg-section" id="type">
+  <div class="container">
+    <p class="t-label sg-section__label">02</p>
+    <h2 class="t-heading sg-section__title">Type</h2>
+    <p class="sg-note" style="margin-block-end: var(--space-5)">
+      Stack: <span class="sg-token">"Helvetica Neue", Helvetica, Arial, "Liberation Sans", sans-serif</span>.
+      Pan&nbsp;Am's 1957 identity was one of the first major corporate uses of Helvetica.
+      No webfont is loaded: macOS has Helvetica&nbsp;Neue, Windows has Arial and Linux has
+      Liberation&nbsp;Sans, and those last two are <em>metrically identical</em> to Helvetica &mdash;
+      same character widths, subtly different letterforms. So every visitor gets the right
+      measure for zero network requests and zero layout shift. A font already on the
+      machine always beats one you download.
+    </p>
+    <p class="sg-note" style="margin-block-end: var(--space-7)">
+      The two largest steps use <span class="sg-token">clamp()</span>, so they scale
+      continuously between a floor and a ceiling instead of jumping at breakpoints.
+      Resize this window and watch the display line move. Media queries are saved for
+      <em>layout</em>, where a discrete switch is genuinely what you want.
+    </p>
+
+    <div class="sg-specimen">
+      <div class="sg-specimen__meta">
+        <p class="sg-token">.t-mega</p>
+        <p class="t-caption">clamp(3.5rem, 13vw, 11rem)<br>700 &middot; lh 0.88 &middot; tracking &minus;0.04em</p>
+      </div>
+      <div class="sg-specimen__sample">
+        <p class="t-mega">Cargo schedule</p>
+        <p class="sg-note" style="margin-block-start: var(--space-4)">
+          <strong>The cover step.</strong> Not a bigger heading &mdash; a graphic element
+          that happens to be readable. On the Pan&nbsp;Am cargo schedule cover the title
+          spans the whole sheet and all but touches both edges, and that scale is most of
+          why the thing still looks confident sixty years later. Two things make it work
+          and both get skipped: line-height <em>below 1</em>, so the lines nearly touch and
+          read as one mass, and tracking at &minus;0.04em, because letterforms carry too much
+          optical space at this size and look loose at default spacing.
+        </p>
+      </div>
+    </div>
+
+    <div class="sg-specimen">
+      <div class="sg-specimen__meta">
+        <p class="sg-token">.t-display</p>
+        <p class="t-caption">clamp(2.75rem, 6vw, 5rem)<br>700 &middot; lh 1.05 &middot; tracking &minus;0.02em</p>
+      </div>
+      <div class="sg-specimen__sample"><p class="t-display">Clipper Class</p></div>
+    </div>
+
+    <div class="sg-specimen">
+      <div class="sg-specimen__meta">
+        <p class="sg-token">.t-heading</p>
+        <p class="t-caption">clamp(1.75rem, 3vw, 2.5rem)<br>700 &middot; lh 1.2 &middot; tracking &minus;0.01em</p>
+      </div>
+      <div class="sg-specimen__sample"><p class="t-heading">Scheduled Service</p></div>
+    </div>
+
+    <div class="sg-specimen">
+      <div class="sg-specimen__meta">
+        <p class="sg-token">.t-subhead</p>
+        <p class="t-caption">1.25rem &middot; 700 &middot; lh 1.2</p>
+      </div>
+      <div class="sg-specimen__sample"><p class="t-subhead">Transatlantic routes, 1958</p></div>
+    </div>
+
+    <div class="sg-specimen">
+      <div class="sg-specimen__meta">
+        <p class="sg-token">.t-body</p>
+        <p class="t-caption">1rem &middot; 400 &middot; lh 1.6</p>
+      </div>
+      <div class="sg-specimen__sample">
+        <p class="t-body t-measure">Body copy sits at a comfortable measure of roughly sixty-six characters. Long lines are genuinely harder to read, because the eye loses its place on the return sweep back to the left margin.</p>
+      </div>
+    </div>
+
+    <div class="sg-specimen">
+      <div class="sg-specimen__meta">
+        <p class="sg-token">.t-caption</p>
+        <p class="t-caption">0.875rem &middot; 400 &middot; muted</p>
+      </div>
+      <div class="sg-specimen__sample"><p class="t-caption">Secondary notes, figure captions, and fine print.</p></div>
+    </div>
+
+    <div class="sg-specimen">
+      <div class="sg-specimen__meta">
+        <p class="sg-token">.t-label</p>
+        <p class="t-caption">0.6875rem &middot; 700 &middot; uppercase<br>tracking +0.12em</p>
+      </div>
+      <div class="sg-specimen__sample">
+        <p class="t-label">Passenger name &middot; Flight &middot; Gate &middot; Boarding time</p>
+        <p class="sg-note" style="margin-block-start: var(--space-3)">
+          <strong>The load-bearing step.</strong> Tiny, bold, uppercase, widely tracked &mdash;
+          this single treatment is the whole visual signature of airline signage, boarding
+          passes and departure boards. It is what will make the About page read as manifest
+          <em>data</em> rather than as a stack of headings. Most of the distinctly Pan&nbsp;Am
+          moments on this site will be this one class.
+        </p>
+      </div>
+    </div>
+
+    <div class="sg-specimen">
+      <div class="sg-specimen__meta">
+        <p class="sg-token">.t-data</p>
+        <p class="t-caption">tabular figures</p>
+      </div>
+      <div class="sg-specimen__sample">
+        <p class="t-subhead t-data">1998&nbsp;&nbsp;2011&nbsp;&nbsp;2015&nbsp;&nbsp;2019</p>
+        <p class="sg-note" style="margin-block-start: var(--space-3)">
+          Forces every digit to the same width, so a column of years lines up vertically
+          instead of wobbling. The detail that makes a table of numbers look typeset
+          rather than typed &mdash; and it matters here, because the About page is mostly years.
+        </p>
+      </div>
+    </div>
+
+    <div style="margin-block-start: var(--space-7); padding: var(--space-5); background-color: var(--color-surface-sunken)">
+      <p class="t-label" style="margin-block-end: var(--space-3)">Tracking, side by side</p>
+      <p style="font-size: 1.5rem; font-weight: 700; letter-spacing: -0.02em">Display tracking &minus;0.02em</p>
+      <p style="font-size: 1.5rem; font-weight: 700; letter-spacing: 0.12em; text-transform: uppercase">Label tracking +0.12em</p>
+      <p class="sg-note" style="margin-block-start: var(--space-3)">
+        Same family, same weight, same size. That opposition &mdash; tight on the big
+        stuff, open on the small stuff &mdash; is most of what makes type look
+        deliberately set rather than merely sized.
+      </p>
+    </div>
+  </div>
+</section>
+
+<!-- ======================= SPACE ======================= -->
+<section class="sg-section" id="space">
+  <div class="container">
+    <p class="t-label sg-section__label">03</p>
+    <h2 class="t-heading sg-section__title">Spacing</h2>
+    <p class="sg-note" style="margin-block-end: var(--space-7)">
+      A 4px base on a deliberately non-linear ramp. Useful spacing values
+      <em>cluster</em> at the small end &mdash; you need 4, 8, 12 and 16 as genuinely
+      distinct choices &mdash; and <em>spread</em> at the large end, where nobody needs both
+      96 and 104. A strictly linear ramp wastes half its steps. The names are numeric
+      rather than t-shirt sizes because <span class="sg-token">--space-5</span> has an
+      obvious neighbour in both directions, where <span class="sg-token">--space-lg</span>
+      does not tell you whether <span class="sg-token">--space-xl</span> comes next or
+      whether someone will eventually add <span class="sg-token">--space-lg-plus</span>.
+    </p>
+
+    <div class="sg-space-row"><p class="sg-token">--space-1</p><p class="t-caption t-data">4px</p><div class="sg-space-bar" style="inline-size: var(--space-1)"></div></div>
+    <div class="sg-space-row"><p class="sg-token">--space-2</p><p class="t-caption t-data">8px</p><div class="sg-space-bar" style="inline-size: var(--space-2)"></div></div>
+    <div class="sg-space-row"><p class="sg-token">--space-3</p><p class="t-caption t-data">12px</p><div class="sg-space-bar" style="inline-size: var(--space-3)"></div></div>
+    <div class="sg-space-row"><p class="sg-token">--space-4</p><p class="t-caption t-data">16px</p><div class="sg-space-bar" style="inline-size: var(--space-4)"></div></div>
+    <div class="sg-space-row"><p class="sg-token">--space-5</p><p class="t-caption t-data">24px</p><div class="sg-space-bar" style="inline-size: var(--space-5)"></div></div>
+    <div class="sg-space-row"><p class="sg-token">--space-6</p><p class="t-caption t-data">32px</p><div class="sg-space-bar" style="inline-size: var(--space-6)"></div></div>
+    <div class="sg-space-row"><p class="sg-token">--space-7</p><p class="t-caption t-data">48px</p><div class="sg-space-bar" style="inline-size: var(--space-7)"></div></div>
+    <div class="sg-space-row"><p class="sg-token">--space-8</p><p class="t-caption t-data">64px</p><div class="sg-space-bar" style="inline-size: var(--space-8)"></div></div>
+    <div class="sg-space-row"><p class="sg-token">--space-9</p><p class="t-caption t-data">96px</p><div class="sg-space-bar" style="inline-size: var(--space-9)"></div></div>
+    <div class="sg-space-row"><p class="sg-token">--space-10</p><p class="t-caption t-data">128px</p><div class="sg-space-bar" style="inline-size: var(--space-10)"></div></div>
+
+    <div style="margin-block-start: var(--space-7); padding: var(--space-5); background-color: var(--color-surface-sunken)">
+      <p class="t-label" style="margin-block-end: var(--space-3)">The stack, applied</p>
+      <div class="stack stack--tight">
+        <p class="t-body">Vertical rhythm comes from one mechanism, not from margins scattered across every element.</p>
+        <p class="t-body">The selector is <span class="sg-token">.stack &gt; * + *</span> &mdash; "every child that follows another child."</p>
+        <p class="t-body">So the first child never gets a top margin, and a stack never adds stray space at its own top edge. Compare the usual approach of putting margin-bottom on every paragraph, which always leaves a margin hanging off the last one that you then strip with a <span class="sg-token">:last-child</span> rule.</p>
+      </div>
+    </div>
+  </div>
+</section>
+
+<!-- ======================= GRID ======================= -->
+<section class="sg-section" id="grid">
+  <div class="container">
+    <p class="t-label sg-section__label">04</p>
+    <h2 class="t-heading sg-section__title">Grid</h2>
+    <p class="sg-note" style="margin-block-end: var(--space-5)">
+      Twelve columns, <span class="sg-token">1200px</span> maximum measure, gutters
+      from the spacing scale. Full-width color bands are achieved by putting a
+      <span class="sg-token">.container</span> inside a full-bleed
+      <span class="sg-token">.band</span>, which is how you get edge-to-edge color
+      without breaking content alignment.
+    </p>
+    <p class="sg-note" style="margin-block-end: var(--space-6)">
+      One substitution worth knowing: the tracks are
+      <span class="sg-token">minmax(0, 1fr)</span>, not plain
+      <span class="sg-token">1fr</span>. A bare <span class="sg-token">1fr</span> has an
+      implicit minimum of <span class="sg-token">auto</span>, so one long unbreakable
+      string &mdash; a URL, a wide table &mdash; can force its track past its share and blow
+      out the whole grid. This is the most common CSS Grid bug and that is the entire fix.
+    </p>
+
+    <button class="sg-button" type="button" id="sg-overlay-toggle" aria-pressed="false">Toggle column overlay</button>
+
+    <div class="sg-grid-demo" style="margin-block-start: var(--space-5)">
+      <div class="grid">
+        <div class="sg-grid-demo__col" style="grid-column: span 1">1</div>
+        <div class="sg-grid-demo__col" style="grid-column: span 1">2</div>
+        <div class="sg-grid-demo__col" style="grid-column: span 1">3</div>
+        <div class="sg-grid-demo__col" style="grid-column: span 1">4</div>
+        <div class="sg-grid-demo__col" style="grid-column: span 1">5</div>
+        <div class="sg-grid-demo__col" style="grid-column: span 1">6</div>
+        <div class="sg-grid-demo__col" style="grid-column: span 1">7</div>
+        <div class="sg-grid-demo__col" style="grid-column: span 1">8</div>
+        <div class="sg-grid-demo__col" style="grid-column: span 1">9</div>
+        <div class="sg-grid-demo__col" style="grid-column: span 1">10</div>
+        <div class="sg-grid-demo__col" style="grid-column: span 1">11</div>
+        <div class="sg-grid-demo__col" style="grid-column: span 1">12</div>
+      </div>
+    </div>
+
+    <div class="grid" style="margin-block-start: var(--space-5)">
+      <div class="sg-grid-demo__col col-8">col-8</div>
+      <div class="sg-grid-demo__col col-4">col-4</div>
+      <div class="sg-grid-demo__col col-6">col-6</div>
+      <div class="sg-grid-demo__col col-3">col-3</div>
+      <div class="sg-grid-demo__col col-3">col-3</div>
+    </div>
+
+    <p class="sg-note" style="margin-block-start: var(--space-5)">
+      Layout <em>does</em> use breakpoints, unlike type. Column count is a genuinely
+      discrete decision &mdash; there is no meaningful "3.4 columns" &mdash; so a hard switch is
+      the right tool here, where <span class="sg-token">clamp()</span> was the right tool
+      for type. Below 900px the narrow spans collapse to halves; below 600px everything
+      goes full width.
+    </p>
+  </div>
+</section>
+
+<!-- ======================= GLOBE ======================= -->
+<section class="sg-section" id="globe">
+  <div class="container">
+    <p class="t-label sg-section__label">05</p>
+    <h2 class="t-heading sg-section__title">The globe</h2>
+    <p class="sg-note" style="margin-block-end: var(--space-5)">
+      Defined once as an SVG <span class="sg-token">&lt;symbol&gt;</span> and referenced
+      with <span class="sg-token">&lt;use&gt;</span>. It strokes with
+      <span class="sg-token">currentColor</span>, so one definition serves navy-on-paper
+      and white-on-navy with no second file &mdash; an
+      <span class="sg-token">&lt;img&gt;</span> could not do this, because an image cannot
+      inherit CSS color.
+    </p>
+    <p class="sg-note" style="margin-block-end: var(--space-6)">
+      <strong>How the geometry works.</strong> Viewed head-on, latitudes project to
+      horizontal <em>chords</em>: a latitude at angle f sits at y&nbsp;=&nbsp;50&nbsp;&minus;&nbsp;46&nbsp;sin&nbsp;f
+      with half-width 46&nbsp;cos&nbsp;f. Meridians project to <em>ellipses</em> sharing the
+      vertical radius, with horizontal radius 46&nbsp;cos&nbsp;(longitude) &mdash; 0 at the centre
+      (a straight line), 23, 39.8, and finally 46, which is the outer circle itself. Each
+      ellipse draws the front and back halves of one meridian pair at once. That ellipse
+      trick is what makes a flat circle read as a sphere, and it is exactly what the
+      original mark does.
+    </p>
+
+    <p class="t-label" style="margin-block-end: var(--space-3)">Line form &mdash; the schedule mark</p>
+    <div class="sg-globe-row">
+      <div class="sg-globe-cell">
+        <svg class="globe globe--xl" aria-hidden="true"><use href="#pa-globe"/></svg>
+        <p class="t-label">XL 88px</p>
+      </div>
+      <div class="sg-globe-cell">
+        <svg class="globe globe--lg" aria-hidden="true"><use href="#pa-globe"/></svg>
+        <p class="t-label">LG 44px</p>
+      </div>
+      <div class="sg-globe-cell">
+        <svg class="globe globe--md globe--simple" aria-hidden="true"><use href="#pa-globe"/></svg>
+        <p class="t-label">MD 28px &middot; simple</p>
+      </div>
+      <div class="sg-globe-cell">
+        <svg class="globe globe--sm globe--simple" aria-hidden="true"><use href="#pa-globe"/></svg>
+        <p class="t-label">SM 20px &middot; simple</p>
+      </div>
+    </div>
+
+    <p class="t-label" style="margin-block: var(--space-6) var(--space-3)">Badge form &mdash; the tail mark</p>
+    <div class="sg-globe-row">
+      <div class="sg-globe-cell">
+        <svg class="globe globe--xl globe--solid" aria-hidden="true"><use href="#pa-globe"/></svg>
+        <p class="t-label">Solid on paper</p>
+      </div>
+      <div class="sg-globe-cell">
+        <svg class="globe globe--lg globe--solid" aria-hidden="true"><use href="#pa-globe"/></svg>
+        <p class="t-label">LG</p>
+      </div>
+      <div class="sg-globe-cell">
+        <svg class="globe globe--md globe--solid globe--simple" aria-hidden="true"><use href="#pa-globe"/></svg>
+        <p class="t-label">MD &middot; simple</p>
+      </div>
+    </div>
+
+    <div class="sg-globe-row sg-globe-row--invert" style="margin-block-start: var(--space-5)">
+      <div class="sg-globe-cell">
+        <svg class="globe globe--xl globe--solid-invert" aria-hidden="true"><use href="#pa-globe"/></svg>
+        <p class="t-label t-invert">Badge, inverted</p>
+      </div>
+      <div class="sg-globe-cell">
+        <svg class="globe globe--xl" aria-hidden="true"><use href="#pa-globe"/></svg>
+        <p class="t-label t-invert">Line, on navy</p>
+      </div>
+      <div class="sg-globe-cell">
+        <svg class="globe globe--lg globe--hairline" aria-hidden="true"><use href="#pa-globe"/></svg>
+        <p class="t-label t-invert">Hairline</p>
+      </div>
+      <div class="sg-globe-cell">
+        <svg class="globe globe--lg globe--heavy" aria-hidden="true"><use href="#pa-globe"/></svg>
+        <p class="t-label t-invert">Heavy</p>
+      </div>
+    </div>
+
+    <p class="sg-note" style="margin-block-start: var(--space-5)">
+      The mark has always had two lives: a <strong>solid navy disc</strong> on aircraft
+      tails and ticket jackets, readable at two hundred metres, and <strong>fine line
+      art</strong> sitting quietly beside the wordmark on a printed schedule. Same
+      geometry, two different jobs. Both come from one symbol &mdash; the disc is a circle
+      whose fill reads <span class="sg-token">--globe-fill</span>, defaulting to
+      <span class="sg-token">none</span>, so the badge variant just fills it and flips
+      the text color. No second symbol, no second file.
+    </p>
+
+    <h3 class="t-subhead" style="margin-block: var(--space-8) var(--space-4)">The lockup</h3>
+    <p class="sg-note" style="margin-block-end: var(--space-5)">
+      Wordmark and globe set as one unit. The globe sits at roughly cap height beside the
+      word &mdash; and it is sized in <span class="sg-token">em</span>, not from the
+      <span class="sg-token">--icon-*</span> scale, so that relationship holds at every
+      size with no per-instance fiddling. Tie an icon to the font size of the text it sits
+      beside and it stays optically correct forever; give it a fixed pixel value and you
+      will be nudging it on every page.
+    </p>
+    <div style="padding: var(--space-6); border: var(--rule-width) solid var(--color-rule)">
+      <p class="lockup lockup--lg">Pan&nbsp;Am <svg class="globe" aria-hidden="true"><use href="#pa-globe"/></svg></p>
+      <p class="lockup" style="margin-block-start: var(--space-5)">Pan&nbsp;Am <svg class="globe" aria-hidden="true"><use href="#pa-globe"/></svg></p>
+      <p class="lockup lockup--sm" style="margin-block-start: var(--space-5)">Pan&nbsp;Am <svg class="globe globe--simple" aria-hidden="true"><use href="#pa-globe"/></svg></p>
+    </div>
+
+    <p class="sg-note" style="margin-block-start: var(--space-5)">
+      The <span class="sg-token">--simple</span>, <span class="sg-token">--hairline</span>
+      and <span class="sg-token">--heavy</span> variants are driven by
+      <em>custom properties</em>, not ordinary selectors. This is worth knowing:
+      <span class="sg-token">&lt;use&gt;</span> clones the symbol into a shadow tree, and
+      a rule like <span class="sg-token">.globe--simple .globe__detail { display: none }</span>
+      cannot reach inside it &mdash; it silently does nothing. Custom properties
+      <em>do</em> inherit across that boundary, so the symbol declares
+      <span class="sg-token">style="display: var(--globe-detail, inline)"</span> and the
+      variant class flips the variable. That is the standard escape hatch for styling
+      <span class="sg-token">&lt;use&gt;</span> content.
+    </p>
+    <p class="sg-note" style="margin-block-start: var(--space-4)">
+      An original geometric construction in homage to the 1957 mark, not a traced
+      reproduction. Fine for a personal site; worth a second look before any commercial
+      use, since the mark is still held.
+    </p>
+  </div>
+</section>
+
+<!-- ======================= MANIFEST ======================= -->
+<section class="sg-section" id="manifest">
+  <div class="container">
+    <p class="t-label sg-section__label">06</p>
+    <h2 class="t-heading sg-section__title">The manifest primitive</h2>
+    <p class="sg-note" style="margin-block-end: var(--space-5)">
+      This is the piece that decides whether the About page works. Its three sections &mdash;
+      a flag row, an experience manifest and a hobbies row &mdash; have to read as
+      <em>one designed system</em> rather than three widgets that happen to share a
+      typeface. The way to guarantee that is to build them from a shared primitive now,
+      before any content exists, instead of styling them separately later and hoping
+      they match.
+    </p>
+    <p class="sg-note" style="margin-block-end: var(--space-7)">
+      The abstraction is a <strong>cell</strong>, not a row. Every entry is
+      <span class="sg-token">[ mark ][ year ][ one-line fact ]</span>, and the modifiers
+      only change how those three parts are arranged. Both read the same local tokens, so
+      retuning the mark size or the rule color updates all three sections at once. The
+      content below is placeholder &mdash; real content arrives in step 3.
+    </p>
+
+    <p class="t-label" style="margin-block-end: var(--space-2)">.manifest--strip</p>
+    <p class="sg-note" style="margin-block-end: var(--space-4)">
+      Items side by side, parts stacked. This becomes the flag row. It reflows from six
+      across to two across with <em>no breakpoints at all</em> &mdash;
+      <span class="sg-token">auto-fit</span> plus <span class="sg-token">minmax()</span>
+      lets the grid work out how many fit, and you only state the minimum width an item
+      needs to stay readable.
+    </p>
+    <div class="manifest manifest--strip" style="margin-block-end: var(--space-8)">
+      <div class="manifest__item">
+        <svg class="globe manifest__mark globe--simple" aria-hidden="true"><use href="#pa-globe"/></svg>
+        <p class="t-label t-data manifest__year">1998</p>
+        <p class="manifest__fact">Placeholder fact</p>
+      </div>
+      <div class="manifest__item">
+        <svg class="globe manifest__mark globe--simple" aria-hidden="true"><use href="#pa-globe"/></svg>
+        <p class="t-label t-data manifest__year">2011</p>
+        <p class="manifest__fact">Placeholder fact</p>
+      </div>
+      <div class="manifest__item">
+        <svg class="globe manifest__mark globe--simple" aria-hidden="true"><use href="#pa-globe"/></svg>
+        <p class="t-label t-data manifest__year">2015</p>
+        <p class="manifest__fact">Placeholder fact</p>
+      </div>
+      <div class="manifest__item">
+        <svg class="globe manifest__mark globe--simple" aria-hidden="true"><use href="#pa-globe"/></svg>
+        <p class="t-label t-data manifest__year">2019</p>
+        <p class="manifest__fact">Placeholder fact</p>
+      </div>
+      <div class="manifest__item">
+        <svg class="globe manifest__mark globe--simple" aria-hidden="true"><use href="#pa-globe"/></svg>
+        <p class="t-label t-data manifest__year">2024</p>
+        <p class="manifest__fact">Placeholder fact</p>
+      </div>
+    </div>
+
+    <p class="t-label" style="margin-block-end: var(--space-2)">.manifest--list</p>
+    <p class="sg-note" style="margin-block-end: var(--space-4)">
+      Items stacked, parts side by side. This becomes the experience manifest. Note the
+      hairline sits on the <em>top</em> of each item rather than the bottom &mdash; same
+      reasoning as the stack owl, so the ruled field closes cleanly with no stray line
+      hanging under the last row.
+    </p>
+    <div class="manifest manifest--list" style="margin-block-end: var(--space-8)">
+      <div class="manifest__item">
+        <svg class="globe manifest__mark globe--simple" aria-hidden="true"><use href="#pa-globe"/></svg>
+        <p class="t-label t-data manifest__year">2015&ndash;18</p>
+        <p class="manifest__fact">One sentence, in the voice of a manifest entry rather than a job description.</p>
+      </div>
+      <div class="manifest__item">
+        <svg class="globe manifest__mark globe--simple" aria-hidden="true"><use href="#pa-globe"/></svg>
+        <p class="t-label t-data manifest__year">2018&ndash;21</p>
+        <p class="manifest__fact">One sentence, in the voice of a manifest entry rather than a job description.</p>
+      </div>
+      <div class="manifest__item">
+        <svg class="globe manifest__mark globe--simple" aria-hidden="true"><use href="#pa-globe"/></svg>
+        <p class="t-label t-data manifest__year">2021&ndash;</p>
+        <p class="manifest__fact">One sentence, in the voice of a manifest entry rather than a job description.</p>
+      </div>
+    </div>
+
+    <p class="t-label" style="margin-block-end: var(--space-2)">.manifest--list.manifest--light</p>
+    <p class="sg-note" style="margin-block-end: var(--space-4)">
+      The hobbies row. Deliberately the <em>smallest possible change</em>: a smaller mark
+      and quieter text. The grid, the hairlines, the label treatment and the spacing are
+      all untouched, so it reads as the same system in a lower register rather than as a
+      different component. Restraint here is what holds the three rows together.
+    </p>
+    <div class="manifest manifest--list manifest--light">
+      <div class="manifest__item">
+        <svg class="globe manifest__mark globe--simple" aria-hidden="true"><use href="#pa-globe"/></svg>
+        <p class="t-label manifest__year">Hobby</p>
+        <p class="manifest__fact">One quiet line.</p>
+      </div>
+      <div class="manifest__item">
+        <svg class="globe manifest__mark globe--simple" aria-hidden="true"><use href="#pa-globe"/></svg>
+        <p class="t-label manifest__year">Hobby</p>
+        <p class="manifest__fact">One quiet line.</p>
+      </div>
+      <div class="manifest__item">
+        <svg class="globe manifest__mark globe--simple" aria-hidden="true"><use href="#pa-globe"/></svg>
+        <p class="t-label manifest__year">Hobby</p>
+        <p class="manifest__fact">One quiet line.</p>
+      </div>
+    </div>
+  </div>
+</section>
+
+<!-- ======================= DOCUMENT TYPES ======================= -->
+<section class="sg-section" id="docs">
+  <div class="container">
+    <p class="t-label sg-section__label">07</p>
+    <h2 class="t-heading sg-section__title">Document types</h2>
+    <p class="sg-note" style="margin-block-end: var(--space-5)">
+      Pan&nbsp;Am did not print one layout four times. A ticket jacket, a cargo schedule,
+      a boarding pass and a baggage tag look nothing alike &mdash; yet nobody could mistake
+      which airline issued them. What holds them together is the globe, Helvetica, the
+      rule grammar and the palette. <strong>Not a shared layout.</strong>
+    </p>
+    <p class="sg-note" style="margin-block-end: var(--space-7)">
+      So each page gets its own document type instead of a common template. They share
+      every token and no structure, which is the difference between a design system and
+      a template. Each preview below simply <em>rebinds the type tokens on a wrapper</em>
+      to scale down &mdash; not one component rule was changed to make them fit, and there is
+      no "small variant" of anything to maintain.
+    </p>
+
+    <div class="sg-docs">
+
+      <div class="sg-doc">
+        <div class="cover cover--jacket">
+          <svg class="globe globe--solid-invert" aria-hidden="true" style="inline-size:3.5rem;block-size:3.5rem"><use href="#pa-globe"/></svg>
+          <p class="t-display cover__title">Clipper<br>Class</p>
+          <p class="t-label" style="color: var(--color-surface-invert)">Passenger ticket and baggage check</p>
+        </div>
+        <p class="sg-doc__caption t-label">Home &mdash; ticket jacket</p>
+      </div>
+
+      <div class="sg-doc">
+        <div class="cover cover--manifest">
+          <div class="cover__band">
+            <p class="t-label" style="color: var(--pa-powder); margin-block-end: var(--space-2)">Passenger manifest</p>
+            <p class="t-display">About</p>
+          </div>
+          <div class="cover__fields">
+            <div class="cover__field"><p class="t-label t-muted">Origin</p><p class="t-data">1998</p></div>
+            <div class="cover__field"><p class="t-label t-muted">Transfer</p><p class="t-data">2015</p></div>
+            <div class="cover__field"><p class="t-label t-muted">Sectors</p><p class="t-data">06</p></div>
+          </div>
+        </div>
+        <p class="sg-doc__caption t-label">About &mdash; boarding pass</p>
+      </div>
+
+      <div class="sg-doc">
+        <div class="cover cover--schedule">
+          <p class="lockup lockup--sm">Notes <svg class="globe globe--simple" aria-hidden="true"><use href="#pa-globe"/></svg></p>
+          <table class="datatable">
+            <thead><tr><th>Entry</th><th>Filed</th></tr></thead>
+            <tbody>
+              <tr><td>On tokens</td><td>2026</td></tr>
+              <tr><td>On measure</td><td>2025</td></tr>
+            </tbody>
+          </table>
+          <div></div>
+          <p class="t-mega cover__title">Writing</p>
+        </div>
+        <p class="sg-doc__caption t-label">Writing &mdash; cargo schedule</p>
+      </div>
+
+      <div class="sg-doc">
+        <div class="cover cover--tag">
+          <p class="t-label" style="color: var(--color-accent)">Destination</p>
+          <p class="t-display">Contact</p>
+          <p class="t-caption">Routed via any of the below.</p>
+        </div>
+        <p class="sg-doc__caption t-label">Contact &mdash; baggage tag</p>
+      </div>
+
+    </div>
+
+    <p class="sg-note" style="margin-block-start: var(--space-6)">
+      These are sketches of the direction, not the finished pages &mdash; step 2 builds the
+      shell and step 3 builds About properly. What they establish is that
+      <em>the plan changed</em>: About is no longer "the template for every page after
+      it." It is one document type among four.
+    </p>
+  </div>
+</section>
+
+<!-- ======================= RULES ======================= -->
+<section class="sg-section" id="rules">
+  <div class="container">
+    <p class="t-label sg-section__label">08</p>
+    <h2 class="t-heading sg-section__title">Design rules</h2>
+    <p class="sg-note" style="margin-block-end: var(--space-6)">
+      A design system is a vocabulary <em>plus rules for using it</em>. Tokens alone will
+      not stop the site drifting, because every drift is individually reasonable. These
+      are written down here, in prose, because they cannot be expressed as CSS &mdash; and
+      an unwritten rule is one you will break without noticing.
+    </p>
+
+    <div class="stack">
+      <div class="sg-rule-card">
+        <p class="t-label" style="color: var(--color-accent); margin-block-end: var(--space-2)">Rule 01 &mdash; Ration the red</p>
+        <p class="t-body t-measure">
+          <span class="sg-token">--pa-stamp-red</span> appears at most
+          <strong>twice per page</strong>: typically the active nav state, and one stamp
+          mark. Historically Pan&nbsp;Am was blue-and-white almost exclusively, with red
+          reserved for stamps and cancellation marks. A restrained palette used
+          unrestrainedly stops being restrained &mdash; and red is the token most likely to
+          creep, because each individual use always feels justified.
+        </p>
+      </div>
+
+      <div class="sg-rule-card">
+        <p class="t-label" style="color: var(--color-accent); margin-block-end: var(--space-2)">Rule 02 &mdash; Powder is a surface, never text</p>
+        <p class="t-body t-measure">
+          <span class="sg-token">--pa-powder</span> and
+          <span class="sg-token">--pa-sky</span> are background colors only. Powder text
+          on paper measures <strong>1.6:1</strong> against a 4.5:1 requirement &mdash; see the
+          contrast table above. This is the specific mistake this palette invites, because
+          powder on paper looks pleasant at display sizes and becomes unreadable at body
+          sizes.
+        </p>
+      </div>
+
+      <div class="sg-rule-card">
+        <p class="t-label" style="color: var(--color-accent); margin-block-end: var(--space-2)">Rule 03 &mdash; Never reach past the semantic layer</p>
+        <p class="t-body t-measure">
+          Outside <span class="sg-token">tokens.css</span>, write
+          <span class="sg-token">var(--color-text)</span>, never
+          <span class="sg-token">var(--pa-ink)</span> and never
+          <span class="sg-token">#14181D</span>. The moment a raw palette token is used
+          directly in a component, the two-tier system stops working and a theme change
+          becomes a find-and-replace across every file.
+        </p>
+      </div>
+
+      <div class="sg-rule-card">
+        <p class="t-label" style="color: var(--color-accent); margin-block-end: var(--space-2)">Rule 04 &mdash; New layout CSS on a content page is a smell</p>
+        <p class="t-body t-measure">
+          If building a page requires new structural CSS, the primitive was
+          underspecified &mdash; fix the primitive, do not add a page-specific override.
+          Overrides are how a design system quietly becomes four unrelated stylesheets.
+          Step 3 is the real test of this: the About page should need essentially no new
+          layout rules.
+        </p>
+      </div>
+    </div>
+  </div>
+</section>
+
+</main>
+
+<footer class="band band--invert" style="padding-block: var(--space-7)">
+  <div class="container">
+    <div class="cluster" style="justify-content: space-between">
+      <div class="cluster">
+        <svg class="globe globe--md globe--simple" aria-hidden="true" style="color: var(--pa-powder)"><use href="#pa-globe"/></svg>
+        <p class="t-label t-invert">Living style guide &middot; Step 1 of 4</p>
+      </div>
+      <p class="t-caption" style="color: var(--pa-powder)">Next: the site shell &mdash; nav, cover, footer.</p>
+    </div>
+  </div>
+</footer>
+
+<!-- The column overlay, kept out of the flow and faded in by a body class. -->
+<div class="sg-overlay" aria-hidden="true">
+  <div class="container" style="block-size: 100%">
+    <div class="sg-overlay__inner">
+      <div class="sg-overlay__col"></div><div class="sg-overlay__col"></div>
+      <div class="sg-overlay__col"></div><div class="sg-overlay__col"></div>
+      <div class="sg-overlay__col"></div><div class="sg-overlay__col"></div>
+      <div class="sg-overlay__col"></div><div class="sg-overlay__col"></div>
+      <div class="sg-overlay__col"></div><div class="sg-overlay__col"></div>
+      <div class="sg-overlay__col"></div><div class="sg-overlay__col"></div>
+    </div>
+  </div>
+</div>
+
+<script>
+  // The only JavaScript in the project, and it exists purely as a dev
+  // affordance on a dev page. aria-pressed is kept in sync so the control is
+  // announced correctly as a toggle rather than as a plain button.
+  var toggle = document.getElementById('sg-overlay-toggle');
+  toggle.addEventListener('click', function () {
+    var on = document.body.classList.toggle('sg-overlay-on');
+    toggle.setAttribute('aria-pressed', String(on));
+  });
+</script>
+
+</body>
+</html>

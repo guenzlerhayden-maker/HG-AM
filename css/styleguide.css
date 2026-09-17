@@ -1,0 +1,316 @@
+/* ============================================================================
+   STYLE GUIDE - page-specific
+   ----------------------------------------------------------------------------
+   Styles that exist ONLY to present the system. Nothing here is part of the
+   system itself, which is why it lives in its own file: you can read the other
+   four stylesheets and know you are looking at the real site.
+   ========================================================================== */
+
+/* --- Masthead -------------------------------------------------------------- */
+
+.sg-masthead {
+  padding-block: var(--space-8) var(--space-7);
+}
+
+.sg-masthead__mark {
+  color: var(--color-text-invert);
+  margin-block-end: var(--space-5);
+}
+
+/* --- Sticky section index -------------------------------------------------- */
+
+.sg-index {
+  position: sticky;
+  inset-block-start: 0;
+  z-index: 10;
+  background-color: var(--color-surface-invert);
+  border-block-start: var(--rule-width) solid var(--color-rule-invert);
+}
+
+.sg-index__list {
+  display: flex;
+  flex-wrap: wrap;
+  gap: 0;
+  margin: 0;
+}
+
+.sg-index__link {
+  display: block;
+  padding: var(--space-3) var(--space-4);
+  color: var(--color-text-invert);
+  text-decoration: none;
+  /* Hairline column rules between items - the departures-board grammar, tried
+     out here before it becomes the real nav in step 2. */
+  border-inline-start: var(--rule-width) solid var(--color-rule-invert);
+}
+
+.sg-index__item:last-child .sg-index__link {
+  border-inline-end: var(--rule-width) solid var(--color-rule-invert);
+}
+
+.sg-index__link:hover,
+.sg-index__link:focus-visible {
+  background-color: rgb(255 255 255 / 0.1);
+  color: var(--color-text-invert);
+}
+
+/* --- Section scaffolding --------------------------------------------------- */
+
+.sg-section {
+  padding-block: var(--space-8);
+  border-block-start: var(--rule-width) solid var(--color-rule);
+}
+
+.sg-section__label {
+  color: var(--color-text-muted);
+  margin-block-end: var(--space-2);
+}
+
+.sg-section__title {
+  margin-block-end: var(--space-4);
+}
+
+.sg-note {
+  max-inline-size: var(--measure);
+  color: var(--color-text-muted);
+  font-size: var(--font-size-caption);
+}
+
+/* Token names are set in mono so they read as code, not as prose. */
+.sg-token {
+  font-family: var(--font-mono);
+  font-size: 0.8125rem;
+  color: var(--color-text-brand);
+}
+
+/* --- Color swatches -------------------------------------------------------- */
+
+.sg-swatches {
+  display: grid;
+  grid-template-columns: repeat(auto-fill, minmax(15rem, 1fr));
+  gap: var(--space-5);
+}
+
+.sg-swatch {
+  border: var(--rule-width) solid var(--color-rule);
+  background-color: var(--color-surface-raised);
+}
+
+.sg-swatch__chip {
+  block-size: 6rem;
+  /* An inner hairline so a white or near-paper chip still reads as a chip and
+     does not dissolve into the card behind it. */
+  box-shadow: inset 0 0 0 var(--rule-width) rgb(20 24 29 / 0.08);
+}
+
+.sg-swatch__body {
+  padding: var(--space-4);
+}
+
+.sg-swatch__hex {
+  font-family: var(--font-mono);
+  font-size: 0.8125rem;
+  color: var(--color-text-muted);
+}
+
+.sg-swatch__why {
+  margin-block-start: var(--space-3);
+  font-size: var(--font-size-caption);
+  line-height: 1.5;
+  color: var(--color-text-muted);
+}
+
+/* --- Contrast readouts ----------------------------------------------------- */
+
+.sg-contrast {
+  display: grid;
+  gap: var(--space-2);
+}
+
+.sg-contrast__row {
+  display: grid;
+  grid-template-columns: 1fr auto auto;
+  gap: var(--space-4);
+  align-items: center;
+  padding: var(--space-3) var(--space-4);
+  border: var(--rule-width) solid var(--color-rule);
+}
+
+.sg-pass,
+.sg-fail {
+  font-family: var(--font-mono);
+  font-size: 0.75rem;
+  padding: 2px var(--space-2);
+}
+
+.sg-pass { background-color: rgb(29 63 110 / 0.1);  color: var(--color-text-brand); }
+.sg-fail { background-color: rgb(179 36 43 / 0.12); color: var(--color-accent); }
+
+/* --- Type specimens -------------------------------------------------------- */
+
+.sg-specimen {
+  display: grid;
+  grid-template-columns: 12rem 1fr;
+  gap: var(--space-5);
+  align-items: baseline;
+  padding-block: var(--space-5);
+  border-block-start: var(--rule-width) solid var(--color-rule);
+}
+
+.sg-specimen__meta {
+  color: var(--color-text-muted);
+}
+
+.sg-specimen__sample {
+  /* Long display strings must be allowed to break rather than force a
+     horizontal scrollbar on narrow screens. */
+  min-inline-size: 0;
+  overflow-wrap: anywhere;
+}
+
+@media (max-width: 700px) {
+  .sg-specimen { grid-template-columns: 1fr; gap: var(--space-3); }
+}
+
+/* --- Spacing ramp ---------------------------------------------------------- */
+
+.sg-space-row {
+  display: grid;
+  /* minmax(0, 1fr), not 1fr. The bar is given a fixed 128px inline-size at the
+     top of the ramp so it literally measures its own token - and a bare 1fr
+     track has an implicit MINIMUM of auto, so the track simply grew to fit it
+     and pushed the page 1px past the viewport at 375px. This is precisely the
+     grid bug described in layout.css, caught in the wild on the first page
+     built with the system. minmax(0, 1fr) lets the track shrink below its
+     content, and the bar is then capped by max-inline-size below. */
+  grid-template-columns: 7rem 5rem minmax(0, 1fr);
+  gap: var(--space-4);
+  align-items: center;
+  padding-block: var(--space-2);
+}
+
+.sg-space-bar {
+  block-size: var(--space-4);
+  background-color: var(--pa-powder);
+  border-inline-start: 2px solid var(--color-text-brand);
+  /* Caps the bar to its track once that track is allowed to shrink. Needed
+     together with the minmax(0, 1fr) above - neither alone is enough. */
+  max-inline-size: 100%;
+}
+
+@media (max-width: 600px) {
+  /* The 7rem/5rem label columns eat over half of a 375px screen. Narrowing
+     them gives the bars enough room to still read as a comparison. */
+  .sg-space-row { grid-template-columns: 5.5rem 3.5rem minmax(0, 1fr); gap: var(--space-3); }
+}
+
+/* --- Grid demo ------------------------------------------------------------- */
+
+.sg-grid-demo {
+  position: relative;
+  padding-block: var(--space-4);
+}
+
+.sg-grid-demo__col {
+  block-size: 4rem;
+  background-color: var(--pa-powder);
+  display: grid;
+  place-items: center;
+  font-family: var(--font-mono);
+  font-size: 0.75rem;
+  color: var(--color-text-brand);
+}
+
+/* The overlay is toggled by a class on <body>, set by the button in the page.
+   A dev affordance on a dev page - the only JavaScript in the project. */
+.sg-overlay {
+  position: fixed;
+  inset: 0;
+  z-index: 5;
+  pointer-events: none;
+  opacity: 0;
+  transition: opacity var(--duration-fast) var(--easing-standard);
+}
+
+body.sg-overlay-on .sg-overlay { opacity: 1; }
+
+.sg-overlay__inner {
+  block-size: 100%;
+  display: grid;
+  grid-template-columns: repeat(var(--grid-columns), minmax(0, 1fr));
+  gap: var(--grid-gutter);
+}
+
+.sg-overlay__col { background-color: rgb(179 36 43 / 0.08); }
+
+.sg-button {
+  font-size: var(--font-size-label);
+  font-weight: var(--font-weight-bold);
+  letter-spacing: var(--tracking-label);
+  text-transform: uppercase;
+  padding: var(--space-3) var(--space-5);
+  color: var(--color-text-invert);
+  background-color: var(--color-surface-invert);
+  border: 0;
+  cursor: pointer;
+}
+
+.sg-button:hover { background-color: var(--pa-ink); }
+
+/* --- Globe demo ------------------------------------------------------------ */
+
+.sg-globe-row {
+  display: flex;
+  flex-wrap: wrap;
+  gap: var(--space-7);
+  align-items: flex-end;
+  padding: var(--space-6);
+  border: var(--rule-width) solid var(--color-rule);
+}
+
+.sg-globe-row--invert {
+  background-color: var(--color-surface-invert);
+  border-color: var(--color-rule-invert);
+}
+
+.sg-globe-row--invert .globe { color: var(--color-text-invert); }
+
+.sg-globe-cell { display: grid; gap: var(--space-3); justify-items: center; }
+
+/* --- Design rules ---------------------------------------------------------- */
+
+.sg-rule-card {
+  padding: var(--space-5);
+  background-color: var(--color-surface-raised);
+  border-inline-start: 3px solid var(--color-accent);
+}
+
+/* --- Document type previews ------------------------------------------------
+   Each preview REBINDS the type tokens on a wrapper, so the whole treatment
+   scales down without a single component rule being touched. That is the
+   two-tier token system paying off: the covers do not know they are being
+   previewed, and there is no "small variant" of anything to maintain. */
+
+.sg-docs {
+  display: grid;
+  grid-template-columns: repeat(auto-fit, minmax(20rem, 1fr));
+  gap: var(--space-6);
+}
+
+.sg-doc {
+  --font-size-mega:    clamp(1.75rem, 4.5vw, 2.75rem);
+  --font-size-display: clamp(1.375rem, 3vw, 1.75rem);
+  --font-size-heading: 1.25rem;
+  --space-7: 1.25rem;
+  --space-8: 1.75rem;
+  border: var(--rule-width) solid var(--color-rule);
+}
+
+.sg-doc__caption {
+  padding: var(--space-3) var(--space-4);
+  border-block-start: var(--rule-width) solid var(--color-rule);
+  background-color: var(--color-surface-sunken);
+}
+
+.sg-doc .cover--schedule { min-block-size: 15rem; }
+.sg-doc .cover--tag { max-inline-size: none; }
