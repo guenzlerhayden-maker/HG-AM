@@ -3,8 +3,8 @@
 <head>
 <meta charset="utf-8">
 <meta name="viewport" content="width=device-width, initial-scale=1">
-<title>Home</title>
-<meta name="description" content="Personal site shell.">
+<title>HG AM</title>
+<meta name="description" content="Hayden Guenzler - personal site.">
 <link rel="stylesheet" href="css/tokens.css">
 <link rel="stylesheet" href="css/base.css">
 <link rel="stylesheet" href="css/layout.css">
@@ -56,9 +56,17 @@
        design - a wallet is mostly blank card stock. -->
   <header class="cover cover--jacket">
     <div class="container">
-      <svg class="globe globe--xl globe--solid" aria-hidden="true"><use href="assets/icons.svg#pa-globe"/></svg>
-      <p class="t-label cover__eyebrow" style="margin-block-start: var(--space-6)">Passenger ticket and baggage check</p>
-      <h1 class="t-mega cover__title" style="margin-block-start: var(--space-3)">Placeholder</h1>
+      <p class="t-label cover__eyebrow">Passenger ticket and baggage check</p>
+      <!-- The wordmark lockup, finally doing the job it was built for in step 1:
+           globe sized in em off the type's cap height, so the relationship holds
+           at any size without per-instance nudging. -->
+      <h1 class="lockup lockup--lg cover__title" style="margin-block-start: var(--space-4)">
+        HG&nbsp;AM
+        <svg class="globe" aria-hidden="true"><use href="assets/icons.svg#pa-globe"/></svg>
+      </h1>
+      <p class="t-subhead" style="margin-block-start: var(--space-4); color: var(--color-surface-invert)">
+        Hayden Guenzler &mdash; personal site
+      </p>
       <div class="cover__meta" style="margin-block-start: var(--space-6)">
         <div class="site-footer__field">
           <p class="t-label" style="color: var(--color-surface-invert)">Sections</p>

@@ -273,6 +273,21 @@
 }
 
 
+/* --- Manifest without a date column ----------------------------------------
+   This component is explicitly "what happened where", not a timeline, so the
+   year column is removed rather than left empty. A two-column variant of the
+   existing primitive, not a new one: same marks, same hairlines, same padding,
+   same label treatment. */
+
+.manifest--nodate .manifest__item {
+  grid-template-columns: var(--manifest-mark-size) 1fr;
+}
+
+@media (max-width: 600px) {
+  .manifest--nodate .manifest__fact { grid-column: 2; }
+}
+
+
 /* Modifier: LIGHT - used for the hobbies row --------------------------------
    Deliberately the SMALLEST possible change: a smaller mark and quieter text.
    The grid, the rules, the label treatment and the spacing are all untouched,
@@ -862,23 +877,6 @@
 }
 
 .stamp__row dd.t-data { font-size: var(--font-size-subhead); font-weight: var(--font-weight-bold); }
-
-/* --- Unverified marker -----------------------------------------------------
-   Deliberately loud, and deliberately the one place red is allowed to exceed
-   the page budget: this is scaffolding that must not ship unnoticed. Removing
-   these marks after fact-checking restores the page to two reds. */
-
-/* The stamp itself stays NAVY even while unverified, so what you are reviewing
-   is the actual finished design rather than a warning-coloured mock of it.
-   Only the badge is red. Recolouring the whole stamp hid the real thing. */
-
-.stamp__unverified {
-  display: inline-block;
-  margin-block-end: var(--space-3);
-  padding: 2px var(--space-2);
-  border: var(--rule-width) solid var(--color-accent);
-  color: var(--color-accent);
-}
 
 @media (max-width: 640px) {
   /* Stacked below 640px. Three 89px columns on a phone would leave the stamps

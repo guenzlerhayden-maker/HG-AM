@@ -175,20 +175,6 @@
   box-shadow: 0 0 0 3px var(--color-surface), 0 0 0 4px var(--color-text-brand);
 }
 
-/* --- Manifest without a date column ----------------------------------------
-   This component is explicitly "what happened where", not a timeline, so the
-   year column is removed rather than left empty. A two-column variant of the
-   existing primitive, not a new one: same marks, same hairlines, same padding,
-   same label treatment. */
-
-.manifest--nodate .manifest__item {
-  grid-template-columns: var(--manifest-mark-size) 1fr;
-}
-
-@media (max-width: 600px) {
-  .manifest--nodate .manifest__fact { grid-column: 2; }
-}
-
 @media (max-width: 720px) {
   /* Below this the chart is too small to carry two labels without collision.
      Shrinking the label type would break it away from the type scale, so the
