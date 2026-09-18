@@ -1,0 +1,168 @@
+/* ============================================================================
+   ROUTE MAP  -  concept only
+   ----------------------------------------------------------------------------
+   Kept in its own file, loaded only by concept-about-map.html, so the whole
+   idea can be compared against the committed About page or thrown away without
+   unpicking it from components.css.
+
+   THE MAP IS TWO LAYERS, DELIBERATELY:
+     - the SVG holds geography only: graticule, coastline, route arc
+     - the pins are HTML positioned over it
+
+   Pins could have been SVG <text>, and that is the obvious way to do it. But
+   text inside a scaling viewBox scales with the map, so a label that is right
+   on a desktop is unreadable on a phone and there is no way to opt out. As
+   HTML the labels sit on the real type scale, take .t-label like every other
+   field label on the site, and stay put while the map behind them resizes.
+   The map is a picture; the labels are type. Keeping them in the layer that
+   suits each is worth the small extra plumbing.
+   ========================================================================== */
+
+.route-map {
+  --chart-ink: var(--color-text-brand);
+}
+
+.route-map__chart {
+  position: relative;
+  margin: 0;
+  background-color: var(--color-surface-sunken);
+  border: var(--rule-width-medium) solid var(--chart-ink);
+  /* Locks the box to the projection's aspect so the absolutely positioned pins
+     land on the right places at every width. Without this the pins drift as
+     soon as the box is not exactly the map's shape. */
+  aspect-ratio: 1000 / 547;
+}
+
+.route-map__chart svg {
+  position: absolute;
+  inset: 0;
+  inline-size: 100%;
+  block-size: 100%;
+}
+
+/* --- Chart layers ---------------------------------------------------------- */
+
+.chart__grid {
+  stroke: var(--chart-ink);
+  stroke-width: 1;
+  opacity: 0.16;
+}
+
+.chart__land {
+  fill: var(--pa-white);
+  stroke: var(--chart-ink);
+  stroke-width: 2.5;
+  stroke-linejoin: round;
+}
+
+/* Dashed, like a scheduled service on a timetable chart rather than a solid
+   border. The dash pattern is in viewBox units, so it scales with the map. */
+.chart__route {
+  fill: none;
+  stroke: var(--color-accent);
+  stroke-width: 3;
+  stroke-dasharray: 10 8;
+  stroke-linecap: round;
+}
+
+/* --- Pins ------------------------------------------------------------------
+   Positioned from custom properties so the coordinates live in the markup next
+   to the place they describe, not buried in a stylesheet. */
+
+.pin {
+  position: absolute;
+  inset-block-start: var(--pin-y);
+  inset-inline-start: var(--pin-x);
+  display: flex;
+  align-items: center;
+  gap: var(--space-2);
+  text-decoration: none;
+  color: var(--chart-ink);
+  transform: translate(0, -50%);
+}
+
+/* Label sits west of the dot when the pin would otherwise run off the chart. */
+.pin--west {
+  flex-direction: row-reverse;
+  transform: translate(-100%, -50%);
+}
+
+.pin__dot {
+  inline-size: 0.85rem;
+  block-size: 0.85rem;
+  flex: none;
+  border-radius: 50%;
+  background-color: var(--chart-ink);
+  /* Concentric ring without a second element. */
+  box-shadow: 0 0 0 3px var(--color-surface-sunken), 0 0 0 4px var(--chart-ink);
+  /* The dot marks the coordinate, so it is what gets centred, not the flex box. */
+  margin-inline: -0.425rem;
+}
+
+.pin--west .pin__dot { margin-inline: -0.425rem; }
+
+.pin__label {
+  white-space: nowrap;
+  padding: 2px var(--space-2);
+  background-color: var(--color-surface);
+  border: var(--rule-width) solid var(--chart-ink);
+}
+
+.pin:hover .pin__label,
+.pin:focus-visible .pin__label {
+  background-color: var(--chart-ink);
+  color: var(--color-text-invert);
+}
+
+/* --- Base clusters ---------------------------------------------------------
+   Two columns on wide screens, stacked below. Both read the SAME mark-stroke,
+   which is what makes them one system rather than two lists that happen to sit
+   side by side. */
+
+.route-map__bases {
+  --mark-stroke: 3.5;
+  display: grid;
+  grid-template-columns: repeat(auto-fit, minmax(19rem, 1fr));
+  gap: var(--space-7);
+  margin-block-start: var(--space-7);
+}
+
+.base__head {
+  display: flex;
+  align-items: center;
+  gap: var(--space-3);
+  margin-block-end: var(--space-3);
+}
+
+.base__dot {
+  inline-size: 0.7rem;
+  block-size: 0.7rem;
+  flex: none;
+  border-radius: 50%;
+  background-color: var(--color-text-brand);
+  box-shadow: 0 0 0 3px var(--color-surface), 0 0 0 4px var(--color-text-brand);
+}
+
+/* --- Manifest without a date column ----------------------------------------
+   This component is explicitly "what happened where", not a timeline, so the
+   year column is removed rather than left empty. A two-column variant of the
+   existing primitive, not a new one: same marks, same hairlines, same padding,
+   same label treatment. */
+
+.manifest--nodate .manifest__item {
+  grid-template-columns: var(--manifest-mark-size) 1fr;
+}
+
+@media (max-width: 600px) {
+  .manifest--nodate .manifest__fact { grid-column: 2; }
+}
+
+@media (max-width: 720px) {
+  /* Below this the chart is too small to carry two labels without collision.
+     Shrinking the label type would break it away from the type scale, so the
+     labels drop and the pins become plain markers; the cluster headings under
+     the map already name both places. */
+  .pin__label { display: none; }
+  .pin, .pin--west { transform: translate(-50%, -50%); }
+  .pin__dot { margin-inline: 0; }
+}

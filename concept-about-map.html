@@ -1,0 +1,332 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<title>About - route map concept</title>
+<meta name="description" content="Manifest page shell.">
+<link rel="stylesheet" href="css/tokens.css">
+<link rel="stylesheet" href="css/base.css">
+<link rel="stylesheet" href="css/layout.css">
+<link rel="stylesheet" href="css/components.css">
+<link rel="stylesheet" href="css/route-map.css">
+</head>
+<body class="page">
+
+<!-- The skip link is the first thing in the tab order on every page. -->
+<a class="skip-link" href="#main">Skip to content</a>
+
+<!-- Icons live in assets/icons.svg and are referenced with
+     <use href="assets/icons.svg#pa-globe"/>. One definition, five pages.
+     Note this only resolves over HTTP - opening these files directly from the
+     file system will silently render no icons. Always preview via the local
+     server (see .claude/launch.json). -->
+
+<nav class="site-nav" aria-label="Main">
+  <div class="container site-nav__inner">
+    <a class="site-nav__brand" href="index.html" aria-label="Home">
+      <svg class="globe globe--md globe--solid-invert globe--simple" aria-hidden="true"><use href="assets/icons.svg#pa-globe"/></svg>
+    </a>
+    <ul class="site-nav__list">
+      <li class="site-nav__item">
+        <a class="site-nav__link" href="index.html">
+          <span class="site-nav__num">01</span>
+          <span class="t-label">Home</span>
+        </a>
+      </li>
+      <li class="site-nav__item">
+        <a class="site-nav__link" href="about.html" aria-current="page">
+          <span class="site-nav__num">02</span>
+          <span class="t-label">About</span>
+        </a>
+      </li>
+      <li class="site-nav__item">
+        <a class="site-nav__link" href="writing.html">
+          <span class="site-nav__num">03</span>
+          <span class="t-label">Writing</span>
+        </a>
+      </li>
+      <li class="site-nav__item">
+        <a class="site-nav__link" href="contact.html">
+          <span class="site-nav__num">04</span>
+          <span class="t-label">Contact</span>
+        </a>
+      </li>
+    </ul>
+  </div>
+</nav>
+
+<main class="page__main" id="main">
+  <!-- ABOUT is the MANIFEST document type: a boarding pass. Navy header band,
+       then ruled fields. Dense and administrative, because this is the page
+       that actually carries the data. -->
+  <header class="cover cover--manifest">
+    <div class="cover__band">
+      <div class="container">
+        <p class="t-label cover__eyebrow">Passenger manifest</p>
+        <h1 class="t-display" style="margin-block-start: var(--space-3)">About</h1>
+      </div>
+    </div>
+    <div class="container">
+      <div class="cover__fields">
+        <div class="cover__field"><p class="t-label t-muted">Bases</p><p class="t-subhead t-data">02</p></div>
+        <div class="cover__field"><p class="t-label t-muted">Entries</p><p class="t-subhead t-data">10</p></div>
+        <div class="cover__field"><p class="t-label t-muted">Interests</p><p class="t-subhead t-data">03</p></div>
+        <div class="cover__field"><p class="t-label t-muted">Status</p><p class="t-subhead">Placeholder</p></div>
+      </div>
+    </div>
+  </header>
+
+  <div class="container section">
+
+    <div class="placeholder-notice" style="margin-block-end: var(--space-9)">
+      <p class="t-label" style="color: var(--color-accent)">Concept &mdash; branch concept/about-map</p>
+      <p class="t-caption t-measure" style="margin-block-start: var(--space-2)">
+        A route-map alternative to the flag row and experience manifest. The committed
+        About page is untouched on <code>main</code>. The place content below is real;
+        the cover fields, the hobby placeholders and the watch stamps are carried over
+        unchanged from the committed page and are still scaffolding.
+      </p>
+    </div>
+
+    <!-- ROUTE MAP - concept. Replaces the flag row and the experience manifest
+         from step 3 with a single "what happened where" component. NO YEARS
+         ANYWHERE by design: the moment a date appears this stops being a map
+         and starts being a timeline, which is exactly what it should not be. -->
+    <section class="manifest-block route-map">
+      <div class="manifest-block__head">
+        <h2 class="t-heading">Places</h2>
+        <p class="t-label t-muted">Route chart &mdash; home bases</p>
+      </div>
+      <hr class="rule rule--heavy">
+
+      <figure class="route-map__chart">
+        <svg viewBox="0 0 1000 547" role="img"
+             aria-label="Stylised route chart of the United States with two marked home bases, Quad Cities in Iowa and Tulsa in Oklahoma, joined by a dashed route line.">
+          <g class="chart__grid">
+        <line x1="172.4" y1="0" x2="172.4" y2="547"/>
+        <line x1="344.8" y1="0" x2="344.8" y2="547"/>
+        <line x1="517.2" y1="0" x2="517.2" y2="547"/>
+        <line x1="689.7" y1="0" x2="689.7" y2="547"/>
+        <line x1="862.1" y1="0" x2="862.1" y2="547"/>
+        <line x1="0" y1="109.4" x2="1000" y2="109.4"/>
+        <line x1="0" y1="218.8" x2="1000" y2="218.8"/>
+        <line x1="0" y1="328.2" x2="1000" y2="328.2"/>
+        <line x1="0" y1="437.6" x2="1000" y2="437.6"/>
+        <line x1="0" y1="547.0" x2="1000" y2="547.0"/>
+          </g>
+          <path class="chart__land" d="M 5.2 13.1 L 15.5 61.3 L 19.0 109.4 L 10.3 188.2 L 44.8 245.1 L 75.9 317.3 L 113.8 334.8 L 136.2 361.0 L 177.6 356.6 L 241.4 387.3 L 289.7 387.3 L 319.0 376.3 L 353.4 422.3 L 379.3 437.6 L 406.9 420.1 L 439.7 470.4 L 475.9 505.4 L 479.3 461.7 L 517.2 437.6 L 537.9 422.3 L 577.6 433.2 L 613.8 437.6 L 622.4 409.1 L 646.6 409.1 L 689.7 422.3 L 712.1 417.9 L 729.3 461.7 L 755.2 520.7 L 772.4 507.6 L 774.1 481.4 L 765.5 450.7 L 751.7 407.0 L 760.3 372.0 L 789.7 343.5 L 812.1 323.8 L 853.4 301.9 L 844.8 264.7 L 860.3 234.1 L 879.3 186.0 L 913.8 168.5 L 948.3 159.7 L 937.9 137.8 L 965.5 111.6 L 996.6 96.3 L 979.3 37.2 L 922.4 87.5 L 891.4 87.5 L 829.3 105.0 L 789.7 122.5 L 753.4 146.6 L 722.4 151.0 L 703.4 67.8 L 669.0 52.5 L 631.0 17.5 L 589.7 19.7 L 513.8 0.0 L 362.1 0.0 L 137.9 0.0 L 34.5 0.0 Z"/>
+          <path class="chart__route" d="M 500.2 281.2 Q 535 213 593.4 163.7"/>
+        </svg>
+
+        <a class="pin" href="#base-quad-cities" style="--pin-x: 59.34%; --pin-y: 29.93%">
+          <span class="pin__dot"></span>
+          <span class="pin__label t-label">Quad Cities, Iowa</span>
+        </a>
+        <a class="pin pin--west" href="#base-tulsa" style="--pin-x: 50.02%; --pin-y: 51.41%">
+          <span class="pin__dot"></span>
+          <span class="pin__label t-label">Tulsa, Oklahoma</span>
+        </a>
+      </figure>
+
+      <div class="route-map__bases">
+        <section class="base" id="base-quad-cities">
+          <div class="base__head">
+            <span class="base__dot"></span>
+            <h3 class="t-subhead">Quad Cities, Iowa</h3>
+          </div>
+          <hr class="rule rule--medium">
+          <ul class="manifest manifest--list manifest--nodate">
+        <li class="manifest__item">
+          <svg class="globe manifest__mark" aria-hidden="true"><use href="assets/icons.svg#pa-pennant"/></svg>
+          <p class="manifest__fact">Pleasant Valley High School</p>
+        </li>
+        <li class="manifest__item">
+          <svg class="globe manifest__mark" aria-hidden="true"><use href="assets/icons.svg#pa-ball"/></svg>
+          <p class="manifest__fact">Basketball</p>
+        </li>
+        <li class="manifest__item">
+          <svg class="globe manifest__mark" aria-hidden="true"><use href="assets/icons.svg#pa-note"/></svg>
+          <p class="manifest__fact">Jazz band</p>
+        </li>
+        <li class="manifest__item">
+          <svg class="globe manifest__mark" aria-hidden="true"><use href="assets/icons.svg#pa-course"/></svg>
+          <p class="manifest__fact">Cross country</p>
+        </li>
+        <li class="manifest__item">
+          <svg class="globe manifest__mark" aria-hidden="true"><use href="assets/icons.svg#pa-rack"/></svg>
+          <p class="manifest__fact">Installed pallet racking at one of the largest distribution warehouses in the country</p>
+        </li>
+          </ul>
+        </section>
+
+        <section class="base" id="base-tulsa">
+          <div class="base__head">
+            <span class="base__dot"></span>
+            <h3 class="t-subhead">Tulsa, Oklahoma</h3>
+          </div>
+          <hr class="rule rule--medium">
+          <ul class="manifest manifest--list manifest--nodate">
+        <li class="manifest__item">
+          <svg class="globe manifest__mark" aria-hidden="true"><use href="assets/icons.svg#pa-chart"/></svg>
+          <p class="manifest__fact">Studied finance</p>
+        </li>
+        <li class="manifest__item">
+          <svg class="globe manifest__mark" aria-hidden="true"><use href="assets/icons.svg#pa-launch"/></svg>
+          <p class="manifest__fact">Co-founded Sky Ventures, Oklahoma&rsquo;s first student-run accelerator, five universities, six companies through the cohort, $50,000 deployed</p>
+        </li>
+        <li class="manifest__item">
+          <svg class="globe manifest__mark" aria-hidden="true"><use href="assets/icons.svg#pa-people"/></svg>
+          <p class="manifest__fact">ORU Finance Society, brought in professionals across PE, IB, and personal financial planning so students saw the whole field, not one corner of it</p>
+        </li>
+        <li class="manifest__item">
+          <svg class="globe manifest__mark" aria-hidden="true"><use href="assets/icons.svg#pa-bank"/></svg>
+          <p class="manifest__fact">Regent Bank, risk-rated fintech and cannabis-adjacent accounts inside a heavily regulated shop, ran onboarding through investment and committee review</p>
+        </li>
+        <li class="manifest__item">
+          <svg class="globe manifest__mark" aria-hidden="true"><use href="assets/icons.svg#pa-document"/></svg>
+          <p class="manifest__fact">Co-founded and ran M&amp;G Journal, a student-run finance publication covering capital markets, startups, and careers, grew to 200+ subscribers with five sourced articles a week</p>
+        </li>
+          </ul>
+        </section>
+      </div>
+    </section>
+
+    <!-- 03 - HOBBIES. Same primitive again, one register quieter. The ONLY
+         differences are a smaller mark and muted text - the grid, the rules,
+         the label treatment and the spacing are untouched. -->
+    <section class="manifest-block">
+      <div class="manifest-block__head">
+        <h2 class="t-heading">Hobbies</h2>
+        <p class="t-label t-muted">03 &mdash; Off duty</p>
+      </div>
+      <hr class="rule rule--heavy">
+      <ul class="manifest manifest--list manifest--light">
+        <li class="manifest__item">
+          <svg class="globe manifest__mark" aria-hidden="true"><use href="assets/icons.svg#pa-clock"/></svg>
+          <p class="t-label manifest__year">Watches</p>
+          <div class="manifest__fact">
+            <div class="watch-trio">
+              <details class="watch">
+                <summary class="watch__summary">
+                  <img class="watch-trio__plate" src="assets/images/watches/jlc-reverso.webp"
+                       alt="Jaeger-LeCoultre Reverso in yellow gold with a red guilloche dial" width="800" height="800" loading="lazy" decoding="async">
+                  <span class="watch__toggle t-label">Stamp</span>
+                </summary>
+                <!-- FACT-CHECK BEFORE TREATING AS FINAL COPY:
+                     Two candidate years: 1833 (Jaeger-LeCoultre) vs 1931 (the Reverso). Confirm which one belongs in a stamp. The polo origin story is widely repeated and worth confirming against a primary source. -->
+                <div class="stamp stamp--unverified" style="--stamp-tilt: -1.5deg" data-unverified="true">
+                  <p class="t-label stamp__unverified">Unverified</p>
+                  <dl class="stamp__fields">
+                    <div class="stamp__row">
+                      <dt class="t-label">Origin</dt>
+                      <dd>Switzerland &mdash; Vall&eacute;e de Joux</dd>
+                    </div>
+                    <div class="stamp__row">
+                      <dt class="t-label">Founded</dt>
+                      <dd class="t-data">1833</dd>
+                      <dd class="t-caption">Maison founded. The Reverso itself dates to 1931.</dd>
+                    </div>
+                    <div class="stamp__row">
+                      <dt class="t-label">Made for</dt>
+                      <dd>Polo. The case pivots in its carrier so the crystal can be turned face-down against a mallet strike.</dd>
+                    </div>
+                  </dl>
+                </div>
+              </details>
+              <details class="watch">
+                <summary class="watch__summary">
+                  <img class="watch-trio__plate" src="assets/images/watches/rolex-polar-explorer-ii.webp"
+                       alt="Rolex Explorer II with a white polar dial and orange 24-hour hand" width="800" height="800" loading="lazy" decoding="async">
+                  <span class="watch__toggle t-label">Stamp</span>
+                </summary>
+                <!-- FACT-CHECK BEFORE TREATING AS FINAL COPY:
+                     Origin is genuinely contested: the firm was founded in LONDON in 1905 as Wilsdorf &amp; Davis, took the Rolex name in 1908 and moved to Geneva in 1919. Calling it Swiss in a country-of-origin field is defensible but not simple. Also: "Polar" is a nickname for the white dial, NOT a claim about polar expeditions &mdash; do not let the stamp imply otherwise. Explorer II introduced 1971. -->
+                <div class="stamp stamp--unverified" style="--stamp-tilt: 1.25deg" data-unverified="true">
+                  <p class="t-label stamp__unverified">Unverified</p>
+                  <dl class="stamp__fields">
+                    <div class="stamp__row">
+                      <dt class="t-label">Origin</dt>
+                      <dd>Switzerland &mdash; Geneva</dd>
+                    </div>
+                    <div class="stamp__row">
+                      <dt class="t-label">Founded</dt>
+                      <dd class="t-data">1905</dd>
+                      <dd class="t-caption">Founded in London; Geneva from 1919.</dd>
+                    </div>
+                    <div class="stamp__row">
+                      <dt class="t-label">Made for</dt>
+                      <dd>Caving. A fixed 24-hour bezel and a second hour hand to tell day from night underground.</dd>
+                    </div>
+                  </dl>
+                </div>
+              </details>
+              <details class="watch">
+                <summary class="watch__summary">
+                  <img class="watch-trio__plate" src="assets/images/watches/glashutte-original.webp"
+                       alt="Glashutte Original chronograph with a green dial and cushion case" width="800" height="800" loading="lazy" decoding="async">
+                  <span class="watch__toggle t-label">Stamp</span>
+                </summary>
+                <!-- FACT-CHECK BEFORE TREATING AS FINAL COPY:
+                     THREE candidate years, all defensible: 1845 (watchmaking begins in Glash&uuml;tte), 1951 (GUB formed from the nationalised workshops), 1994 (the Glash&uuml;tte Original brand name). Pick deliberately. Also confirm the exact model in the photo &mdash; it appears to be a Seventies Chronograph Panorama Date, which would change the "made for" line if wrong. -->
+                <div class="stamp stamp--unverified" style="--stamp-tilt: -1deg" data-unverified="true">
+                  <p class="t-label stamp__unverified">Unverified</p>
+                  <dl class="stamp__fields">
+                    <div class="stamp__row">
+                      <dt class="t-label">Origin</dt>
+                      <dd>Germany &mdash; Glash&uuml;tte, Saxony</dd>
+                    </div>
+                    <div class="stamp__row">
+                      <dt class="t-label">Founded</dt>
+                      <dd class="t-data">1845</dd>
+                      <dd class="t-caption">Watchmaking in the town. The brand name is far younger.</dd>
+                    </div>
+                    <div class="stamp__row">
+                      <dt class="t-label">Made for</dt>
+                      <dd>Precision timing. A chronograph built to measure elapsed intervals, not to be worn underwater.</dd>
+                    </div>
+                  </dl>
+                </div>
+              </details>
+            </div>
+            <p>Three Cravings: JLC Reverso, Rolex Polar Explorer II, Glash&uuml;tte Original.</p>
+          </div>
+        </li>
+        <li class="manifest__item">
+          <svg class="globe manifest__mark" aria-hidden="true"><use href="assets/icons.svg#pa-signal"/></svg>
+          <p class="t-label manifest__year">Photography</p>
+          <p class="manifest__fact">One quiet line.</p>
+        </li>
+        <li class="manifest__item">
+          <svg class="globe manifest__mark" aria-hidden="true"><use href="assets/icons.svg#pa-waypoint"/></svg>
+          <p class="t-label manifest__year">Sports</p>
+          <p class="manifest__fact">One quiet line.</p>
+        </li>
+      </ul>
+    </section>
+
+  </div>
+</main>
+
+<footer class="site-footer">
+  <div class="container site-footer__inner">
+    <div class="site-footer__fields">
+      <div class="site-footer__field">
+        <p class="t-label t-muted">Issued</p>
+        <p class="t-caption t-data">2026</p>
+      </div>
+      <div class="site-footer__field">
+        <p class="t-label t-muted">Revision</p>
+        <p class="t-caption t-data">01</p>
+      </div>
+      <div class="site-footer__field">
+        <p class="t-label t-muted">Reference</p>
+        <p class="t-caption"><a href="styleguide.html">Style guide</a></p>
+      </div>
+    </div>
+    <svg class="globe globe--md globe--simple" aria-hidden="true"><use href="assets/icons.svg#pa-globe"/></svg>
+  </div>
+</footer>
+
+</body>
+</html>
