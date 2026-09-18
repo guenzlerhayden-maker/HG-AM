@@ -102,29 +102,18 @@
       <hr class="rule rule--heavy">
 
       <figure class="route-map__chart">
-        <svg viewBox="0 0 1000 547" role="img"
-             aria-label="Stylised route chart of the United States with two marked home bases, Quad Cities in Iowa and Tulsa in Oklahoma, joined by a dashed route line.">
-          <g class="chart__grid">
-        <line x1="172.4" y1="0" x2="172.4" y2="547"/>
-        <line x1="344.8" y1="0" x2="344.8" y2="547"/>
-        <line x1="517.2" y1="0" x2="517.2" y2="547"/>
-        <line x1="689.7" y1="0" x2="689.7" y2="547"/>
-        <line x1="862.1" y1="0" x2="862.1" y2="547"/>
-        <line x1="0" y1="109.4" x2="1000" y2="109.4"/>
-        <line x1="0" y1="218.8" x2="1000" y2="218.8"/>
-        <line x1="0" y1="328.2" x2="1000" y2="328.2"/>
-        <line x1="0" y1="437.6" x2="1000" y2="437.6"/>
-        <line x1="0" y1="547.0" x2="1000" y2="547.0"/>
-          </g>
-          <path class="chart__land" d="M 5.2 13.1 L 15.5 61.3 L 19.0 109.4 L 10.3 188.2 L 44.8 245.1 L 75.9 317.3 L 113.8 334.8 L 136.2 361.0 L 177.6 356.6 L 241.4 387.3 L 289.7 387.3 L 319.0 376.3 L 353.4 422.3 L 379.3 437.6 L 406.9 420.1 L 439.7 470.4 L 475.9 505.4 L 479.3 461.7 L 517.2 437.6 L 537.9 422.3 L 577.6 433.2 L 613.8 437.6 L 622.4 409.1 L 646.6 409.1 L 689.7 422.3 L 712.1 417.9 L 729.3 461.7 L 755.2 520.7 L 772.4 507.6 L 774.1 481.4 L 765.5 450.7 L 751.7 407.0 L 760.3 372.0 L 789.7 343.5 L 812.1 323.8 L 853.4 301.9 L 844.8 264.7 L 860.3 234.1 L 879.3 186.0 L 913.8 168.5 L 948.3 159.7 L 937.9 137.8 L 965.5 111.6 L 996.6 96.3 L 979.3 37.2 L 922.4 87.5 L 891.4 87.5 L 829.3 105.0 L 789.7 122.5 L 753.4 146.6 L 722.4 151.0 L 703.4 67.8 L 669.0 52.5 L 631.0 17.5 L 589.7 19.7 L 513.8 0.0 L 362.1 0.0 L 137.9 0.0 L 34.5 0.0 Z"/>
-          <path class="chart__route" d="M 500.2 281.2 Q 535 213 593.4 163.7"/>
+        <svg viewBox="0 0 1000 621" role="img"
+             aria-label="Albers projection chart of the continental United States with two marked home bases, Quad Cities in Iowa and Tulsa in Oklahoma, joined by a dashed route line.">
+          <use class="chart__grid" href="assets/us-outline.svg#us-grid"/>
+          <use class="chart__land" href="assets/us-outline.svg#us"/>
+          <path class="chart__route" d="M 511.1 371.9 Q 546 295 608.2 238.1"/>
         </svg>
 
-        <a class="pin" href="#base-quad-cities" style="--pin-x: 59.34%; --pin-y: 29.93%">
+        <a class="pin" href="#base-quad-cities" style="--pin-x: 60.82%; --pin-y: 38.35%">
           <span class="pin__dot"></span>
           <span class="pin__label t-label">Quad Cities, Iowa</span>
         </a>
-        <a class="pin pin--west" href="#base-tulsa" style="--pin-x: 50.02%; --pin-y: 51.41%">
+        <a class="pin pin--west" href="#base-tulsa" style="--pin-x: 51.11%; --pin-y: 59.89%">
           <span class="pin__dot"></span>
           <span class="pin__label t-label">Tulsa, Oklahoma</span>
         </a>

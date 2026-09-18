@@ -30,7 +30,7 @@
   /* Locks the box to the projection's aspect so the absolutely positioned pins
      land on the right places at every width. Without this the pins drift as
      soon as the box is not exactly the map's shape. */
-  aspect-ratio: 1000 / 547;
+  aspect-ratio: 1000 / 621;
 }
 
 .route-map__chart svg {
@@ -42,17 +42,29 @@
 
 /* --- Chart layers ---------------------------------------------------------- */
 
+/* fill and stroke are INHERITED properties, which is the whole reason the
+   generated symbol sets neither. Declaring them on the <use> element passes
+   them through the shadow boundary into the path, so the map draws with the
+   site's tokens and no colour is hard-coded in the asset. */
+
 .chart__grid {
+  fill: none;
   stroke: var(--chart-ink);
-  stroke-width: 1;
-  opacity: 0.16;
+  stroke-width: 0.8;
+  opacity: 0.18;
 }
 
 .chart__land {
   fill: var(--pa-white);
   stroke: var(--chart-ink);
-  stroke-width: 2.5;
+  /* NOT var(--mark-stroke) literally. The icons live in a 100-unit box drawn
+     at ~28px, this map is a 1000-unit box drawn at ~900px - the same number
+     would render nearly three times heavier here. What has to match is the
+     weight on screen, not the digit in the file, so this is tuned to sit with
+     the marks rather than copy them. */
+  stroke-width: 1.8;
   stroke-linejoin: round;
+  stroke-linecap: round;
 }
 
 /* Dashed, like a scheduled service on a timetable chart rather than a solid
