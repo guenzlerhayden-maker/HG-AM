@@ -10,6 +10,7 @@
 <link rel="stylesheet" href="css/layout.css">
 <link rel="stylesheet" href="css/components.css">
 <link rel="stylesheet" href="css/route-map.css">
+<link rel="stylesheet" href="css/boarding-stub.css">
 </head>
 <body class="page">
 
@@ -293,9 +294,127 @@
           </div>
         </li>
         <li class="manifest__item">
-          <svg class="globe manifest__mark" aria-hidden="true"><use href="assets/icons.svg#pa-signal"/></svg>
+          <svg class="globe manifest__mark" aria-hidden="true"><use href="assets/icons.svg#pa-camera"/></svg>
           <p class="t-label manifest__year">Photography</p>
-          <p class="manifest__fact">One quiet line.</p>
+          <div class="manifest__fact">
+            <!-- BOARDING-PASS STUBS. Same <details> mechanism as the watch
+                 stamps below, deliberately: one page, one way to expand
+                 something. Photographs are PLACEHOLDERS until the real files
+                 land at these exact paths. -->
+            <div class="stubs">
+              <details class="stub" style="--stub-tilt: -1.7deg; --stub-drop: 0; --age: 1.15">
+                <summary class="stub__summary">
+                  <span class="stub__spine" aria-hidden="true"><span>First Flight</span></span>
+                  <figure class="stub__figure">
+                    <img class="stub__photo" src="assets/images/travel/salzburg.webp"
+                         alt="Salzburg seen from the fortress at dusk, church domes and the river below a grey sky" width="900" height="1200" loading="lazy" decoding="async">
+                  </figure>
+                  <div class="stub__field">
+                    <p class="stub__eyebrow t-label">Passenger Ticket and Baggage Check</p>
+                    <div class="stub__band"><span class="stub__code">SZG</span></div>
+                    <p class="stub__place">Salzburg, Austria</p>
+                    <p class="stub__serial">026 4447 85332</p>
+                    <p class="stub__toggle t-label">Page</p>
+                  </div>
+                </summary>
+                <p class="stub__caption">Shot from the fortress. Domes, the river, and the whole city under low grey.</p>
+              </details>
+              <details class="stub" style="--stub-tilt: 1.2deg; --stub-drop: var(--space-5); --age: 0.85">
+                <summary class="stub__summary">
+                  <span class="stub__spine" aria-hidden="true"><span>Second Flight</span></span>
+                  <figure class="stub__figure">
+                    <img class="stub__photo" src="assets/images/travel/vienna.webp"
+                         alt="An empty street at dusk with wet cobbles, bronze statues on plinths either side and a fortress on the hill beyond" width="900" height="1200" loading="lazy" decoding="async">
+                  </figure>
+                  <div class="stub__field">
+                    <p class="stub__eyebrow t-label">Passenger Ticket and Baggage Check</p>
+                    <div class="stub__band"><span class="stub__code">VIE</span></div>
+                    <p class="stub__place">Austria</p>
+                    <p class="stub__serial">026 5108 21744</p>
+                    <p class="stub__toggle t-label">Page</p>
+                  </div>
+                </summary>
+                <p class="stub__caption">Empty street at dusk. Wet cobbles, bronze statues mid-throw on both sides.</p>
+              </details>
+              <details class="stub" style="--stub-tilt: -0.9deg; --stub-drop: var(--space-2); --age: 1.3">
+                <summary class="stub__summary">
+                  <span class="stub__spine" aria-hidden="true"><span>Third Flight</span></span>
+                  <figure class="stub__figure">
+                    <img class="stub__photo" src="assets/images/travel/cinque-terre.webp"
+                         alt="A crowded pebble beach on the Ligurian coast with blue umbrellas, headland and open sea" width="900" height="1200" loading="lazy" decoding="async">
+                  </figure>
+                  <div class="stub__field">
+                    <p class="stub__eyebrow t-label">Passenger Ticket and Baggage Check</p>
+                    <div class="stub__band"><span class="stub__code">PSA</span></div>
+                    <p class="stub__place">Cinque Terre, Italy</p>
+                    <p class="stub__serial">026 7731 40915</p>
+                    <p class="stub__toggle t-label">Page</p>
+                  </div>
+                </summary>
+                <p class="stub__caption">Monterosso in September. Umbrellas all the way down to the water.</p>
+              </details>
+              <details class="stub" style="--stub-tilt: 2.0deg; --stub-drop: var(--space-6); --age: 0.7">
+                <summary class="stub__summary">
+                  <span class="stub__spine" aria-hidden="true"><span>Fourth Flight</span></span>
+                  <figure class="stub__figure">
+                    <img class="stub__photo" src="assets/images/travel/lucerne.webp"
+                         alt="A meadow of buttercups high above the valley with snow-capped Alps along the horizon" width="900" height="1200" loading="lazy" decoding="async">
+                  </figure>
+                  <div class="stub__field">
+                    <p class="stub__eyebrow t-label">Passenger Ticket and Baggage Check</p>
+                    <div class="stub__band"><span class="stub__code">ZRH</span></div>
+                    <p class="stub__place">Lucerne, Switzerland</p>
+                    <p class="stub__serial">026 2294 66180</p>
+                    <p class="stub__toggle t-label">Page</p>
+                  </div>
+                </summary>
+                <p class="stub__caption">Up the Rigi. Alps on every side and a meadow full of buttercups.</p>
+              </details>
+              <details class="stub" style="--stub-tilt: -1.4deg; --stub-drop: var(--space-3); --age: 1.0">
+                <summary class="stub__summary">
+                  <span class="stub__spine" aria-hidden="true"><span>Fifth Flight</span></span>
+                  <figure class="stub__figure">
+                    <img class="stub__photo" src="assets/images/travel/crete-heraklion.webp"
+                         alt="A small whitewashed Greek chapel with a blue dome and bell, the sea behind it" width="900" height="1200" loading="lazy" decoding="async">
+                  </figure>
+                  <div class="stub__field">
+                    <p class="stub__eyebrow t-label">Passenger Ticket and Baggage Check</p>
+                    <div class="stub__band"><span class="stub__code">HER</span></div>
+                    <p class="stub__place">Heraklion, Crete</p>
+                    <p class="stub__serial">026 8815 03627</p>
+                    <p class="stub__toggle t-label">Page</p>
+                  </div>
+                </summary>
+                <p class="stub__caption">A white chapel above the sea. Blue dome, one bell, nobody else up there.</p>
+              </details>
+              <details class="stub" style="--stub-tilt: 0.8deg; --stub-drop: 0; --age: 1.25">
+                <summary class="stub__summary">
+                  <span class="stub__spine" aria-hidden="true"><span>Sixth Flight</span></span>
+                  <figure class="stub__figure">
+                    <img class="stub__photo" src="assets/images/travel/crete-chania.webp"
+                         alt="A portrait in evening light beside a dry stone wall, the sea just visible past it" width="900" height="1200" loading="lazy" decoding="async">
+                  </figure>
+                  <div class="stub__field">
+                    <p class="stub__eyebrow t-label">Passenger Ticket and Baggage Check</p>
+                    <div class="stub__band"><span class="stub__code">CHQ</span></div>
+                    <p class="stub__place">Chania, Crete</p>
+                    <p class="stub__serial">026 3360 97251</p>
+                    <p class="stub__toggle t-label">Page</p>
+                  </div>
+                </summary>
+                <p class="stub__caption">Warm stone, low sun, the sea just past the wall.</p>
+              </details>
+            </div>
+                </summary>
+                <p class="stub__caption">Warm stone, low sun, the sea just past the wall.</p>
+              </details>
+            </div>
+                </summary>
+                <p class="stub__caption">A white chapel above the sea, blue dome, bell, nobody else there.</p>
+              </details>
+            </div>
+            <p>Catching vibes, trying to catch the photo.</p>
+          </div>
         </li>
         <li class="manifest__item">
           <svg class="globe manifest__mark" aria-hidden="true"><use href="assets/icons.svg#pa-waypoint"/></svg>

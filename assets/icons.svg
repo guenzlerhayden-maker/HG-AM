@@ -240,5 +240,13 @@
         <line x1="14" y1="84" x2="86" y2="84"/>
       </g>
     </symbol>
+
+    <symbol id="pa-camera" viewBox="0 0 100 100">
+      <g fill="none" stroke="currentColor" style="stroke-width: var(--mark-stroke, 3)"
+         stroke-linejoin="round">
+        <path d="M 12 32 L 32 32 L 40 22 L 60 22 L 68 32 L 88 32 L 88 80 L 12 80 Z"/>
+        <circle cx="50" cy="54" r="16"/>
+      </g>
+    </symbol>
   </defs>
 </svg>

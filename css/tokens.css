@@ -49,6 +49,15 @@
      red appeared as stamps and cancellation marks. See design rule 1. */
   --pa-stamp-red:  #B3242B;
 
+  /* Aged ticket card. Yellower and a shade darker than paper, because card
+     stock that has sat in a drawer for forty years goes warm, not grey.
+     Its ONE job is the boarding-pass stubs, which are deliberately the only
+     aged thing on an otherwise crisp page. It is a token rather than a hex
+     buried in a component for the usual reason (design rule 3) and for one
+     more: if the aged look is ever dropped, this is the single line to pull.
+     Contrast: 14.0:1 against ink, 8.3:1 against globe blue. */
+  --pa-ticket:     #EDE3CE;
+
 
   /* ==========================================================================
      TIER 2 - SEMANTIC ROLES
@@ -61,6 +70,7 @@
 
   --color-surface:         var(--pa-paper);
   --color-surface-raised:  var(--pa-white);
+  --color-surface-aged:    var(--pa-ticket);
   --color-surface-sunken:  var(--pa-sky);
   --color-surface-field:   var(--pa-powder);
   --color-surface-invert:  var(--pa-globe-blue);
