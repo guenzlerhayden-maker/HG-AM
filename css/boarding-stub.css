@@ -1,35 +1,33 @@
 /* ============================================================================
    TICKETS  -  concept only
    ----------------------------------------------------------------------------
-   Six ticket jackets in the hobbies row, one per destination.
+   Six 1960s-70s airline tickets in the hobbies row, one per destination.
 
-   REBUILT FROM THE REAL ARTEFACTS. The first version was a portrait card with
-   a photo on top, which read as a Polaroid rather than a ticket. Actual Pan Am
-   passenger tickets are LANDSCAPE - wide and short - and four details do most
-   of the identifying work:
+   WHAT THE PERIOD FORMS ACTUALLY LOOK LIKE, and what this pass corrects:
 
-     1. a dark binding spine down the left edge, with type rotated into it
-     2. a printed colour field carrying a pale band across it, the destination
-        set large on that band
-     3. a machine-set serial number, in a different face from everything else
-     4. small caps legal text, and a PAGE number in the corner
+   A real ticket is DENSE. Nearly every square inch carries something - coupon
+   boxes, fare basis, routing, conditions of contract, a ticket number in a
+   different face from everything else. The previous version had one large
+   friendly code in a solid colour bar surrounded by white space, which is a
+   modern travel-card idiom; period forms did the opposite.
 
-   All four are cheap to reproduce and together they are unmistakable. Without
-   them, aging a rectangle just produces an old rectangle.
+   THE TYPOGRAPHY IS TWO VOICES, and getting that split right does more than
+   any texture:
+     - the FORM was letterpress-printed in advance: small, letterspaced caps
+     - the DATA was struck onto it later by a ticketing machine: monospaced,
+       uneven, sitting slightly awkwardly in its box
+   So pre-printed labels are set in the sans, and every variable value is mono.
+   That contrast is why a real ticket reads as filled-in rather than designed.
 
-   MECHANISM is unchanged: native <details>/<summary>, no JavaScript, the same
-   pattern as the watch stamps. Opening turns to page 2 - the photo frame goes
-   from a letterbox crop to a tall one, and the caption strip appears. The
-   "View +" affordance is gone; the page number carries the state instead,
-   which is both quieter and what a real ticket actually does.
+   THE PERFORATION is the strongest single signal of a physical ticket and was
+   missing entirely. Every coupon separates from its counterfoil along a line
+   of punched holes, and the eye reads that line as "this was torn from a book"
+   faster than it reads any amount of ageing.
    ========================================================================== */
 
 .stubs {
   --mark-stroke: 3.5;
   display: grid;
-  /* Two across, not three. A landscape ticket needs width to hold a spine, a
-     photo and a field panel side by side; at three across each one dropped
-     below the width the serial line alone requires. */
   grid-template-columns: repeat(2, minmax(0, 1fr));
   gap: var(--space-6) var(--space-5);
   align-items: start;
@@ -37,66 +35,48 @@
   margin-block-end: var(--space-5);
 }
 
-@media (max-width: 780px) {
+@media (max-width: 820px) {
   .stubs { grid-template-columns: minmax(0, 1fr); }
 }
 
-/* --- The ticket ------------------------------------------------------------
-   --tilt, --drop and --age are set per instance in the markup, beside the
-   content they belong to. --age scales the staining so no two cards have
-   weathered by quite the same amount. */
+/* --- Card stock ------------------------------------------------------------
+   --tilt, --drop and --age are set per instance in the markup. --age scales
+   the staining so no two cards have weathered by the same amount. */
 
 .stub {
   position: relative;
   background-color: var(--color-surface-aged);
-  border-radius: var(--radius-1);
   transform: rotate(var(--stub-tilt, 0deg));
   margin-block-start: var(--stub-drop, 0);
 
-  /* Card stock: two offset stains plus a fine fractal grain, no image file. */
+  /* PAPER, in four layers. The previous version was two soft radial stains and
+     a little noise, which read as a gradient rather than as stock. Printed
+     cardstock has direction: fibres lie in the grain, and light catches them.
+     So there are now crossed fibre gradients at 1px intervals, a coarse
+     turbulence for the pulp, and the stains on top of both. */
   background-image:
-    radial-gradient(52% 40% at 16% 18%, rgb(150 116 56 / calc(0.17 * var(--age, 1))), transparent 70%),
-    radial-gradient(42% 36% at 86% 82%, rgb(132 100 48 / calc(0.15 * var(--age, 1))), transparent 70%),
-    radial-gradient(26% 22% at 62% 12%, rgb(142 108 50 / calc(0.12 * var(--age, 1))), transparent 72%),
-    url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg'%3E%3Cfilter id='g'%3E%3CfeTurbulence type='fractalNoise' baseFrequency='0.85' numOctaves='4'/%3E%3C/filter%3E%3Crect width='100%25' height='100%25' filter='url(%23g)' opacity='0.4'/%3E%3C/svg%3E");
-  background-blend-mode: multiply, multiply, multiply, multiply;
+    radial-gradient(52% 40% at 16% 18%, rgb(150 116 56 / calc(0.20 * var(--age, 1))), transparent 70%),
+    radial-gradient(42% 36% at 86% 82%, rgb(132 100 48 / calc(0.17 * var(--age, 1))), transparent 70%),
+    radial-gradient(22% 18% at 62% 10%, rgb(142 108 50 / calc(0.14 * var(--age, 1))), transparent 72%),
+    repeating-linear-gradient(94deg, rgb(120 96 52 / 0.05) 0 1px, transparent 1px 3px),
+    repeating-linear-gradient(2deg, rgb(120 96 52 / 0.04) 0 1px, transparent 1px 4px),
+    url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg'%3E%3Cfilter id='g'%3E%3CfeTurbulence type='fractalNoise' baseFrequency='0.62' numOctaves='5'/%3E%3C/filter%3E%3Crect width='100%25' height='100%25' filter='url(%23g)' opacity='0.55'/%3E%3C/svg%3E");
+  background-blend-mode: multiply, multiply, multiply, multiply, multiply, multiply;
 
   box-shadow:
-    inset 0 0 var(--space-6) rgb(118 92 46 / calc(0.16 * var(--age, 1))),
-    0 1px 2px rgb(20 24 29 / 0.14),
-    0 8px 18px rgb(20 24 29 / 0.09);
+    inset 0 0 var(--space-6) rgb(118 92 46 / calc(0.18 * var(--age, 1))),
+    0 1px 2px rgb(20 24 29 / 0.15),
+    0 8px 18px rgb(20 24 29 / 0.10);
 }
-
-/* NO ::after OVERLAY - removed as redundant, not as a fix.
-
-   There was one, to lay foxing over the printed panel as well as the stock.
-   Once the field panel went transparent it stopped earning its place: the
-   card's OWN background, stains and grain, already shows straight through the
-   panel. So the overlay was ageing paper that was already aged, and deleting
-   it removes a stacking context for nothing lost.
-
-   Recorded because I nearly wrote the wrong reason here: the preview kept
-   showing the photo windows blank, I assumed the overlay was covering them,
-   and deleting it seemed to help. It did not. A hit test with
-   elementFromPoint at each photo's centre returned the <img> itself for all
-   six - nothing was ever covering them, and the blank frames were the preview
-   failing to repaint. Measurement settled in one call what three rounds of
-   screenshots had muddled.
 
 @media (prefers-reduced-motion: reduce) {
   .stub { transform: none; margin-block-start: 0; }
 }
 
-
-/* --- The face: spine | photo | printed panel ------------------------------- */
-
 .stub__summary {
-  display: grid;
-  grid-template-columns: 1.6rem minmax(0, 0.9fr) minmax(0, 1.25fr);
+  display: block;
   cursor: pointer;
   list-style: none;
-  border-radius: inherit;
-  overflow: hidden;
 }
 
 .stub__summary::-webkit-details-marker { display: none; }
@@ -106,36 +86,21 @@
   outline-offset: 3px;
 }
 
-/* The binding spine. On the real ticket this is the glued edge of the book,
-   printed dark, with the flight coupon name set sideways into it. */
-.stub__spine {
-  background-color: var(--pa-ink);
+
+/* --- Body: binding edge | photo | fields ---------------------------------- */
+
+.stub__body {
   display: grid;
-  place-items: center;
+  grid-template-columns: 0.85rem minmax(0, 0.8fr) minmax(0, 1.35fr);
 }
 
-.stub__spine span {
-  writing-mode: vertical-rl;
-  transform: rotate(180deg);
-  color: var(--pa-powder);
-  font-size: 0.5rem;
-  font-weight: var(--font-weight-bold);
-  letter-spacing: 0.18em;
-  text-transform: uppercase;
-  white-space: nowrap;
-}
+/* The glued binding edge of the coupon book. It carried a coupon name on some
+   forms and nothing at all on others; here it is left bare, because the label
+   was the one piece of invented copy on the card. */
+.stub__spine { background-color: var(--pa-ink); }
 
-/* --- Photograph ------------------------------------------------------------
-   Closed it is a letterbox slice, which is what keeps the ticket landscape.
-   Opening turns it tall, so page 2 genuinely shows you more of the picture
-   rather than the same crop at a different size.
-
-   z-index 4 puts it ABOVE the foxing overlay: the card is old, the print in
-   the window is not, and a filtered photograph is where "vintage" turns into
-   costume. */
 .stub__figure {
   position: relative;
-  z-index: 4;
   margin: 0;
   aspect-ratio: 5 / 4;
   overflow: hidden;
@@ -145,107 +110,129 @@
 
 .stub[open] .stub__figure { aspect-ratio: 4 / 5; }
 
-.stub__photo {
-  inline-size: 100%;
-  block-size: 100%;
-  object-fit: cover;
-}
-
-/* --- Printed panel ---------------------------------------------------------
-   Straight from the 1960s ticket: a saturated field with a pale band across
-   the middle and the destination set large on the band, in the field colour. */
+.stub__photo { inline-size: 100%; block-size: 100%; object-fit: cover; }
 
 .stub__field {
-  position: relative;
-  /* CREAM, not navy. The first pass printed this panel in the brand blue,
-     straight off the 1960s Pan Am ticket - and it worked, but navy covered
-     nearly half the card and the foxing had nowhere to show. The Eastern
-     ticket and the vintage template sheet are mostly bare stock with dark
-     type, which is where their age actually reads. So the device is flipped:
-     cream field, one navy band, destination reversed out of it. Same quotation
-     from the same ticket, arranged so the paper wins. */
-  background-color: transparent;
-  padding: var(--space-4) var(--space-4) var(--space-3);
+  padding: var(--space-3) var(--space-3) var(--space-2);
   display: grid;
-  align-content: space-between;
+  align-content: start;
   gap: var(--space-2);
 }
 
+/* --- The two voices --------------------------------------------------------
+   Pre-printed form copy: sans, tiny, letterspaced, navy.
+   Machine-struck data:   mono, ink, sitting a touch large in its box. */
+
 .stub__eyebrow {
+  font-size: 0.5rem;
+  letter-spacing: 0.13em;
+  line-height: 1.25;
   color: var(--color-text-brand);
-  font-size: 0.5625rem;
-  letter-spacing: 0.14em;
-  line-height: 1.3;
-  opacity: 0.8;
+  padding-block-end: var(--space-1);
+  border-block-end: var(--rule-width) solid var(--color-text-brand);
 }
 
-/* The band runs past the panel padding to the card edge, the way a printed
-   bar runs to the trim on a real form rather than sitting in a margin. */
-.stub__band {
-  background-color: var(--color-surface-invert);
-  padding: var(--space-2) var(--space-4);
-  margin-inline: calc(var(--space-4) * -1);
+.stub__grid {
+  display: grid;
+  grid-template-columns: auto repeat(3, auto);
+  justify-content: start;
+  gap: 0 var(--space-4);
+  margin: 0;
 }
 
-.stub__code {
-  font-family: var(--font-mono);
-  font-size: clamp(1.75rem, 4vw, 2.5rem);
+.stub__grid dt {
+  font-size: 0.4375rem;
   font-weight: var(--font-weight-bold);
-  line-height: 1.05;
-  letter-spacing: 0.05em;
-  color: var(--color-surface-aged);
+  letter-spacing: 0.12em;
+  text-transform: uppercase;
+  color: var(--color-text-brand);
+  opacity: 0.7;
+}
+
+.stub__grid dd {
+  margin: 0;
+  font-family: var(--font-mono);
+  font-size: 0.8125rem;
+  line-height: 1.2;
+  color: var(--color-text);
+}
+
+/* Destination is the one value allowed any size - it is what the component is
+   FOR. Still mono, still administrative: this is a code struck into a box, not
+   a headline in a colour bar. */
+.stub__grid dd.stub__code {
+  font-size: 1.125rem;
+  font-weight: var(--font-weight-bold);
+  letter-spacing: 0.06em;
 }
 
 .stub__place {
-  color: var(--color-text);
-  font-size: var(--font-size-caption);
-  font-weight: var(--font-weight-bold);
-  line-height: 1.25;
-}
-
-/* Machine-set, and a different face from everything around it - which is why
-   it reads as stamped onto the form rather than printed with it. */
-.stub__serial {
   font-family: var(--font-mono);
   font-size: 0.6875rem;
-  letter-spacing: 0.08em;
-  color: var(--color-text-brand);
-  opacity: 0.75;
+  line-height: 1.2;
+  color: var(--color-text);
 }
 
-/* The page number carries the open/closed state. No "View +" chrome: a real
-   ticket tells you which page you are on, so this one does the same. */
-.stub__toggle {
-  font-size: 0.5rem;
-  letter-spacing: 0.14em;
-  color: var(--color-text-brand);
-  opacity: 0.55;
+/* --- Perforation -----------------------------------------------------------
+   Punched holes in the page colour, so they read as light through the card
+   rather than as dots printed on it. A row of these says "torn from a book"
+   faster than any amount of staining. */
+
+.stub__perf {
+  block-size: 0.6rem;
+  background-image: radial-gradient(circle, var(--color-surface) 0 2.1px, transparent 2.3px);
+  background-size: 9px 0.6rem;
+  background-position: 3px center;
+  background-repeat: repeat-x;
 }
+
+/* --- Counterfoil -----------------------------------------------------------
+   The strip below the perforation, carrying the dense boilerplate a real
+   ticket is covered in.
+
+   DELIBERATELY BELOW THE USUAL MINIMUM TYPE SIZE. Period small print was set
+   around 5pt and being barely readable is the point - it is texture, not copy.
+   Everything a reader actually needs (destination, place, caption) stays at a
+   normal size, so nothing is hidden behind the effect. */
+
+.stub__counterfoil {
+  padding: var(--space-2) var(--space-3) var(--space-3) calc(0.85rem + var(--space-3));
+  display: flex;
+  flex-wrap: wrap;
+  gap: 2px var(--space-4);
+  font-size: 0.4375rem;
+  letter-spacing: 0.1em;
+  text-transform: uppercase;
+  color: var(--color-text-brand);
+  opacity: 0.72;
+}
+
+.stub__counterfoil b {
+  font-family: var(--font-mono);
+  font-weight: var(--font-weight-regular);
+  letter-spacing: 0.04em;
+  text-transform: none;
+  color: var(--color-text);
+}
+
+.stub__serial { margin-inline-start: auto; }
 
 .stub__toggle::after { content: " 1"; }
 .stub[open] .stub__toggle::after { content: " 2"; }
-
-.stub__summary:hover .stub__toggle,
-.stub[open] .stub__toggle { opacity: 1; color: var(--color-text-brand); }
-
-/* --- Page 2: the caption strip -------------------------------------------- */
+.stub__summary:hover .stub__toggle { color: var(--color-text); }
 
 .stub__caption {
-  position: relative;
-  z-index: 2;
-  padding: var(--space-3) var(--space-4) var(--space-4) calc(1.6rem + var(--space-3));
+  padding: var(--space-3) var(--space-4) var(--space-4) calc(0.85rem + var(--space-3));
   border-block-start: var(--rule-width) dashed rgb(29 63 110 / 0.4);
   color: var(--color-text);
   font-size: var(--font-size-caption);
   line-height: 1.45;
 }
 
-@media (max-width: 420px) {
-  /* The three-column face stops working once the panel drops under about
-     10rem; the spine goes and the photo takes the full width above the panel. */
-  .stub__summary { grid-template-columns: minmax(0, 1fr); }
+@media (max-width: 440px) {
+  .stub__body { grid-template-columns: minmax(0, 1fr); }
   .stub__spine { display: none; }
   .stub__figure { aspect-ratio: 16 / 9; }
   .stub[open] .stub__figure { aspect-ratio: 4 / 5; }
-  .stub__caption { padding-inline-start: var(--space-4); }
+  .stub__counterfoil, .stub__caption { padding-inline-start: var(--space-3); }
 }

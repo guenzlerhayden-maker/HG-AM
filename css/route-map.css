@@ -69,6 +69,25 @@
 
 /* Dashed, like a scheduled service on a timetable chart rather than a solid
    border. The dash pattern is in viewBox units, so it scales with the map. */
+/* The Mississippi, drawn in the sea colour so it reads as water cutting
+   through the land rather than as another border. Finer than the coastline:
+   it is orientation, not outline, and a river at the same weight as a national
+   border claims more importance than it has.
+
+   It earns its place because the Quad Cities sit ON it - half the metro in
+   Iowa, half in Illinois - so the river is what makes that pin mean something
+   instead of being a dot in a blank middle. Checked rather than eyeballed:
+   the build tool reports the pin 0.6 units from the river on a 1000-unit map,
+   and Tulsa 110 away. */
+
+.chart__river {
+  fill: none;
+  stroke: var(--pa-powder);
+  stroke-width: 1.4;
+  stroke-linecap: round;
+  stroke-linejoin: round;
+}
+
 .chart__route {
   fill: none;
   stroke: var(--color-accent);
