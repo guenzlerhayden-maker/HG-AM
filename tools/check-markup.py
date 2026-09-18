@@ -14,7 +14,7 @@ import io
 import re
 import sys
 
-PAGE = 'concept-about-map.html'
+PAGE = 'about.html'
 PAIRED = ['details', 'summary', 'section', 'ul', 'li', 'div', 'figure', 'main', 'dl']
 
 

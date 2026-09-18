@@ -1,9 +1,10 @@
 /* ============================================================================
-   ROUTE MAP  -  concept only
+   ROUTE MAP
    ----------------------------------------------------------------------------
-   Kept in its own file, loaded only by concept-about-map.html, so the whole
-   idea can be compared against the committed About page or thrown away without
-   unpicking it from components.css.
+   Loaded only by about.html. It began as a concept in its own file so it could
+   be compared against the previous About page and dropped without unpicking it
+   from components.css; it stays in its own file because nothing else uses it
+   and a single-page component has no business in the shared stylesheet.
 
    THE MAP IS TWO LAYERS, DELIBERATELY:
      - the SVG holds geography only: graticule, coastline, route arc

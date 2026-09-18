@@ -171,16 +171,16 @@
 /* ============================================================================
    MANIFEST
    ----------------------------------------------------------------------------
-   The row primitive that the flag row, experience manifest and hobbies row on
-   the About page all inherit from. Defining it HERE, before any content
-   exists, is what will make those three sections read as one designed system
-   rather than as three widgets that happen to share a typeface.
+   The row primitive every list of entries on the site inherits from - the two
+   place clusters and the hobbies rows on About today, and whatever comes next.
+   Defining it before any content existed is what makes those sections read as
+   one designed system rather than as widgets that happen to share a typeface.
 
    The abstraction is a CELL, not a row. Every entry is
        [ mark ] [ year ] [ one-line fact ]
    and the two modifiers only change how those three parts are arranged.
 
-     .manifest--strip   items side by side, parts stacked   (the flag row)
+     .manifest--strip   items side by side, parts stacked   (a row of marks)
      .manifest--list    items stacked, parts side by side   (experience, hobbies)
 
    Because both modifiers read the same local tokens below, changing the mark
@@ -307,8 +307,9 @@
    updatable. Editing the asset itself means redoing that work on every update,
    and means nobody can tell which files you changed.
 
-   Flags arrive in step 3. The treatment is defined here so it is part of the
-   system rather than something invented later on the About page. */
+   No page uses flags today - the places section became a map instead. This is
+   kept for the heritage component that is still to be built, and because the
+   wrapper technique is worth having documented either way. */
 
 .flag {
   inline-size: var(--manifest-mark-size);
