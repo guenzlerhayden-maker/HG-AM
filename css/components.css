@@ -321,13 +321,20 @@ a.pa-route-row:hover { background: #E4D9BB; }
    nothing the cover does not already carry.
    ========================================================================== */
 
+/* Proportions are taken from the artboard rather than invented. There the
+   field is 430 tall, the globe 268 across, and the wordmark band crosses at
+   173 from the top. So: the globe is 62% of the FIELD HEIGHT, and the band sits
+   at 40% down, not centred.
+
+   Sizing the globe off the height rather than the width is what keeps the
+   composition looking like the artboard at any page width. Off the width it
+   grew with the viewport and the whole thing drifted out of proportion. */
 .pa-jacket {
+  --jacket-h: clamp(26rem, 62vh, 38rem);
   position: relative;
   overflow: hidden;
   background: var(--pa-sky);
-  min-block-size: clamp(24rem, 62vh, 34rem);
-  display: grid;
-  place-items: center;
+  min-block-size: var(--jacket-h);
 }
 
 /* Paper and ink noise, plus the vignette. Stacked in the canvas's own order:
@@ -371,8 +378,14 @@ a.pa-route-row:hover { background: #E4D9BB; }
 
 /* --- The mark, which is the link ----------------------------------------- */
 
+/* Absolutely placed so the equator lands at 40% of the field. The mark's own
+   box is exactly the globe (the plane is out of flow below), so the band's 50%
+   is the equator and the two line up by construction. */
 .pa-jacket__mark {
-  position: relative;
+  position: absolute;
+  inset-block-start: 40%;
+  inset-inline-start: 50%;
+  transform: translate(-50%, -50%);
   z-index: 2;
   display: grid;
   justify-items: center;
@@ -402,7 +415,7 @@ a.pa-route-row:hover { background: #E4D9BB; }
 }
 
 .pa-jacket__globe {
-  inline-size: min(78vw, 20rem);
+  inline-size: min(calc(var(--jacket-h) * 0.62), 82vw);
   block-size: auto;
   aspect-ratio: 1;
   fill: none;
@@ -452,6 +465,18 @@ a.pa-route-row:hover { background: #E4D9BB; }
   box-shadow: 0 1px 3px rgba(20,24,29,.18);
 }
 
+/* The card's fields. .pa-field is not a class this stylesheet defines, so the
+   label and value ran together as inline spans - "ORIGINTUL". Stacking them is
+   what the artboard does, and it is the same manifest grammar the rest of the
+   site uses: tiny letterpress label over machine-struck value. */
+.pa-jacket__card .pa-field {
+  display: grid;
+  gap: 2px;
+  align-content: start;
+}
+
+.pa-jacket__card .pa-label { line-height: 1.1; }
+
 .pa-jacket__grommet {
   position: absolute;
   inset-block-end: 2.125rem;
@@ -483,3 +508,37 @@ a.pa-route-row:hover { background: #E4D9BB; }
      narrow. The grommets go; they are the more decorative of the two. */
   .pa-jacket__grommet { display: none; }
 }
+
+
+/* --- 1a's nav: the cream form strip ---------------------------------------
+   Only on Contact, because the cream strip belongs to the 1a system and the
+   other two pages are 1c. That is a real inconsistency across the shell and it
+   is deliberate: the jacket cover reads as an object, and an object has its own
+   furniture. Easy to roll site-wide if the mixed shell grates. */
+
+.pa-nav--jacket {
+  background: var(--pa-stock);
+  border-block-end: 2px solid var(--pa-blue);
+}
+
+.pa-nav--jacket .pa-nav-mark svg {
+  --globe-fill: var(--pa-blue);
+  color: var(--pa-stock);
+}
+
+.pa-nav--jacket a[data-section] {
+  border-inline-start: 1px solid rgba(58, 101, 132, .4);
+  background: none;
+}
+
+.pa-nav--jacket a[data-section] .name { color: var(--pa-ink); }
+.pa-nav--jacket a[data-section] .num  { color: var(--pa-globe-blue); }
+
+.pa-nav--jacket a[data-section]:last-child,
+.pa-nav--jacket li:last-child a[data-section] {
+  border-inline-end: 1px solid rgba(58, 101, 132, .4);
+}
+
+.pa-nav--jacket a[data-section][aria-current="page"] { background: var(--pa-stamp); }
+.pa-nav--jacket a[data-section][aria-current="page"] .name,
+.pa-nav--jacket a[data-section][aria-current="page"] .num { color: var(--pa-stock); }
