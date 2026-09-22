@@ -134,7 +134,7 @@
   height: auto;
   box-sizing: border-box;
   aspect-ratio: 1;
-  /* contain, not cover — these are product shots and must not be cropped or stretched */
+  /* contain, not cover - these are product shots and must not be cropped or stretched */
   object-fit: contain;
   display: block;
   border: var(--pa-rule-hair);
@@ -298,13 +298,13 @@ a.pa-route-row:hover { background: #E4D9BB; }
 }
 
 /* ============================================================================
-   TICKET JACKET  —  Contact cover (canvas option 1a)
+   TICKET JACKET  -  Contact cover (canvas option 1a)
    ----------------------------------------------------------------------------
    Lifted from the 1a artboard in the design canvas: flat sky field, white
    line-art globe, cream wordmark band across the equator, fold crease,
    grommets, dog-eared corner.
 
-   The globe is the link. That is the whole idea here — the object you would
+   The globe is the link. That is the whole idea here - the object you would
    actually pick up is the thing you press, rather than a labelled button
    sitting next to a picture of one.
 
@@ -391,7 +391,7 @@ a.pa-route-row:hover { background: #E4D9BB; }
   justify-items: center;
   /* Full width, so the band it contains can run to both trim edges the way a
      printed wordmark band does. The GLOBE is what gets constrained, not the
-     link — constraining the link was the first attempt and it stopped the band
+     link - constraining the link was the first attempt and it stopped the band
      at the globe's edge, which made it look like a label stuck on the mark
      rather than ink laid across the card. */
   inline-size: 100%;
@@ -426,7 +426,7 @@ a.pa-route-row:hover { background: #E4D9BB; }
 }
 
 /* The band sits across the equator, running the full width of the page the way
-   the wordmark band does on a real jacket — it is printed on the card, not on
+   the wordmark band does on a real jacket - it is printed on the card, not on
    the globe, so it must not stop at the globe's edge. */
 .pa-jacket__band {
   position: absolute;
