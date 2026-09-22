@@ -22,3 +22,6 @@ _*.html
 # NOTE: there is deliberately no node_modules/ or dist/ entry. This project has
 # no build step and no dependencies - everything in the repo is the site as it
 # ships. If that ever changes, this file changes with it.
+
+# Design-pass download, kept locally but not versioned
+*.zip

@@ -1,251 +1,167 @@
-<?xml version="1.0" encoding="UTF-8"?>
-<!--
-  ICON SPRITE - every icon in the system, defined once.
-
-  Referenced from a page with:
-    <svg class="globe"><use href="assets/icons.svg#pa-globe"/></svg>
-
-  This resolves because the site is served over HTTP (python http.server
-  locally, GitHub Pages in production) and the file is same-origin. External
-  use references DO fail under the file: protocol, so opening a page by
-  double-clicking it will silently render no icons. One more reason to always
-  preview through the local server.
-
-  CAREFUL: this file is parsed as XML, not HTML. Two consequences:
-    1. A double hyphen is ILLEGAL inside an XML comment. Custom properties are
-       therefore written below WITHOUT their leading hyphens (globe-fill, not
-       the real spelling). In the markup itself they are spelled normally,
-       because attribute values are not comments.
-    2. XML parsing is fatal, not forgiving. One malformed character and the
-       entire sprite fails to load and every icon on every page disappears.
-       An inline sprite goes through the lenient HTML parser and would have
-       tolerated the same mistake.
-
-  Two things survive the external boundary, and they are what let one symbol
-  serve every variant:
-    - currentColor, so strokes take the colour of whatever the icon sits in
-    - CSS custom properties (globe-fill, globe-stroke, globe-detail), which
-      inherit into the shadow tree that use creates
-  Ordinary CSS selectors do NOT cross that boundary, which is why the variants
-  are built from custom properties rather than descendant rules.
--->
-<svg xmlns="http://www.w3.org/2000/svg">
+<?xml version="1.0"?><svg xmlns="http://www.w3.org/2000/svg" xmlns:c2pa="http://c2pa.org/manifest"><metadata><c2pa:manifest>AAAWgmp1bWIAAAAeanVtZGMycGEAEQAQgAAAqgA4m3EDYzJwYQAAABZcanVtYgAAAEdqdW1kYzJtYQARABCAAACqADibcQN1cm46YzJwYTo0MzMzMjQwNy05NDVjLTRmZjktOGRiYy1iN2U5MmE0OGE3YWEAAAADl2p1bWIAAAApanVtZGMyYXMAEQAQgAAAqgA4m3EDYzJwYS5hc3NlcnRpb25zAAAAALxqdW1iAAAARGp1bWRjYm9yABEAEIAAAKoAOJtxE2MycGEuaW5ncmVkaWVudC52MwAAAAAYYzJzaAdymmXm3nixMvZ4rNFiYcEAAABwY2JvcqNpZGM6Zm9ybWF0bWltYWdlL3N2Zyt4bWxqaW5zdGFuY2VJRHgseG1wOmlpZDpkZTdmMjA5My05ZDg0LTRkOWQtODcwYi05MjBkYTI4MGQwY2JscmVsYXRpb25zaGlwaHBhcmVudE9mAAAB4mp1bWIAAABBanVtZGNib3IAEQAQgAAAqgA4m3ETYzJwYS5hY3Rpb25zLnYyAAAAABhjMnNoCV8fUHGR0qusSiphKPgbNwAAAZljYm9yomdhY3Rpb25zgqJmYWN0aW9ua2MycGEub3BlbmVkanBhcmFtZXRlcnOha2luZ3JlZGllbnRzgaJjdXJseC1zZWxmI2p1bWJmPWMycGEuYXNzZXJ0aW9ucy9jMnBhLmluZ3JlZGllbnQudjNkaGFzaFggW/gcDkfOT2okaWsZc7vM0OW1uCoX0orUOgmbgLWZs4GkZmFjdGlvbngdY29tLmFudGhyb3BpYy5jbGF1ZGUucHJvdmlkZWRqcGFyYW1ldGVyc6F4H2NvbS5hbnRocm9waWMub3JpZ2luLWNvbmZpZGVuY2VndW5rbm93bmtkZXNjcmlwdGlvbnhmQ2xhdWRlIHByb3ZpZGVkIHRoaXMgZmlsZSBhdCB0aGUgcmVxdWVzdCBvZiBhIHVzZXIgYW5kIG1heSBoYXZlIGNyZWF0ZWQgb3IgbW9kaWZpZWQgdGhlIGZpbGUgY29udGVudHMubXNvZnR3YXJlQWdlbnShZG5hbWVmQ2xhdWRlcmFsbEFjdGlvbnNJbmNsdWRlZPUAAADIanVtYgAAAEBqdW1kY2JvcgARABCAAACqADibcRNjMnBhLmhhc2guZGF0YQAAAAAYYzJzaNokLzKXy1uxUYlALju/WowAAACAY2JvcqVjYWxnZnNoYTI1NmNwYWRNAAAAAAAAAAAAAAAAAGRoYXNoWCDswUD5LU3nUeZmu+Exuy7yjYNe38haPFrHEESUfIaioWRuYW1lbmp1bWJmIG1hbmlmZXN0amV4Y2x1c2lvbnOBomVzdGFydBh8Zmxlbmd0aBkeBAAAAj5qdW1iAAAAJ2p1bWRjMmNsABEAEIAAAKoAOJtxA2MycGEuY2xhaW0udjIAAAACD2Nib3KlY2FsZ2ZzaGEyNTZpc2lnbmF0dXJleE1zZWxmI2p1bWJmPS9jMnBhL3VybjpjMnBhOjQzMzMyNDA3LTk0NWMtNGZmOS04ZGJjLWI3ZTkyYTQ4YTdhYS9jMnBhLnNpZ25hdHVyZWppbnN0YW5jZUlEeCx4bXA6aWlkOjk0MDNkODM5LTMwMTEtNDVhNy1iMGFhLTdjOWUyMDUwODZjY3JjcmVhdGVkX2Fzc2VydGlvbnODomN1cmx4LXNlbGYjanVtYmY9YzJwYS5hc3NlcnRpb25zL2MycGEuaW5ncmVkaWVudC52M2RoYXNoWCBb+BwOR85PaiRpaxlzu8zQ5bW4KhfSitQ6CZuAtZmzgaJjdXJseCpzZWxmI2p1bWJmPWMycGEuYXNzZXJ0aW9ucy9jMnBhLmFjdGlvbnMudjJkaGFzaFggB9rMPCcIwvpOABXMlwAeMRFRugeddEDDCYwVjqod03CiY3VybHgpc2VsZiNqdW1iZj1jMnBhLmFzc2VydGlvbnMvYzJwYS5oYXNoLmRhdGFkaGFzaFggZ8cWzZkBVL5c8n+TYdjZXrJXxctoaEojErsRX8dQiTh0Y2xhaW1fZ2VuZXJhdG9yX2luZm+jZG5hbWVvQW50aHJvcGljIEZpbGVzZ3ZlcnNpb25lMS4wLjBrc3BlY1ZlcnNpb25lMi40LjAAABA4anVtYgAAAChqdW1kYzJjcwARABCAAACqADibcQNjMnBhLnNpZ25hdHVyZQAAABAIY2JvctKEWQISogEmGCFZAgowggIGMIIBjaADAgECAhRA5aAK7sI50L64g/oGQgU9Z1UTADAKBggqhkjOPQQDAzBJMRcwFQYDVQQKEw5BbnRocm9waWMsIFBCQzEuMCwGA1UEAxMlQW50aHJvcGljIENvbnRlbnQgQ3JlZGVudGlhbHMgUm9vdCBDQTAeFw0yNjA4MDcxODQzNTZaFw0yODA4MDYxOTQzNTZaMEQxFzAVBgNVBAoTDkFudGhyb3BpYywgUEJDMSkwJwYDVQQDEyBBbnRocm9waWMgQ2xhdWRlIENvbnRlbnQgU2lnbmluZzBZMBMGByqGSM49AgEGCCqGSM49AwEHA0IABJh6CmvLUBgFFNU0vUKlOVtE6djd17L5SuwX0LemFisBM3dkd/3cyjxFA3Qo5S46fX0/ihY0VZ7mfb9KF703t5OjWDBWMA4GA1UdDwEB/wQEAwIHgDAVBgNVHSUEDjAMBgorBgEEAYPoXgIBMAwGA1UdEwEB/wQCMAAwHwYDVR0jBBgwFoAUzlHiBIFOZFsj+OPEz5o+nMHXXMIwCgYIKoZIzj0EAwMDZwAwZAIwMXMdFJ4BetLLVY7ORuE9noqbbAZOZn/aArXyTwFAZfKrPzxF2vPoJNf1+UCdg1XGAjBwX1zd9WGqYkqmL5SFqw1QySjr1zJfpJM9+1rdDwSPLMOPOjKuiXjoU/pUUeG9RwmhY3BhZFkNngAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAPZYQMcE2qEyWQ/BrK2Sq7NCw6OURG/vpzz0HyVUbAE6twuY5nHKeGDcf1wtNjtikt/5z+7zOrbMOKdXEg96ejNOPLg=</c2pa:manifest></metadata>
   <defs>
     <symbol id="pa-globe" viewBox="0 0 100 100">
-      <!-- The disc. Fill defaults to none, so the symbol is line art unless a
-           variant sets globe-fill. That one property is what lets a single
-           definition serve both the fine schedule mark and the solid badge
-           used on an aircraft tail. -->
-      <circle cx="50" cy="50" r="46" style="fill: var(--globe-fill, none)"/>
-      <g fill="none" stroke="currentColor" style="stroke-width: var(--globe-stroke, var(--mark-stroke, 3))"
-         stroke-linecap="round">
-        <!-- Outer circle: the 90 degree meridian. -->
-        <circle cx="50" cy="50" r="46"/>
-        <!-- MERIDIANS, as ellipses with rx = 46 * cos(longitude). Four of
-             them rather than two: the original mark is dense, and a sparse
-             wireframe reads as a stock globe icon instead of as this one.
-             22.5 / 45 / 67.5 degrees, plus the centre line at rx 0. -->
-        <line x1="50" y1="4" x2="50" y2="96"/>
-        <ellipse cx="50" cy="50" rx="17.6" ry="46"/>
-        <ellipse cx="50" cy="50" rx="32.5" ry="46"/>
-        <ellipse cx="50" cy="50" rx="42.5" ry="46"/>
-        <!-- LATITUDES, as sagging ARCS rather than straight chords. This is
-             the correction that matters most. Straight chords are what you get
-             viewing a sphere exactly head-on, and they read as a wireframe.
-             The real mark is drawn as though seen from slightly below the
-             equator, so every latitude bows downward in the middle. Each is a
-             quadratic curve whose control point sits at twice the desired sag
-             below the endpoints, so Q 50 37 on a line at y=27 sags by exactly
-             5. The equator stays straight, which is what carries the wordmark
-             band on the badge version.
-
-             The polar pair sits at roughly 51 degrees rather than a strict 60,
-             and sags by 3 rather than 5. Strict geometry put them at y 10.2
-             and 89.8 with a full sag, which crowded the outer circle and made
-             the mark look molten at the bottom. The original is not strictly
-             geometric either: it is drawn to look right, and optical spacing
-             beats arithmetic whenever the two disagree. -->
-        <line x1="4" y1="50" x2="96" y2="50"/>
-        <path d="M 10.2 27 Q 50 37 89.8 27"/>
-        <path d="M 10.2 73 Q 50 83 89.8 73"/>
-        <!-- The polar pair, dropped at small sizes via globe-detail. -->
+      
+      <circle cx="50" cy="50" r="46" style="fill: var(--globe-fill, none)"></circle>
+      <g fill="none" stroke="currentColor" style="stroke-width: var(--globe-stroke, var(--mark-stroke, 3))" stroke-linecap="round">
+        
+        <circle cx="50" cy="50" r="46"></circle>
+        
+        <line x1="50" y1="4" x2="50" y2="96"></line>
+        <ellipse cx="50" cy="50" rx="17.6" ry="46"></ellipse>
+        <ellipse cx="50" cy="50" rx="32.5" ry="46"></ellipse>
+        <ellipse cx="50" cy="50" rx="42.5" ry="46"></ellipse>
+        
+        <line x1="4" y1="50" x2="96" y2="50"></line>
+        <path d="M 10.2 27 Q 50 37 89.8 27"></path>
+        <path d="M 10.2 73 Q 50 83 89.8 73"></path>
+        
         <g style="display: var(--globe-detail, inline)">
-          <path d="M 21.4 14 Q 50 20 78.6 14"/>
-          <path d="M 21.4 86 Q 50 92 78.6 86"/>
+          <path d="M 21.4 14 Q 50 20 78.6 14"></path>
+          <path d="M 21.4 86 Q 50 92 78.6 86"></path>
         </g>
       </g>
     </symbol>
 
-    <!--
-      MANIFEST ICONS
-      Every icon below shares the globe geometry box (100x100) and, crucially,
-      reads the SAME stroke variable as the globe: mark-stroke. Matching stroke
-      weight across the globe and every manifest icon is the single detail that
-      makes the flag row, the experience manifest and the hobbies row read as
-      one designed system rather than three unrelated widgets. It is also the
-      detail most often skipped, because each icon looks fine in isolation.
-
-      Set mark-stroke once on a container and every mark inside it retunes
-      together. The globe reads globe-stroke first and falls back to
-      mark-stroke, so it can still be overridden on its own when it needs to be.
-    -->
+    
 
     <symbol id="pa-waypoint" viewBox="0 0 100 100">
       <g fill="none" stroke="currentColor" style="stroke-width: var(--mark-stroke, 3)">
-        <circle cx="50" cy="50" r="34"/>
-        <circle cx="50" cy="50" r="10" fill="currentColor" stroke="none"/>
+        <circle cx="50" cy="50" r="34"></circle>
+        <circle cx="50" cy="50" r="10" fill="currentColor" stroke="none"></circle>
       </g>
     </symbol>
 
     <symbol id="pa-sector" viewBox="0 0 100 100">
-      <g fill="none" stroke="currentColor" style="stroke-width: var(--mark-stroke, 3)"
-         stroke-linecap="round" stroke-linejoin="round">
-        <line x1="16" y1="50" x2="84" y2="50"/>
-        <circle cx="16" cy="50" r="8" fill="currentColor" stroke="none"/>
-        <path d="M 62 32 L 84 50 L 62 68"/>
+      <g fill="none" stroke="currentColor" style="stroke-width: var(--mark-stroke, 3)" stroke-linecap="round" stroke-linejoin="round">
+        <line x1="16" y1="50" x2="84" y2="50"></line>
+        <circle cx="16" cy="50" r="8" fill="currentColor" stroke="none"></circle>
+        <path d="M 62 32 L 84 50 L 62 68"></path>
       </g>
     </symbol>
 
     <symbol id="pa-document" viewBox="0 0 100 100">
       <g fill="none" stroke="currentColor" style="stroke-width: var(--mark-stroke, 3)">
-        <rect x="22" y="14" width="56" height="72"/>
-        <line x1="34" y1="38" x2="66" y2="38"/>
-        <line x1="34" y1="52" x2="66" y2="52"/>
-        <line x1="34" y1="66" x2="54" y2="66"/>
+        <rect x="22" y="14" width="56" height="72"></rect>
+        <line x1="34" y1="38" x2="66" y2="38"></line>
+        <line x1="34" y1="52" x2="66" y2="52"></line>
+        <line x1="34" y1="66" x2="54" y2="66"></line>
       </g>
     </symbol>
 
     <symbol id="pa-clock" viewBox="0 0 100 100">
-      <g fill="none" stroke="currentColor" style="stroke-width: var(--mark-stroke, 3)"
-         stroke-linecap="round" stroke-linejoin="round">
-        <circle cx="50" cy="50" r="36"/>
-        <path d="M 50 26 L 50 50 L 68 60"/>
+      <g fill="none" stroke="currentColor" style="stroke-width: var(--mark-stroke, 3)" stroke-linecap="round" stroke-linejoin="round">
+        <circle cx="50" cy="50" r="36"></circle>
+        <path d="M 50 26 L 50 50 L 68 60"></path>
       </g>
     </symbol>
 
     <symbol id="pa-tag" viewBox="0 0 100 100">
-      <g fill="none" stroke="currentColor" style="stroke-width: var(--mark-stroke, 3)"
-         stroke-linejoin="round">
-        <path d="M 32 16 L 80 16 L 80 84 L 32 84 L 20 50 Z"/>
-        <circle cx="40" cy="50" r="6"/>
+      <g fill="none" stroke="currentColor" style="stroke-width: var(--mark-stroke, 3)" stroke-linejoin="round">
+        <path d="M 32 16 L 80 16 L 80 84 L 32 84 L 20 50 Z"></path>
+        <circle cx="40" cy="50" r="6"></circle>
       </g>
     </symbol>
 
     <symbol id="pa-signal" viewBox="0 0 100 100">
-      <g fill="none" stroke="currentColor" style="stroke-width: var(--mark-stroke, 3)"
-         stroke-linecap="round">
-        <circle cx="50" cy="70" r="9" fill="currentColor" stroke="none"/>
-        <path d="M 30 54 A 28 28 0 0 1 70 54"/>
-        <path d="M 18 40 A 46 46 0 0 1 82 40"/>
+      <g fill="none" stroke="currentColor" style="stroke-width: var(--mark-stroke, 3)" stroke-linecap="round">
+        <circle cx="50" cy="70" r="9" fill="currentColor" stroke="none"></circle>
+        <path d="M 30 54 A 28 28 0 0 1 70 54"></path>
+        <path d="M 18 40 A 46 46 0 0 1 82 40"></path>
       </g>
     </symbol>
 
     <symbol id="pa-book" viewBox="0 0 100 100">
-      <g fill="none" stroke="currentColor" style="stroke-width: var(--mark-stroke, 3)"
-         stroke-linejoin="round">
-        <path d="M 16 24 L 48 32 L 48 80 L 16 72 Z"/>
-        <path d="M 84 24 L 52 32 L 52 80 L 84 72 Z"/>
+      <g fill="none" stroke="currentColor" style="stroke-width: var(--mark-stroke, 3)" stroke-linejoin="round">
+        <path d="M 16 24 L 48 32 L 48 80 L 16 72 Z"></path>
+        <path d="M 84 24 L 52 32 L 52 80 L 84 72 Z"></path>
       </g>
     </symbol>
 
-    <!--
-      PLACE MARKS
-      Added for the route map concept. Same 100x100 box and the same
-      mark-stroke variable as every other icon, which is what keeps the two
-      location clusters reading as one system instead of two unrelated lists.
-      Nothing here sets its own stroke width.
-    -->
+    
 
     <symbol id="pa-pennant" viewBox="0 0 100 100">
-      <g fill="none" stroke="currentColor" style="stroke-width: var(--mark-stroke, 3)"
-         stroke-linejoin="round">
-        <line x1="26" y1="14" x2="26" y2="86"/>
-        <path d="M 26 22 L 82 36 L 26 50 Z"/>
+      <g fill="none" stroke="currentColor" style="stroke-width: var(--mark-stroke, 3)" stroke-linejoin="round">
+        <line x1="26" y1="14" x2="26" y2="86"></line>
+        <path d="M 26 22 L 82 36 L 26 50 Z"></path>
       </g>
     </symbol>
 
     <symbol id="pa-ball" viewBox="0 0 100 100">
       <g fill="none" stroke="currentColor" style="stroke-width: var(--mark-stroke, 3)">
-        <circle cx="50" cy="50" r="34"/>
-        <line x1="16" y1="50" x2="84" y2="50"/>
-        <line x1="50" y1="16" x2="50" y2="84"/>
-        <path d="M 27 27 Q 50 50 27 73"/>
-        <path d="M 73 27 Q 50 50 73 73"/>
+        <circle cx="50" cy="50" r="34"></circle>
+        <line x1="16" y1="50" x2="84" y2="50"></line>
+        <line x1="50" y1="16" x2="50" y2="84"></line>
+        <path d="M 27 27 Q 50 50 27 73"></path>
+        <path d="M 73 27 Q 50 50 73 73"></path>
       </g>
     </symbol>
 
     <symbol id="pa-note" viewBox="0 0 100 100">
-      <g fill="none" stroke="currentColor" style="stroke-width: var(--mark-stroke, 3)"
-         stroke-linejoin="round">
-        <circle cx="34" cy="72" r="13"/>
-        <line x1="47" y1="72" x2="47" y2="22"/>
-        <path d="M 47 22 L 78 31 L 78 45"/>
+      <g fill="none" stroke="currentColor" style="stroke-width: var(--mark-stroke, 3)" stroke-linejoin="round">
+        <circle cx="34" cy="72" r="13"></circle>
+        <line x1="47" y1="72" x2="47" y2="22"></line>
+        <path d="M 47 22 L 78 31 L 78 45"></path>
       </g>
     </symbol>
 
     <symbol id="pa-course" viewBox="0 0 100 100">
-      <g fill="none" stroke="currentColor" style="stroke-width: var(--mark-stroke, 3)"
-         stroke-linecap="round">
-        <circle cx="20" cy="78" r="8" fill="currentColor" stroke="none"/>
-        <path d="M 20 78 Q 42 40 58 58 T 82 24"/>
+      <g fill="none" stroke="currentColor" style="stroke-width: var(--mark-stroke, 3)" stroke-linecap="round">
+        <circle cx="20" cy="78" r="8" fill="currentColor" stroke="none"></circle>
+        <path d="M 20 78 Q 42 40 58 58 T 82 24"></path>
       </g>
     </symbol>
 
     <symbol id="pa-rack" viewBox="0 0 100 100">
       <g fill="none" stroke="currentColor" style="stroke-width: var(--mark-stroke, 3)">
-        <line x1="24" y1="16" x2="24" y2="86"/>
-        <line x1="76" y1="16" x2="76" y2="86"/>
-        <line x1="24" y1="36" x2="76" y2="36"/>
-        <line x1="24" y1="58" x2="76" y2="58"/>
-        <line x1="24" y1="80" x2="76" y2="80"/>
+        <line x1="24" y1="16" x2="24" y2="86"></line>
+        <line x1="76" y1="16" x2="76" y2="86"></line>
+        <line x1="24" y1="36" x2="76" y2="36"></line>
+        <line x1="24" y1="58" x2="76" y2="58"></line>
+        <line x1="24" y1="80" x2="76" y2="80"></line>
       </g>
     </symbol>
 
     <symbol id="pa-chart" viewBox="0 0 100 100">
-      <g fill="none" stroke="currentColor" style="stroke-width: var(--mark-stroke, 3)"
-         stroke-linecap="square">
-        <path d="M 18 16 L 18 84 L 86 84"/>
-        <line x1="34" y1="84" x2="34" y2="60"/>
-        <line x1="52" y1="84" x2="52" y2="42"/>
-        <line x1="70" y1="84" x2="70" y2="26"/>
+      <g fill="none" stroke="currentColor" style="stroke-width: var(--mark-stroke, 3)" stroke-linecap="square">
+        <path d="M 18 16 L 18 84 L 86 84"></path>
+        <line x1="34" y1="84" x2="34" y2="60"></line>
+        <line x1="52" y1="84" x2="52" y2="42"></line>
+        <line x1="70" y1="84" x2="70" y2="26"></line>
       </g>
     </symbol>
 
     <symbol id="pa-launch" viewBox="0 0 100 100">
-      <g fill="none" stroke="currentColor" style="stroke-width: var(--mark-stroke, 3)"
-         stroke-linecap="round" stroke-linejoin="round">
-        <path d="M 16 78 L 40 54 L 56 68 L 84 28"/>
-        <path d="M 64 28 L 84 28 L 84 48"/>
+      <g fill="none" stroke="currentColor" style="stroke-width: var(--mark-stroke, 3)" stroke-linecap="round" stroke-linejoin="round">
+        <path d="M 16 78 L 40 54 L 56 68 L 84 28"></path>
+        <path d="M 64 28 L 84 28 L 84 48"></path>
       </g>
     </symbol>
 
     <symbol id="pa-people" viewBox="0 0 100 100">
-      <g fill="none" stroke="currentColor" style="stroke-width: var(--mark-stroke, 3)"
-         stroke-linecap="round">
-        <circle cx="37" cy="38" r="13"/>
-        <path d="M 15 80 A 22 22 0 0 1 59 80"/>
-        <circle cx="72" cy="44" r="10"/>
-        <path d="M 62 80 A 16 16 0 0 1 90 80"/>
+      <g fill="none" stroke="currentColor" style="stroke-width: var(--mark-stroke, 3)" stroke-linecap="round">
+        <circle cx="37" cy="38" r="13"></circle>
+        <path d="M 15 80 A 22 22 0 0 1 59 80"></path>
+        <circle cx="72" cy="44" r="10"></circle>
+        <path d="M 62 80 A 16 16 0 0 1 90 80"></path>
       </g>
     </symbol>
 
     <symbol id="pa-bank" viewBox="0 0 100 100">
-      <g fill="none" stroke="currentColor" style="stroke-width: var(--mark-stroke, 3)"
-         stroke-linejoin="round">
-        <path d="M 14 38 L 50 16 L 86 38 Z"/>
-        <line x1="28" y1="46" x2="28" y2="76"/>
-        <line x1="44" y1="46" x2="44" y2="76"/>
-        <line x1="60" y1="46" x2="60" y2="76"/>
-        <line x1="76" y1="46" x2="76" y2="76"/>
-        <line x1="14" y1="84" x2="86" y2="84"/>
+      <g fill="none" stroke="currentColor" style="stroke-width: var(--mark-stroke, 3)" stroke-linejoin="round">
+        <path d="M 14 38 L 50 16 L 86 38 Z"></path>
+        <line x1="28" y1="46" x2="28" y2="76"></line>
+        <line x1="44" y1="46" x2="44" y2="76"></line>
+        <line x1="60" y1="46" x2="60" y2="76"></line>
+        <line x1="76" y1="46" x2="76" y2="76"></line>
+        <line x1="14" y1="84" x2="86" y2="84"></line>
       </g>
     </symbol>
 
     <symbol id="pa-camera" viewBox="0 0 100 100">
-      <g fill="none" stroke="currentColor" style="stroke-width: var(--mark-stroke, 3)"
-         stroke-linejoin="round">
-        <path d="M 12 32 L 32 32 L 40 22 L 60 22 L 68 32 L 88 32 L 88 80 L 12 80 Z"/>
-        <circle cx="50" cy="54" r="16"/>
+      <g fill="none" stroke="currentColor" style="stroke-width: var(--mark-stroke, 3)" stroke-linejoin="round">
+        <path d="M 12 32 L 32 32 L 40 22 L 60 22 L 68 32 L 88 32 L 88 80 L 12 80 Z"></path>
+        <circle cx="50" cy="54" r="16"></circle>
       </g>
     </symbol>
   </defs>

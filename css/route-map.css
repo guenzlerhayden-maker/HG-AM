@@ -1,186 +1,114 @@
 /* ============================================================================
    ROUTE MAP
-   ----------------------------------------------------------------------------
-   Loaded only by about.html. It began as a concept in its own file so it could
-   be compared against the previous About page and dropped without unpicking it
-   from components.css; it stays in its own file because nothing else uses it
-   and a single-page component has no business in the shared stylesheet.
+   Chart + the station log that opens over it on hover.
+   ========================================================================= */
 
-   THE MAP IS TWO LAYERS, DELIBERATELY:
-     - the SVG holds geography only: graticule, coastline, route arc
-     - the pins are HTML positioned over it
+.pa-map-wrap { position: relative; }
 
-   Pins could have been SVG <text>, and that is the obvious way to do it. But
-   text inside a scaling viewBox scales with the map, so a label that is right
-   on a desktop is unreadable on a phone and there is no way to opt out. As
-   HTML the labels sit on the real type scale, take .t-label like every other
-   field label on the site, and stay put while the map behind them resizes.
-   The map is a picture; the labels are type. Keeping them in the layer that
-   suits each is worth the small extra plumbing.
-   ========================================================================== */
-
-.route-map {
-  --chart-ink: var(--color-text-brand);
-}
-
-.route-map__chart {
+.pa-chart {
   position: relative;
-  margin: 0;
-  background-color: var(--color-surface-sunken);
-  border: var(--rule-width-medium) solid var(--chart-ink);
-  /* Locks the box to the projection's aspect so the absolutely positioned pins
-     land on the right places at every width. Without this the pins drift as
-     soon as the box is not exactly the map's shape. */
+  margin: 24px 0 0;
+  background: var(--pa-chart);
+  border: var(--pa-rule);
   aspect-ratio: 1000 / 621;
 }
 
-.route-map__chart svg {
+.pa-chart > svg { position: absolute; inset: 0; width: 100%; height: 100%; }
+
+/* ---- Station pins -------------------------------------------------------- */
+
+.pa-pin {
   position: absolute;
-  inset: 0;
-  inline-size: 100%;
-  block-size: 100%;
-}
-
-/* --- Chart layers ---------------------------------------------------------- */
-
-/* fill and stroke are INHERITED properties, which is the whole reason the
-   generated symbol sets neither. Declaring them on the <use> element passes
-   them through the shadow boundary into the path, so the map draws with the
-   site's tokens and no colour is hard-coded in the asset. */
-
-.chart__grid {
-  fill: none;
-  stroke: var(--chart-ink);
-  stroke-width: 0.8;
-  opacity: 0.18;
-}
-
-.chart__land {
-  fill: var(--pa-white);
-  stroke: var(--chart-ink);
-  /* NOT var(--mark-stroke) literally. The icons live in a 100-unit box drawn
-     at ~28px, this map is a 1000-unit box drawn at ~900px - the same number
-     would render nearly three times heavier here. What has to match is the
-     weight on screen, not the digit in the file, so this is tuned to sit with
-     the marks rather than copy them. */
-  stroke-width: 1.8;
-  stroke-linejoin: round;
-  stroke-linecap: round;
-}
-
-/* Dashed, like a scheduled service on a timetable chart rather than a solid
-   border. The dash pattern is in viewBox units, so it scales with the map. */
-/* The Mississippi, drawn in the sea colour so it reads as water cutting
-   through the land rather than as another border. Finer than the coastline:
-   it is orientation, not outline, and a river at the same weight as a national
-   border claims more importance than it has.
-
-   It earns its place because the Quad Cities sit ON it - half the metro in
-   Iowa, half in Illinois - so the river is what makes that pin mean something
-   instead of being a dot in a blank middle. Checked rather than eyeballed:
-   the build tool reports the pin 0.6 units from the river on a 1000-unit map,
-   and Tulsa 110 away. */
-
-.chart__river {
-  fill: none;
-  stroke: var(--pa-powder);
-  stroke-width: 1.4;
-  stroke-linecap: round;
-  stroke-linejoin: round;
-}
-
-.chart__route {
-  fill: none;
-  stroke: var(--color-accent);
-  stroke-width: 3;
-  stroke-dasharray: 10 8;
-  stroke-linecap: round;
-}
-
-/* --- Pins ------------------------------------------------------------------
-   Positioned from custom properties so the coordinates live in the markup next
-   to the place they describe, not buried in a stylesheet. */
-
-.pin {
-  position: absolute;
-  inset-block-start: var(--pin-y);
-  inset-inline-start: var(--pin-x);
+  z-index: 4;
   display: flex;
   align-items: center;
-  gap: var(--space-2);
+  gap: 8px;
   text-decoration: none;
-  color: var(--chart-ink);
-  transform: translate(0, -50%);
+  color: var(--pa-globe-blue);
 }
 
-/* Label sits west of the dot when the pin would otherwise run off the chart. */
-.pin--west {
+.pa-pin[data-station="quad-cities"] { top: 38.35%; left: 60.82%; transform: translate(0, -50%); }
+
+.pa-pin[data-station="tulsa"] {
+  top: 59.89%;
+  left: 51.11%;
   flex-direction: row-reverse;
   transform: translate(-100%, -50%);
 }
 
-.pin__dot {
-  inline-size: 0.85rem;
-  block-size: 0.85rem;
+.pa-pin .dot {
+  width: 14px;
+  height: 14px;
   flex: none;
   border-radius: 50%;
-  background-color: var(--chart-ink);
-  /* Concentric ring without a second element. */
-  box-shadow: 0 0 0 3px var(--color-surface-sunken), 0 0 0 4px var(--chart-ink);
-  /* The dot marks the coordinate, so it is what gets centred, not the flex box. */
-  margin-inline: -0.425rem;
+  background: var(--pa-globe-blue);
+  box-shadow: 0 0 0 3px var(--pa-chart), 0 0 0 4px var(--pa-globe-blue);
+  margin-inline: -7px;
 }
 
-.pin--west .pin__dot { margin-inline: -0.425rem; }
-
-.pin__label {
+.pa-pin .plate {
   white-space: nowrap;
-  padding: 2px var(--space-2);
-  background-color: var(--color-surface);
-  border: var(--rule-width) solid var(--chart-ink);
+  padding: 3px 8px;
+  background: var(--pa-card);
+  border: 1px solid var(--pa-globe-blue);
+  font: 700 10px/1.3 var(--pa-display);
+  letter-spacing: .14em;
+  text-transform: uppercase;
 }
 
-.pin:hover .pin__label,
-.pin:focus-visible .pin__label {
-  background-color: var(--chart-ink);
-  color: var(--color-text-invert);
+.pa-pin.is-active .dot { background: var(--pa-stamp); box-shadow: 0 0 0 3px var(--pa-chart), 0 0 0 4px var(--pa-stamp); }
+
+/* The inactive pin hides while a log is open so the card never sits under an
+   irrelevant marker. */
+.pa-map-wrap.has-open .pa-pin:not(.is-active) { visibility: hidden; }
+
+/* ---- Station log --------------------------------------------------------- */
+
+.pa-log {
+  display: none;
+  background: var(--pa-card);
+  border: 2px solid var(--pa-globe-blue);
+  box-shadow: 0 2px 4px rgba(20, 24, 29, .2), 0 12px 28px rgba(20, 24, 29, .22);
+  padding: 14px 16px 16px;
+  /* pointer-events off, or the card intercepts its own pin's mouseleave */
+  pointer-events: none;
 }
 
-/* --- Base clusters ---------------------------------------------------------
-   Two columns on wide screens, stacked below. Both read the SAME mark-stroke,
-   which is what makes them one system rather than two lists that happen to sit
-   side by side. */
+.pa-log.is-open { display: block; }
 
-.route-map__bases {
-  --mark-stroke: 3.5;
-  display: grid;
-  grid-template-columns: repeat(auto-fit, minmax(19rem, 1fr));
-  gap: var(--space-7);
-  margin-block-start: var(--space-7);
-}
+.pa-log h3 { font-size: 17px; }
 
-.base__head {
-  display: flex;
-  align-items: center;
-  gap: var(--space-3);
-  margin-block-end: var(--space-3);
-}
+.pa-log-head { display: flex; align-items: center; gap: 12px; margin-bottom: 12px; }
 
-.base__dot {
-  inline-size: 0.7rem;
-  block-size: 0.7rem;
+.pa-log-head .dot {
+  width: 11px;
+  height: 11px;
   flex: none;
   border-radius: 50%;
-  background-color: var(--color-text-brand);
-  box-shadow: 0 0 0 3px var(--color-surface), 0 0 0 4px var(--color-text-brand);
+  background: var(--pa-globe-blue);
+  box-shadow: 0 0 0 3px var(--pa-stock), 0 0 0 4px var(--pa-globe-blue);
 }
 
-@media (max-width: 720px) {
-  /* Below this the chart is too small to carry two labels without collision.
-     Shrinking the label type would break it away from the type scale, so the
-     labels drop and the pins become plain markers; the cluster headings under
-     the map already name both places. */
-  .pin__label { display: none; }
-  .pin, .pin--west { transform: translate(-50%, -50%); }
-  .pin__dot { margin-inline: 0; }
+/* Width is deliberate: 40%/22rem clears both pin coordinates on the chart.
+   Anything wider and the card box spans a marker. */
+@media (min-width: 640px) {
+  .pa-log {
+    position: absolute;
+    z-index: 3;
+    top: 5%;
+    width: min(40%, 22rem);
+    max-height: 90%;
+    overflow: hidden;
+  }
+
+  .pa-log[data-station="quad-cities"] { left: 3%; }
+  .pa-log[data-station="tulsa"] { right: 3%; }
 }
+
+/* Below 640px the card stacks under the chart at full width, unconstrained
+   height — an overlay that narrow is unreadable. */
+@media (max-width: 639px) {
+  .pa-log { position: relative; margin: 18px 0 2px; }
+}
+
+.pa-map-hint { margin-top: 14px; }

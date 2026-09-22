@@ -1,241 +1,121 @@
 /* ============================================================================
    BASE
-   ----------------------------------------------------------------------------
-   Reset, element defaults, and the type scale applied as utility classes.
-   Loaded AFTER tokens.css, so every value here comes from a var().
-   Nothing in this file knows about any specific component or page.
-   ========================================================================== */
+   ========================================================================= */
 
-/* --- Reset -----------------------------------------------------------------
-   A small, opinionated reset rather than a large third-party one. Each rule
-   below earns its place; there is nothing here you cannot explain. */
+*, *::before, *::after { box-sizing: border-box; }
 
-*,
-*::before,
-*::after {
-  /* border-box means width includes padding and border. Without it, adding
-     padding to a sized box makes it overflow, which is the single most common
-     source of "why is my layout broken" in hand-written CSS. */
-  box-sizing: border-box;
+html, body { overflow-x: clip; }
+
+html { -webkit-text-size-adjust: 100%; }
+
+body {
+  margin: 0;
+  background-color: var(--pa-stock);
+  background-image: var(--pa-mottle);
+  background-size: 520px;
+  color: var(--pa-ink);
+  font: 400 var(--pa-size-body)/1.6 var(--pa-body);
+  text-wrap: pretty;
 }
 
-* {
-  /* Browsers apply default margins to headings, paragraphs and lists that
-     differ per element. Zeroing them means vertical rhythm comes from ONE
-     place (the layout stack utilities) instead of from browser defaults you
-     are constantly fighting. */
+h1, h2, h3 {
+  font-family: var(--pa-display);
+  font-weight: 700;
+  letter-spacing: -.015em;
   margin: 0;
 }
 
-html {
-  /* Never set a px font-size on html. Doing so overrides the user's browser
-     font-size preference, which is an accessibility regression. 100% respects
-     it, and every rem in the system then scales with the user's choice. */
-  font-size: 100%;
-  -webkit-text-size-adjust: 100%;
-}
+h1 { font-size: clamp(1.9rem, 4.6vw, 3rem); line-height: .95; }
+h2 { font-size: clamp(1.8rem, 3.4vw, 2.6rem); line-height: 1.1; }
+h3 { font-size: 21px; line-height: 1.15; letter-spacing: .02em; }
 
-body {
-  min-block-size: 100vh;
-  background-color: var(--color-surface);
-  color: var(--color-text);
-  font-family: var(--font-sans);
-  font-size: var(--font-size-body);
-  font-weight: var(--font-weight-regular);
-  line-height: var(--leading-base);
-  /* Slightly better letterform rendering on macOS at these weights. */
-  -webkit-font-smoothing: antialiased;
-}
+p { margin: 0; }
 
-img,
-svg,
-picture {
-  /* Inline elements sit on the text baseline, which leaves a mysterious few
-     px of space under every image. block removes it. */
-  display: block;
-  max-inline-size: 100%;
-}
+img, svg { max-width: 100%; }
 
-input,
-button,
-textarea,
-select {
-  /* Form controls do NOT inherit font by default. This is the fix. */
-  font: inherit;
-  color: inherit;
-}
+a { color: var(--pa-globe-blue); text-underline-offset: .2em; text-decoration-thickness: 1px; }
+a:hover { color: var(--pa-stamp); }
 
-ul[class],
-ol[class] {
-  /* Only strip list styling from lists we have deliberately styled. An
-     unclassed <ul> in prose keeps its bullets, as it should. */
-  list-style: none;
-  padding: 0;
-}
+summary::-webkit-details-marker { display: none; }
 
+:focus-visible { outline: 2px solid var(--pa-stamp); outline-offset: 2px; }
 
-/* --- Headings --------------------------------------------------------------
-   Heading ELEMENTS carry document structure (h1..h6) for screen readers and
-   outline. Heading APPEARANCE comes from the .t-* classes below.
+hr { border: 0; border-top: var(--pa-rule-bold); margin: 0; }
 
-   Keeping those two separate is the point: you choose <h2> because it is the
-   correct level in the document, and .t-subhead because that is the right
-   size. Conflating them forces you to pick the wrong tag to get the right
-   look, which is how documents end up with three h1s and no h2. */
+/* ---- Type roles ---------------------------------------------------------
+   Three voices, as on the printed forms:
+   .pa-label  letterpress caps        .pa-data  machine-struck
+   body copy  neutral grotesque
+   ------------------------------------------------------------------------ */
 
-h1, h2, h3, h4, h5, h6 {
-  font-size: inherit;
-  font-weight: inherit;
-  line-height: inherit;
-}
-
-
-/* --- Links ----------------------------------------------------------------- */
-
-a {
-  color: var(--color-text-brand);
-  /* Offsetting the underline from descenders is a small, cheap legibility win
-     that separates "styled" from "default browser link". */
-  text-underline-offset: 0.2em;
-  text-decoration-thickness: 1px;
-  transition: color var(--duration-fast) var(--easing-standard);
-}
-
-a:hover {
-  color: var(--color-accent);
-}
-
-
-/* --- Focus -----------------------------------------------------------------
-   :focus-visible, not :focus. The difference: :focus fires on mouse clicks too,
-   so styling it puts a ring around buttons people just clicked, which looks
-   broken and leads developers to remove focus styles entirely. :focus-visible
-   only fires when the browser judges a visible indicator is needed - keyboard
-   navigation, essentially. You get an accessible ring and a clean mouse UI. */
-
-:focus-visible {
-  outline: 2px solid var(--color-focus);
-  outline-offset: 2px;
-}
-
-
-/* --- Reduced motion --------------------------------------------------------
-   Respect the OS-level "reduce motion" setting. This system barely animates,
-   but the guard costs three lines and is correct by default. */
-
-@media (prefers-reduced-motion: reduce) {
-  *,
-  *::before,
-  *::after {
-    animation-duration: 0.01ms !important;
-    animation-iteration-count: 1 !important;
-    transition-duration: 0.01ms !important;
-    scroll-behavior: auto !important;
-  }
-}
-
-
-/* ============================================================================
-   TYPE SCALE - applied
-   Each named step from tokens.css, composed into a usable class.
-   ========================================================================== */
-
-/* The cover step. Not a bigger heading - a graphic element.
-   text-wrap: balance keeps a two-line cover title from leaving one orphaned
-   word on the second line, which at this scale is very visible. */
-.t-mega {
-  font-size: var(--font-size-mega);
-  font-weight: var(--font-weight-bold);
-  line-height: var(--leading-mega);
-  letter-spacing: var(--tracking-mega);
-  text-wrap: balance;
-  /* Safety net. text-wrap: balance can only break BETWEEN words - a single
-     long word at 130px has no break opportunity at all and simply runs off the
-     side. The vw factor was also too steep (13vw put a 48px floor on a 375px
-     phone, wider than the screen could hold), so that came down to 11vw with a
-     lower floor. Belt and braces: the clamp keeps normal titles fitting, and
-     break-word guarantees a freakishly long one degrades instead of vanishing. */
-  overflow-wrap: break-word;
-}
-
-.t-display {
-  font-size: var(--font-size-display);
-  font-weight: var(--font-weight-bold);
-  line-height: var(--leading-tight);
-  letter-spacing: var(--tracking-display);
-}
-
-.t-heading {
-  font-size: var(--font-size-heading);
-  font-weight: var(--font-weight-bold);
-  line-height: var(--leading-snug);
-  letter-spacing: var(--tracking-heading);
-}
-
-.t-subhead {
-  font-size: var(--font-size-subhead);
-  font-weight: var(--font-weight-bold);
-  line-height: var(--leading-snug);
-}
-
-.t-body {
-  font-size: var(--font-size-body);
-  font-weight: var(--font-weight-regular);
-  line-height: var(--leading-base);
-}
-
-.t-caption {
-  font-size: var(--font-size-caption);
-  line-height: var(--leading-base);
-  color: var(--color-text-muted);
-}
-
-/* THE load-bearing step.
-   Tiny, bold, uppercase, widely tracked. This single treatment is the entire
-   visual signature of airline signage, boarding passes and departure boards.
-   It is what will make the About page read as manifest DATA rather than as a
-   series of headings. Most of the distinctly "Pan Am" moments on this site are
-   going to be this one class. */
-.t-label {
-  font-size: var(--font-size-label);
-  font-weight: var(--font-weight-bold);
-  line-height: var(--leading-snug);
-  letter-spacing: var(--tracking-label);
+.pa-label {
+  font: 700 var(--pa-size-label)/1 var(--pa-display);
+  letter-spacing: var(--pa-track-label);
   text-transform: uppercase;
+  color: var(--pa-globe-blue);
 }
 
-/* Numeric data - years, flight numbers, times.
-   font-variant-numeric: tabular-nums forces every digit to the same width, so
-   columns of years line up vertically instead of wobbling. This is exactly the
-   detail that makes a table of numbers look typeset rather than typed. */
-.t-data {
-  font-variant-numeric: tabular-nums;
-  font-feature-settings: "tnum" 1;
+.pa-eyebrow {
+  font: 700 var(--pa-size-eyebrow)/1 var(--pa-display);
+  letter-spacing: var(--pa-track-wide);
+  text-transform: uppercase;
+  color: var(--pa-globe-blue);
 }
 
-/* --- Small text helpers --------------------------------------------------- */
+.pa-data {
+  font: 700 var(--pa-size-data)/1 var(--pa-data);
+  color: var(--pa-ink);
+}
 
-.t-muted  { color: var(--color-text-muted); }
-.t-invert { color: var(--color-text-invert); }
-.t-brand  { color: var(--color-text-brand); }
+.pa-note { font: 400 13px/1.6 var(--pa-body); color: var(--pa-ink-soft); }
 
-/* Constrain prose to a comfortable measure. Long lines are genuinely harder to
-   read because the eye loses its place on the return sweep. */
-.t-measure { max-inline-size: var(--measure); }
+.pa-caps {
+  font: 700 13px/1.1 var(--pa-display);
+  letter-spacing: .11em;
+  text-transform: uppercase;
+  color: var(--pa-ink);
+}
 
+/* ---- Print texture helpers ---------------------------------------------- */
 
-/* --- Accessibility utilities ---------------------------------------------- */
+.pa-textured { position: relative; }
 
-/* Visually hidden but still announced by screen readers. Used for section
-   labels that are obvious sighted but invisible to assistive tech. */
+.pa-textured > .pa-grain,
+.pa-textured > .pa-mottle {
+  position: absolute;
+  inset: 0;
+  pointer-events: none;
+  mix-blend-mode: multiply;
+}
+
+.pa-mottle { background-image: var(--pa-mottle); background-size: 420px; opacity: .42; }
+.pa-grain  { background-image: var(--pa-grain); opacity: .5; }
+
+/* Screen-blend layer that breaks up flat ink so coverage reads as printed */
+.pa-inkwash {
+  position: absolute;
+  inset: 0;
+  pointer-events: none;
+  background-image: var(--pa-ink-mottle);
+  background-size: 380px;
+  mix-blend-mode: screen;
+  opacity: .18;
+}
+
+.pa-scratches {
+  position: absolute;
+  inset: 0;
+  width: 100%;
+  height: 100%;
+  pointer-events: none;
+  mix-blend-mode: multiply;
+}
+
 .visually-hidden {
   position: absolute;
-  inline-size: 1px;
-  block-size: 1px;
-  padding: 0;
-  margin: -1px;
+  width: 1px; height: 1px;
+  margin: -1px; padding: 0;
   overflow: hidden;
   clip-path: inset(50%);
   white-space: nowrap;
-  border: 0;
 }

@@ -1,140 +1,73 @@
 /* ============================================================================
    LAYOUT
-   ----------------------------------------------------------------------------
-   Page-level primitives that POSITION boxes. They have no opinion about what
-   goes inside them and set almost no color.
+   ========================================================================= */
 
-   Note on logical properties: this file uses margin-inline / padding-block /
-   max-inline-size rather than margin-left / padding-top / max-width. They
-   describe intent relative to the text direction rather than to the physical
-   screen, so the site survives a future right-to-left translation without a
-   rewrite. It costs nothing to adopt now and is painful to retrofit later.
-   ========================================================================== */
+.pa-shell { max-width: var(--pa-measure); margin: 0 auto; padding-inline: var(--pa-gap); }
 
+.pa-section { margin-top: var(--pa-gap-xl); }
 
-/* --- Container -------------------------------------------------------------
-   One horizontal measure for the whole site. Every full-width band on the page
-   is a full-bleed background with a .container inside it, which is how you get
-   edge-to-edge color without breaking the content alignment. */
-
-.container {
-  inline-size: 100%;
-  max-inline-size: var(--container-max);
-  margin-inline: auto;
-  padding-inline: var(--space-5);
-}
-
-.container--narrow {
-  max-inline-size: 820px;
-}
-
-
-/* --- The 12-column grid ---------------------------------------------------- */
-
-.grid {
-  display: grid;
-  grid-template-columns: repeat(var(--grid-columns), minmax(0, 1fr));
-  gap: var(--grid-gutter);
-}
-
-/* minmax(0, 1fr) rather than plain 1fr is deliberate. A bare 1fr track has an
-   implicit minimum of auto, which means a long unbreakable string (a URL, a
-   wide table) can force the track wider than its share and blow out the grid.
-   minmax(0, 1fr) lets the track shrink properly. This is the single most
-   common CSS Grid bug and the fix is this one substitution. */
-
-.col-2  { grid-column: span 2; }
-.col-3  { grid-column: span 3; }
-.col-4  { grid-column: span 4; }
-.col-6  { grid-column: span 6; }
-.col-8  { grid-column: span 8; }
-.col-9  { grid-column: span 9; }
-.col-12 { grid-column: 1 / -1; }
-
-/* Layout DOES use breakpoints, unlike type. Column count is a genuinely
-   discrete decision - there is no meaningful "3.4 columns" - so a hard switch
-   is the right tool here, where clamp() was the right tool for type. */
-
-@media (max-width: 900px) {
-  .col-2,
-  .col-3,
-  .col-4 { grid-column: span 6; }
-}
-
-@media (max-width: 600px) {
-  [class*="col-"] { grid-column: 1 / -1; }
-}
-
-
-/* --- Stack -----------------------------------------------------------------
-   Vertical rhythm, applied once, here.
-
-   The "> * + *" selector (sometimes called the lobotomized owl) reads as
-   "every child that follows another child." That means the FIRST child never
-   gets a top margin, so a stack never adds unwanted space at its own top edge.
-   Compare the usual approach - putting margin-bottom on every paragraph - which
-   always leaves a stray margin hanging off the last element that you then have
-   to strip with a :last-child rule.
-
-   Spacing is overridable per instance via the --stack-space custom property,
-   so you get one mechanism instead of a family of .stack-sm/.stack-lg classes. */
-
-.stack > * + * {
-  margin-block-start: var(--stack-space, var(--space-5));
-}
-
-.stack--tight  { --stack-space: var(--space-3); }
-.stack--loose  { --stack-space: var(--space-7); }
-
-
-/* --- Sections and bands ---------------------------------------------------- */
-
-.section {
-  padding-block: var(--space-9);
-}
-
-.section--tight { padding-block: var(--space-7); }
-
-/* A full-bleed colored band. Put a .container inside it. */
-.band            { inline-size: 100%; }
-.band--paper     { background-color: var(--color-surface); }
-.band--sunken    { background-color: var(--color-surface-sunken); }
-.band--field     { background-color: var(--color-surface-field); }
-.band--invert    { background-color: var(--color-surface-invert); color: var(--color-text-invert); }
-
-
-/* --- Rules -----------------------------------------------------------------
-   Hairlines are a primary graphic element in this system, not an afterthought.
-   Printed airline documents are built out of ruled fields, so the rule weight
-   and color are as much a design decision as the type. */
-
-.rule {
-  border: 0;
-  border-block-start: var(--rule-width) solid var(--color-rule);
-}
-
-.rule--strong { border-block-start-color: var(--color-rule-strong); }
-.rule--invert { border-block-start-color: var(--color-rule-invert); }
-
-/* Weight modifiers. A heavy rule is solid ink, not a tinted hairline - at 4px
-   a 22% tint reads as a grey smear rather than as a deliberate bar. */
-.rule--medium {
-  border-block-start-width: var(--rule-width-medium);
-  border-block-start-color: var(--color-text-brand);
-}
-
-.rule--heavy {
-  border-block-start-width: var(--rule-width-heavy);
-  border-block-start-color: var(--color-text-brand);
-}
-
-
-/* --- Cluster ---------------------------------------------------------------
-   Horizontal group that wraps. Used for nav items, tag rows, flag strips. */
-
-.cluster {
+.pa-section-head {
   display: flex;
   flex-wrap: wrap;
-  align-items: center;
-  gap: var(--cluster-space, var(--space-4));
+  align-items: baseline;
+  justify-content: space-between;
+  gap: var(--pa-gap-sm);
+  margin-bottom: var(--pa-gap-sm);
 }
+
+/* ---- Page masthead: solid blue band + ruled field strip ------------------ */
+
+.pa-masthead { position: relative; background: var(--pa-blue); overflow: hidden; }
+
+.pa-masthead > .pa-shell { position: relative; padding-block: 22px 24px; }
+
+.pa-masthead .pa-eyebrow { color: var(--pa-sky-pale); font-size: 7.5px; letter-spacing: .28em; }
+
+.pa-masthead h1 { margin-top: 10px; color: var(--pa-card); }
+
+/* ---- Ruled field row ----------------------------------------------------- */
+
+.pa-fields {
+  display: grid;
+  grid-template-columns: repeat(auto-fit, minmax(130px, 1fr));
+  border-top: var(--pa-rule);
+  border-bottom: var(--pa-rule-bold);
+}
+
+.pa-fields > div { padding: 13px 15px 15px; }
+.pa-fields > div + div { border-left: var(--pa-rule-thin); }
+.pa-fields .pa-label { display: block; margin-bottom: 6px; }
+.pa-fields .pa-data { font-size: 20px; }
+
+/* ---- Entry list ---------------------------------------------------------- */
+
+.pa-list { list-style: none; margin: 0; padding: 0; }
+
+.pa-list > li {
+  display: grid;
+  grid-template-columns: 22px 1fr;
+  gap: 12px;
+  align-items: start;
+  padding-block: 10px;
+  border-top: var(--pa-rule-hair);
+}
+
+.pa-list svg { width: 22px; height: 22px; color: var(--pa-blue); margin-top: .15em; flex: none; }
+.pa-list p { font: 400 13px/1.5 var(--pa-body); }
+
+/* ---- Footer -------------------------------------------------------------- */
+
+.pa-footer { margin-top: var(--pa-gap-xl); border-top: var(--pa-rule); padding-block: 28px; }
+
+.pa-footer > .pa-shell {
+  display: flex;
+  flex-wrap: wrap;
+  align-items: baseline;
+  justify-content: space-between;
+  gap: 22px;
+}
+
+.pa-footer dl { display: flex; flex-wrap: wrap; gap: 30px; margin: 0; }
+.pa-footer div { display: grid; gap: 3px; }
+.pa-footer dd { margin: 0; font: 400 13px/1 var(--pa-data); color: var(--pa-ink-soft); }
+.pa-footer .pa-globe { width: 28px; height: 28px; color: var(--pa-blue); --mark-stroke: 3.5; --globe-detail: none; }

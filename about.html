@@ -3,8 +3,10 @@
 <head>
 <meta charset="utf-8">
 <meta name="viewport" content="width=device-width, initial-scale=1">
-<title>About</title>
-<meta name="description" content="Manifest page shell.">
+<title>About &mdash; Hayden Guenzler</title>
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link href="https://fonts.googleapis.com/css2?family=News+Cycle:wght@400;700&family=Archivo:wght@400;500;600;700&family=Courier+Prime:wght@400;700&display=swap" rel="stylesheet">
 <link rel="stylesheet" href="css/tokens.css">
 <link rel="stylesheet" href="css/base.css">
 <link rel="stylesheet" href="css/layout.css">
@@ -12,460 +14,314 @@
 <link rel="stylesheet" href="css/route-map.css">
 <link rel="stylesheet" href="css/boarding-stub.css">
 </head>
-<body class="page">
-
-<!-- The skip link is the first thing in the tab order on every page. -->
-<a class="skip-link" href="#main">Skip to content</a>
-
-<!-- Icons live in assets/icons.svg and are referenced with
-     <use href="assets/icons.svg#pa-globe"/>. One definition, five pages.
-     Note this only resolves over HTTP - opening these files directly from the
-     file system will silently render no icons. Always preview via the local
-     server (see .claude/launch.json). -->
-
-<nav class="site-nav" aria-label="Main">
-  <div class="container site-nav__inner">
-    <a class="site-nav__brand" href="index.html" aria-label="Home">
-      <svg class="globe globe--md globe--solid-invert globe--simple" aria-hidden="true"><use href="assets/icons.svg#pa-globe"/></svg>
+<body>
+<nav class="pa-nav">
+  <div class="pa-shell">
+    <a class="pa-nav-mark" href="index.html" aria-label="Home">
+      <svg><use href="assets/icons.svg#pa-globe"></use></svg>
     </a>
-    <ul class="site-nav__list">
-      <li class="site-nav__item">
-        <a class="site-nav__link" href="index.html">
-          <span class="site-nav__num">01</span>
-          <span class="t-label">Home</span>
-        </a>
-      </li>
-      <li class="site-nav__item">
-        <a class="site-nav__link" href="about.html" aria-current="page">
-          <span class="site-nav__num">02</span>
-          <span class="t-label">About</span>
-        </a>
-      </li>
-      <li class="site-nav__item">
-        <a class="site-nav__link" href="contact.html">
-          <span class="site-nav__num">03</span>
-          <span class="t-label">Contact</span>
-        </a>
-      </li>
+    <ul>
+      <li><a data-section href="index.html"><span class="num">01</span><span class="name">Home</span></a></li>
+      <li><a data-section href="about.html" aria-current="page"><span class="num">02</span><span class="name">About</span></a></li>
+      <li><a data-section href="contact.html"><span class="num">03</span><span class="name">Contact</span></a></li>
     </ul>
   </div>
 </nav>
 
-<main class="page__main" id="main">
-  <!-- ABOUT is the MANIFEST document type: a boarding pass. Navy header band,
-       then ruled fields. Dense and administrative, because this is the page
-       that actually carries the data. -->
-  <header class="cover cover--manifest">
-    <div class="cover__band">
-      <div class="container">
-        <p class="t-label cover__eyebrow">Passenger manifest</p>
-        <h1 class="t-display" style="margin-block-start: var(--space-3)">About</h1>
-      </div>
+<header>
+  <div class="pa-masthead">
+    <div class="pa-inkwash"></div>
+    <div class="pa-shell">
+      <p class="pa-eyebrow">Passenger manifest</p>
+      <h1>About</h1>
     </div>
-    <div class="container">
-      <div class="cover__fields">
-        <div class="cover__field"><p class="t-label t-muted">Bases</p><p class="t-subhead t-data">02</p></div>
-        <div class="cover__field"><p class="t-label t-muted">Entries</p><p class="t-subhead t-data">10</p></div>
-        <div class="cover__field"><p class="t-label t-muted">Interests</p><p class="t-subhead t-data">02</p></div>
-        <div class="cover__field"><p class="t-label t-muted">Revision</p><p class="t-subhead t-data">02</p></div>
-      </div>
+  </div>
+  <div class="pa-shell">
+    <dl class="pa-fields">
+      <div><dt class="pa-label">Bases</dt><dd class="pa-data">02</dd></div>
+      <div><dt class="pa-label">Entries</dt><dd class="pa-data">10</dd></div>
+      <div><dt class="pa-label">Interests</dt><dd class="pa-data">02</dd></div>
+      <div><dt class="pa-label">Revision</dt><dd class="pa-data">02</dd></div>
+    </dl>
+  </div>
+</header>
+
+<main class="pa-shell" style="padding-top:64px">
+
+  <section>
+    <div class="pa-section-head">
+      <h2>Places</h2>
+      <p class="pa-label">Route chart &mdash; home bases</p>
     </div>
-  </header>
+    <hr>
 
-  <div class="container section">
-
-    
-
-    <!-- PLACES. One "what happened where" component in place of a flag row and
-         a separate experience list. NO YEARS ANYWHERE by design: the moment a
-         date appears this stops being a map and becomes a timeline, which is
-         the thing it exists to avoid. -->
-    <section class="manifest-block route-map">
-      <div class="manifest-block__head">
-        <h2 class="t-heading">Places</h2>
-        <p class="t-label t-muted">Route chart &mdash; home bases</p>
-      </div>
-      <hr class="rule rule--heavy">
-
-      <figure class="route-map__chart">
-        <svg viewBox="0 0 1000 621" role="img"
-             aria-label="Albers projection chart of the continental United States with two marked home bases, Quad Cities in Iowa and Tulsa in Oklahoma, joined by a dashed route line.">
-          <use class="chart__grid" href="assets/us-outline.svg#us-grid"/>
-          <use class="chart__land" href="assets/us-outline.svg#us"/>
-          <use class="chart__river" href="assets/us-outline.svg#us-rivers"/>
-          <path class="chart__route" d="M 511.1 371.9 Q 546 295 608.2 238.1"/>
+    <div class="pa-map-wrap" data-route-map>
+      <figure class="pa-chart">
+        <svg viewBox="0 0 1000 621" role="img" aria-label="Chart of the continental United States with two marked home bases, Quad Cities in Iowa and Tulsa in Oklahoma, joined by a dashed route line.">
+          <use href="assets/us-outline.svg#us-grid" fill="none" stroke="#3A6584" stroke-width="0.8" opacity="0.18"></use>
+          <use href="assets/us-outline.svg#us" fill="#EFE6CE" stroke="#3A6584" stroke-width="1.8" stroke-linejoin="round" stroke-linecap="round"></use>
+          <use href="assets/us-outline.svg#us-rivers" fill="none" stroke="#6E9DBE" stroke-width="1.4" stroke-linecap="round" stroke-linejoin="round"></use>
+          <path d="M 511.1 371.9 Q 546 295 608.2 238.1" fill="none" stroke="#A8342F" stroke-width="3" stroke-dasharray="10 8" stroke-linecap="round"></path>
+          <polygon points="11,0 -7,6.5 -7,-6.5" fill="#A8342F" transform="translate(552.8 300) rotate(126)"></polygon>
         </svg>
 
-        <a class="pin" href="#base-quad-cities" style="--pin-x: 60.82%; --pin-y: 38.35%">
-          <span class="pin__dot"></span>
-          <span class="pin__label t-label">Quad Cities, Iowa</span>
+        <a class="pa-pin" data-station="quad-cities" href="#log-quad-cities" aria-expanded="false">
+          <span class="dot"></span><span class="plate">Quad Cities, Iowa</span>
         </a>
-        <a class="pin pin--west" href="#base-tulsa" style="--pin-x: 51.11%; --pin-y: 59.89%">
-          <span class="pin__dot"></span>
-          <span class="pin__label t-label">Tulsa, Oklahoma</span>
+        <a class="pa-pin" data-station="tulsa" href="#log-tulsa" aria-expanded="false">
+          <span class="dot"></span><span class="plate">Tulsa, Oklahoma</span>
         </a>
       </figure>
 
-      <div class="route-map__bases">
-        <section class="base" id="base-quad-cities">
-          <div class="base__head">
-            <span class="base__dot"></span>
-            <h3 class="t-subhead">Quad Cities, Iowa</h3>
-          </div>
-          <hr class="rule rule--medium">
-          <ul class="manifest manifest--list manifest--nodate">
-        <li class="manifest__item">
-          <svg class="globe manifest__mark" aria-hidden="true"><use href="assets/icons.svg#pa-pennant"/></svg>
-          <p class="manifest__fact">Pleasant Valley High School</p>
-        </li>
-        <li class="manifest__item">
-          <svg class="globe manifest__mark" aria-hidden="true"><use href="assets/icons.svg#pa-ball"/></svg>
-          <p class="manifest__fact">Basketball</p>
-        </li>
-        <li class="manifest__item">
-          <svg class="globe manifest__mark" aria-hidden="true"><use href="assets/icons.svg#pa-note"/></svg>
-          <p class="manifest__fact">Jazz band</p>
-        </li>
-        <li class="manifest__item">
-          <svg class="globe manifest__mark" aria-hidden="true"><use href="assets/icons.svg#pa-course"/></svg>
-          <p class="manifest__fact">Cross country</p>
-        </li>
-        <li class="manifest__item">
-          <svg class="globe manifest__mark" aria-hidden="true"><use href="assets/icons.svg#pa-rack"/></svg>
-          <p class="manifest__fact">Installed pallet racking at one of the largest distribution warehouses in the country</p>
-        </li>
-          </ul>
-        </section>
-
-        <section class="base" id="base-tulsa">
-          <div class="base__head">
-            <span class="base__dot"></span>
-            <h3 class="t-subhead">Tulsa, Oklahoma</h3>
-          </div>
-          <hr class="rule rule--medium">
-          <ul class="manifest manifest--list manifest--nodate">
-        <li class="manifest__item">
-          <svg class="globe manifest__mark" aria-hidden="true"><use href="assets/icons.svg#pa-chart"/></svg>
-          <p class="manifest__fact">Studied finance</p>
-        </li>
-        <li class="manifest__item">
-          <svg class="globe manifest__mark" aria-hidden="true"><use href="assets/icons.svg#pa-launch"/></svg>
-          <p class="manifest__fact">Co-founded Sky Ventures, Oklahoma&rsquo;s first student-run accelerator, five universities, six companies through the cohort, $50,000 deployed</p>
-        </li>
-        <li class="manifest__item">
-          <svg class="globe manifest__mark" aria-hidden="true"><use href="assets/icons.svg#pa-people"/></svg>
-          <p class="manifest__fact">ORU Finance Society, brought in professionals across PE, IB, and personal financial planning so students saw the whole field, not one corner of it</p>
-        </li>
-        <li class="manifest__item">
-          <svg class="globe manifest__mark" aria-hidden="true"><use href="assets/icons.svg#pa-bank"/></svg>
-          <p class="manifest__fact">Regent Bank, risk-rated fintech and cannabis-adjacent accounts inside a heavily regulated shop, ran onboarding through investment and committee review</p>
-        </li>
-        <li class="manifest__item">
-          <svg class="globe manifest__mark" aria-hidden="true"><use href="assets/icons.svg#pa-document"/></svg>
-          <p class="manifest__fact">Co-founded and ran M&amp;G Journal, a student-run finance publication covering capital markets, startups, and careers, grew to 200+ subscribers with five sourced articles a week</p>
-        </li>
-          </ul>
-        </section>
+      <div class="pa-log" data-station="quad-cities" id="log-quad-cities">
+        <div class="pa-log-head"><span class="dot"></span><h3>Quad Cities, Iowa</h3></div>
+        <hr style="border-top:var(--pa-rule)">
+        <ul class="pa-list">
+        <li><svg><use href="assets/icons.svg#pa-pennant"></use></svg><p>Pleasant Valley High School</p></li>
+        <li><svg><use href="assets/icons.svg#pa-ball"></use></svg><p>Basketball</p></li>
+        <li><svg><use href="assets/icons.svg#pa-note"></use></svg><p>Jazz band</p></li>
+        <li><svg><use href="assets/icons.svg#pa-course"></use></svg><p>Cross country</p></li>
+        <li><svg><use href="assets/icons.svg#pa-rack"></use></svg><p>Installed pallet racking at one of the largest distribution warehouses in the country</p></li>
+        </ul>
       </div>
-    </section>
-
-    <!-- 03 - HOBBIES. Same primitive again, one register quieter. The ONLY
-         differences are a smaller mark and muted text - the grid, the rules,
-         the label treatment and the spacing are untouched. -->
-    <section class="manifest-block">
-      <div class="manifest-block__head">
-        <h2 class="t-heading">Hobbies</h2>
-        <p class="t-label t-muted">03 &mdash; Off duty</p>
-      </div>
-      <hr class="rule rule--heavy">
-      <ul class="manifest manifest--list manifest--light">
-        <li class="manifest__item">
-          <svg class="globe manifest__mark" aria-hidden="true"><use href="assets/icons.svg#pa-clock"/></svg>
-          <p class="t-label manifest__year">Watches</p>
-          <div class="manifest__fact">
-            <div class="watch-trio">
-              <details class="watch">
-                <summary class="watch__summary">
-                  <img class="watch-trio__plate" src="assets/images/watches/jlc-reverso.webp"
-                       alt="Jaeger-LeCoultre Reverso in yellow gold with a red guilloche dial" width="800" height="800" loading="lazy" decoding="async">
-                  <span class="watch__toggle t-label">Stamp</span>
-                </summary>
-                <div class="stamp" style="--stamp-tilt: -1.5deg">
-                  <dl class="stamp__fields">
-                    <div class="stamp__row">
-                      <dt class="t-label">Origin</dt>
-                      <dd>Switzerland &mdash; Vall&eacute;e de Joux</dd>
-                    </div>
-                    <div class="stamp__row">
-                      <dt class="t-label">Founded</dt>
-                      <dd class="t-data">1833</dd>
-                      <dd class="t-caption">Maison founded. The Reverso itself dates to 1931.</dd>
-                    </div>
-                    <div class="stamp__row">
-                      <dt class="t-label">Made for</dt>
-                      <dd>Polo. The case pivots in its carrier so the crystal can be turned face-down against a mallet strike.</dd>
-                    </div>
-                  </dl>
-                </div>
-              </details>
-              <details class="watch">
-                <summary class="watch__summary">
-                  <img class="watch-trio__plate" src="assets/images/watches/rolex-polar-explorer-ii.webp"
-                       alt="Rolex Explorer II with a white polar dial and orange 24-hour hand" width="800" height="800" loading="lazy" decoding="async">
-                  <span class="watch__toggle t-label">Stamp</span>
-                </summary>
-                <div class="stamp" style="--stamp-tilt: 1.25deg">
-                  <dl class="stamp__fields">
-                    <div class="stamp__row">
-                      <dt class="t-label">Origin</dt>
-                      <dd>Switzerland &mdash; Geneva</dd>
-                    </div>
-                    <div class="stamp__row">
-                      <dt class="t-label">Founded</dt>
-                      <dd class="t-data">1905</dd>
-                      <dd class="t-caption">Founded in London; Geneva from 1919.</dd>
-                    </div>
-                    <div class="stamp__row">
-                      <dt class="t-label">Made for</dt>
-                      <dd>Caving. A fixed 24-hour bezel and a second hour hand to tell day from night underground.</dd>
-                    </div>
-                  </dl>
-                </div>
-              </details>
-              <details class="watch">
-                <summary class="watch__summary">
-                  <img class="watch-trio__plate" src="assets/images/watches/glashutte-original.webp"
-                       alt="Glashutte Original chronograph with a green dial and cushion case" width="800" height="800" loading="lazy" decoding="async">
-                  <span class="watch__toggle t-label">Stamp</span>
-                </summary>
-                <div class="stamp" style="--stamp-tilt: -1deg">
-                  <dl class="stamp__fields">
-                    <div class="stamp__row">
-                      <dt class="t-label">Origin</dt>
-                      <dd>Germany &mdash; Glash&uuml;tte, Saxony</dd>
-                    </div>
-                    <div class="stamp__row">
-                      <dt class="t-label">Founded</dt>
-                      <dd class="t-data">1845</dd>
-                      <dd class="t-caption">Watchmaking in the town. The brand name is far younger.</dd>
-                    </div>
-                    <div class="stamp__row">
-                      <dt class="t-label">Made for</dt>
-                      <dd>Precision timing. A chronograph built to measure elapsed intervals, not to be worn underwater.</dd>
-                    </div>
-                  </dl>
-                </div>
-              </details>
-            </div>
-            <p>Three Cravings: JLC Reverso, Rolex Polar Explorer II, Glash&uuml;tte Original.</p>
-          </div>
-        </li>
-        <li class="manifest__item">
-          <svg class="globe manifest__mark" aria-hidden="true"><use href="assets/icons.svg#pa-camera"/></svg>
-          <p class="t-label manifest__year">Photography</p>
-          <div class="manifest__fact">
-            <!-- TICKET JACKETS. Same disclosure mechanism as the watch stamps
-                 above, deliberately: one page, one way to expand something.
-                 The row's line sits ABOVE the tickets so nothing trails the
-                 last photograph. -->
-            <p>Catching vibes, trying to catch the photo.</p>
-            <div class="stubs">
-              <details class="stub" style="--stub-tilt: -1.7deg; --stub-drop: 0; --age: 1.15">
-                <summary class="stub__summary">
-                  <div class="stub__body">
-                    <span class="stub__spine" aria-hidden="true"></span>
-                    <figure class="stub__figure">
-                      <img class="stub__photo" src="assets/images/travel/salzburg.webp"
-                           alt="Salzburg seen from the fortress at dusk, church domes and the river below a grey sky" width="900" height="1200" loading="lazy" decoding="async">
-                    </figure>
-                    <div class="stub__field">
-                      <p class="stub__eyebrow">Passenger Ticket and Baggage Check &middot; Issued subject to conditions of contract</p>
-                      <dl class="stub__grid">
-                        <dt>To</dt><dt>Carrier</dt><dt>Flight</dt><dt>Class</dt>
-                        <dd class="stub__code">SZG</dd><dd>PA</dd><dd>114</dd><dd>Y</dd>
-                      </dl>
-                      <p class="stub__place">Salzburg, Austria</p>
-                    </div>
-                  </div>
-                  <div class="stub__perf" aria-hidden="true"></div>
-                  <div class="stub__counterfoil">
-                    <span>Fare basis <b>YLE45</b></span>
-                    <span>Routing <b>SZG PA MUC</b></span>
-                    <span>Not transferable</span>
-                    <span class="stub__serial"><b>026 4447 85332 4</b></span>
-                    <span class="stub__toggle">Page</span>
-                  </div>
-                </summary>
-                <p class="stub__caption">Shot from the fortress. Domes, the river, and the whole city under low grey.</p>
-              </details>
-              <details class="stub" style="--stub-tilt: 1.2deg; --stub-drop: var(--space-5); --age: 0.85">
-                <summary class="stub__summary">
-                  <div class="stub__body">
-                    <span class="stub__spine" aria-hidden="true"></span>
-                    <figure class="stub__figure">
-                      <img class="stub__photo" src="assets/images/travel/vienna.webp"
-                           alt="An empty street at dusk with wet cobbles, bronze statues on plinths either side and a fortress on the hill beyond" width="900" height="1200" loading="lazy" decoding="async">
-                    </figure>
-                    <div class="stub__field">
-                      <p class="stub__eyebrow">Passenger Ticket and Baggage Check &middot; Issued subject to conditions of contract</p>
-                      <dl class="stub__grid">
-                        <dt>To</dt><dt>Carrier</dt><dt>Flight</dt><dt>Class</dt>
-                        <dd class="stub__code">SZG</dd><dd>PA</dd><dd>118</dd><dd>Y</dd>
-                      </dl>
-                      <p class="stub__place">Salzburg, Austria</p>
-                    </div>
-                  </div>
-                  <div class="stub__perf" aria-hidden="true"></div>
-                  <div class="stub__counterfoil">
-                    <span>Fare basis <b>YHX60</b></span>
-                    <span>Routing <b>SZG PA FRA</b></span>
-                    <span>Not transferable</span>
-                    <span class="stub__serial"><b>026 5108 21744 9</b></span>
-                    <span class="stub__toggle">Page</span>
-                  </div>
-                </summary>
-                <p class="stub__caption">Empty street at dusk. Wet cobbles, bronze statues mid-throw on both sides.</p>
-              </details>
-              <details class="stub" style="--stub-tilt: -0.9deg; --stub-drop: var(--space-2); --age: 1.3">
-                <summary class="stub__summary">
-                  <div class="stub__body">
-                    <span class="stub__spine" aria-hidden="true"></span>
-                    <figure class="stub__figure">
-                      <img class="stub__photo" src="assets/images/travel/cinque-terre.webp"
-                           alt="A crowded pebble beach on the Ligurian coast with blue umbrellas, headland and open sea" width="900" height="1200" loading="lazy" decoding="async">
-                    </figure>
-                    <div class="stub__field">
-                      <p class="stub__eyebrow">Passenger Ticket and Baggage Check &middot; Issued subject to conditions of contract</p>
-                      <dl class="stub__grid">
-                        <dt>To</dt><dt>Carrier</dt><dt>Flight</dt><dt>Class</dt>
-                        <dd class="stub__code">PSA</dd><dd>PA</dd><dd>220</dd><dd>Y</dd>
-                      </dl>
-                      <p class="stub__place">Cinque Terre, Italy</p>
-                    </div>
-                  </div>
-                  <div class="stub__perf" aria-hidden="true"></div>
-                  <div class="stub__counterfoil">
-                    <span>Fare basis <b>YLW14</b></span>
-                    <span>Routing <b>PSA PA MXP</b></span>
-                    <span>Not transferable</span>
-                    <span class="stub__serial"><b>026 7731 40915 2</b></span>
-                    <span class="stub__toggle">Page</span>
-                  </div>
-                </summary>
-                <p class="stub__caption">Monterosso in September. Umbrellas all the way down to the water.</p>
-              </details>
-              <details class="stub" style="--stub-tilt: 2.0deg; --stub-drop: var(--space-6); --age: 0.7">
-                <summary class="stub__summary">
-                  <div class="stub__body">
-                    <span class="stub__spine" aria-hidden="true"></span>
-                    <figure class="stub__figure">
-                      <img class="stub__photo" src="assets/images/travel/lucerne.webp"
-                           alt="A meadow of buttercups high above the valley with snow-capped Alps along the horizon" width="900" height="1200" loading="lazy" decoding="async">
-                    </figure>
-                    <div class="stub__field">
-                      <p class="stub__eyebrow">Passenger Ticket and Baggage Check &middot; Issued subject to conditions of contract</p>
-                      <dl class="stub__grid">
-                        <dt>To</dt><dt>Carrier</dt><dt>Flight</dt><dt>Class</dt>
-                        <dd class="stub__code">ZRH</dd><dd>PA</dd><dd>046</dd><dd>Y</dd>
-                      </dl>
-                      <p class="stub__place">Lucerne, Switzerland</p>
-                    </div>
-                  </div>
-                  <div class="stub__perf" aria-hidden="true"></div>
-                  <div class="stub__counterfoil">
-                    <span>Fare basis <b>YEE30</b></span>
-                    <span>Routing <b>ZRH PA LHR</b></span>
-                    <span>Not transferable</span>
-                    <span class="stub__serial"><b>026 2294 66180 7</b></span>
-                    <span class="stub__toggle">Page</span>
-                  </div>
-                </summary>
-                <p class="stub__caption">Up the Rigi. Alps on every side and a meadow full of buttercups.</p>
-              </details>
-              <details class="stub" style="--stub-tilt: -1.4deg; --stub-drop: var(--space-3); --age: 1.0">
-                <summary class="stub__summary">
-                  <div class="stub__body">
-                    <span class="stub__spine" aria-hidden="true"></span>
-                    <figure class="stub__figure">
-                      <img class="stub__photo" src="assets/images/travel/crete-heraklion.webp"
-                           alt="A small whitewashed Greek chapel with a blue dome and bell, the sea behind it" width="900" height="1200" loading="lazy" decoding="async">
-                    </figure>
-                    <div class="stub__field">
-                      <p class="stub__eyebrow">Passenger Ticket and Baggage Check &middot; Issued subject to conditions of contract</p>
-                      <dl class="stub__grid">
-                        <dt>To</dt><dt>Carrier</dt><dt>Flight</dt><dt>Class</dt>
-                        <dd class="stub__code">HER</dd><dd>PA</dd><dd>512</dd><dd>Y</dd>
-                      </dl>
-                      <p class="stub__place">Heraklion, Crete</p>
-                    </div>
-                  </div>
-                  <div class="stub__perf" aria-hidden="true"></div>
-                  <div class="stub__counterfoil">
-                    <span>Fare basis <b>YHG21</b></span>
-                    <span>Routing <b>HER PA ATH</b></span>
-                    <span>Not transferable</span>
-                    <span class="stub__serial"><b>026 8815 03627 5</b></span>
-                    <span class="stub__toggle">Page</span>
-                  </div>
-                </summary>
-                <p class="stub__caption">A white chapel above the sea. Blue dome, one bell, nobody else up there.</p>
-              </details>
-              <details class="stub" style="--stub-tilt: 0.8deg; --stub-drop: 0; --age: 1.25">
-                <summary class="stub__summary">
-                  <div class="stub__body">
-                    <span class="stub__spine" aria-hidden="true"></span>
-                    <figure class="stub__figure">
-                      <img class="stub__photo" src="assets/images/travel/crete-chania.webp"
-                           alt="A portrait in evening light beside a dry stone wall, the sea just visible past it" width="900" height="1200" loading="lazy" decoding="async">
-                    </figure>
-                    <div class="stub__field">
-                      <p class="stub__eyebrow">Passenger Ticket and Baggage Check &middot; Issued subject to conditions of contract</p>
-                      <dl class="stub__grid">
-                        <dt>To</dt><dt>Carrier</dt><dt>Flight</dt><dt>Class</dt>
-                        <dd class="stub__code">CHQ</dd><dd>PA</dd><dd>516</dd><dd>Y</dd>
-                      </dl>
-                      <p class="stub__place">Chania, Crete</p>
-                    </div>
-                  </div>
-                  <div class="stub__perf" aria-hidden="true"></div>
-                  <div class="stub__counterfoil">
-                    <span>Fare basis <b>YHG21</b></span>
-                    <span>Routing <b>CHQ PA ATH</b></span>
-                    <span>Not transferable</span>
-                    <span class="stub__serial"><b>026 3360 97251 8</b></span>
-                    <span class="stub__toggle">Page</span>
-                  </div>
-                </summary>
-                <p class="stub__caption">Warm stone, low sun, the sea just past the wall.</p>
-              </details>
-            </div>
-          </div>
-        </li>
-      </ul>
-    </section>
-
-  </div>
-</main>
-
-<footer class="site-footer">
-  <div class="container site-footer__inner">
-    <div class="site-footer__fields">
-      <div class="site-footer__field">
-        <p class="t-label t-muted">Issued</p>
-        <p class="t-caption t-data">2026</p>
-      </div>
-      <div class="site-footer__field">
-        <p class="t-label t-muted">Revision</p>
-        <p class="t-caption t-data">01</p>
-      </div>
-      <div class="site-footer__field">
-        <p class="t-label t-muted">Reference</p>
-        <p class="t-caption"><a href="styleguide.html">Style guide</a></p>
+      <div class="pa-log" data-station="tulsa" id="log-tulsa">
+        <div class="pa-log-head"><span class="dot"></span><h3>Tulsa, Oklahoma</h3></div>
+        <hr style="border-top:var(--pa-rule)">
+        <ul class="pa-list">
+        <li><svg><use href="assets/icons.svg#pa-chart"></use></svg><p>Studied finance</p></li>
+        <li><svg><use href="assets/icons.svg#pa-launch"></use></svg><p>Co-founded Sky Ventures, Oklahoma&rsquo;s first student-run accelerator, five universities, six companies through the cohort, $50,000 deployed</p></li>
+        <li><svg><use href="assets/icons.svg#pa-people"></use></svg><p>ORU Finance Society, brought in professionals across PE, IB, and personal financial planning so students saw the whole field, not one corner of it</p></li>
+        <li><svg><use href="assets/icons.svg#pa-bank"></use></svg><p>Regent Bank, risk-rated fintech and cannabis-adjacent accounts inside a heavily regulated shop, ran onboarding through investment and committee review</p></li>
+        <li><svg><use href="assets/icons.svg#pa-document"></use></svg><p>Co-founded and ran M&amp;G Journal, a student-run finance publication covering capital markets, startups, and careers, grew to 200+ subscribers with five sourced articles a week</p></li>
+        </ul>
       </div>
     </div>
-    <svg class="globe globe--md globe--simple" aria-hidden="true"><use href="assets/icons.svg#pa-globe"/></svg>
+
+    <p class="pa-label pa-map-hint" data-map-hint>Point to a station on the chart for its log</p>
+  </section>
+
+  <section class="pa-section">
+    <div class="pa-section-head">
+      <h2>Hobbies</h2>
+      <p class="pa-label">03 &mdash; Off duty</p>
+    </div>
+    <hr>
+
+    <div class="pa-hobby">
+      <svg><use href="assets/icons.svg#pa-camera"></use></svg>
+      <p>Photography</p>
+      <div>
+        <p class="pa-note" style="margin-bottom:20px">Catching vibes, trying to catch a photo.</p>
+        <div class="pa-stubs">
+          <details class="pa-stub">
+            <summary>
+              <div class="pa-stub-top">
+                <span class="pa-stub-edge"></span>
+                <figure><img src="assets/images/travel/salzburg.webp" alt="Salzburg seen from the fortress at dusk, church domes and the river below a grey sky" width="900" height="1200" loading="lazy" decoding="async"></figure>
+                <div class="pa-stub-body">
+                  <p class="pa-stub-terms">Passenger Ticket and Baggage Check &middot; Issued subject to conditions of contract</p>
+                  <dl>
+                    <dt>To</dt><dt>Carrier</dt><dt>Flight</dt><dt>Class</dt>
+                    <dd>SZG</dd><dd>PA</dd><dd>114</dd><dd>Y</dd>
+                  </dl>
+                  <p class="pa-stub-city">Salzburg, Austria</p>
+                </div>
+              </div>
+              <div class="pa-perf"></div>
+              <div class="pa-stub-foot">
+                <span>Fare basis <b>YLE45</b></span>
+                <span>Routing <b>SZG PA MUC</b></span>
+                <span>Not transferable</span>
+                <span class="serial"><b>026 4447 85332 4</b></span>
+              </div>
+            </summary>
+            <p class="pa-stub-note">Shot from the fortress. Domes, the river, and the whole city under low grey.</p>
+          </details>
+          <details class="pa-stub">
+            <summary>
+              <div class="pa-stub-top">
+                <span class="pa-stub-edge"></span>
+                <figure><img src="assets/images/travel/vienna.webp" alt="An empty street at dusk with wet cobbles, bronze statues on plinths either side and a fortress on the hill beyond" width="900" height="1200" loading="lazy" decoding="async"></figure>
+                <div class="pa-stub-body">
+                  <p class="pa-stub-terms">Passenger Ticket and Baggage Check &middot; Issued subject to conditions of contract</p>
+                  <dl>
+                    <dt>To</dt><dt>Carrier</dt><dt>Flight</dt><dt>Class</dt>
+                    <dd>VIE</dd><dd>PA</dd><dd>118</dd><dd>Y</dd>
+                  </dl>
+                  <p class="pa-stub-city">Vienna, Austria</p>
+                </div>
+              </div>
+              <div class="pa-perf"></div>
+              <div class="pa-stub-foot">
+                <span>Fare basis <b>YHX60</b></span>
+                <span>Routing <b>VIE PA FRA</b></span>
+                <span>Not transferable</span>
+                <span class="serial"><b>026 5108 21744 9</b></span>
+              </div>
+            </summary>
+            <p class="pa-stub-note">Empty street at dusk. Wet cobbles, bronze statues mid-throw on both sides.</p>
+          </details>
+          <details class="pa-stub">
+            <summary>
+              <div class="pa-stub-top">
+                <span class="pa-stub-edge"></span>
+                <figure><img src="assets/images/travel/cinque-terre.webp" alt="A crowded pebble beach on the Ligurian coast with blue umbrellas, headland and open sea" width="900" height="1200" loading="lazy" decoding="async"></figure>
+                <div class="pa-stub-body">
+                  <p class="pa-stub-terms">Passenger Ticket and Baggage Check &middot; Issued subject to conditions of contract</p>
+                  <dl>
+                    <dt>To</dt><dt>Carrier</dt><dt>Flight</dt><dt>Class</dt>
+                    <dd>PSA</dd><dd>PA</dd><dd>220</dd><dd>Y</dd>
+                  </dl>
+                  <p class="pa-stub-city">Cinque Terre, Italy</p>
+                </div>
+              </div>
+              <div class="pa-perf"></div>
+              <div class="pa-stub-foot">
+                <span>Fare basis <b>YLW14</b></span>
+                <span>Routing <b>PSA PA MXP</b></span>
+                <span>Not transferable</span>
+                <span class="serial"><b>026 7731 40915 2</b></span>
+              </div>
+            </summary>
+            <p class="pa-stub-note">Monterosso in September. Umbrellas all the way down to the water.</p>
+          </details>
+          <details class="pa-stub">
+            <summary>
+              <div class="pa-stub-top">
+                <span class="pa-stub-edge"></span>
+                <figure><img src="assets/images/travel/lucerne.webp" alt="A meadow of buttercups high above the valley with snow-capped Alps along the horizon" width="900" height="1200" loading="lazy" decoding="async"></figure>
+                <div class="pa-stub-body">
+                  <p class="pa-stub-terms">Passenger Ticket and Baggage Check &middot; Issued subject to conditions of contract</p>
+                  <dl>
+                    <dt>To</dt><dt>Carrier</dt><dt>Flight</dt><dt>Class</dt>
+                    <dd>ZRH</dd><dd>PA</dd><dd>046</dd><dd>Y</dd>
+                  </dl>
+                  <p class="pa-stub-city">Lucerne, Switzerland</p>
+                </div>
+              </div>
+              <div class="pa-perf"></div>
+              <div class="pa-stub-foot">
+                <span>Fare basis <b>YEE30</b></span>
+                <span>Routing <b>ZRH PA LHR</b></span>
+                <span>Not transferable</span>
+                <span class="serial"><b>026 2294 66180 7</b></span>
+              </div>
+            </summary>
+            <p class="pa-stub-note">Up the Rigi. Alps on every side and a meadow full of buttercups.</p>
+          </details>
+          <details class="pa-stub">
+            <summary>
+              <div class="pa-stub-top">
+                <span class="pa-stub-edge"></span>
+                <figure><img src="assets/images/travel/crete-heraklion.webp" alt="A small whitewashed Greek chapel with a blue dome and bell, the sea behind it" width="900" height="1200" loading="lazy" decoding="async"></figure>
+                <div class="pa-stub-body">
+                  <p class="pa-stub-terms">Passenger Ticket and Baggage Check &middot; Issued subject to conditions of contract</p>
+                  <dl>
+                    <dt>To</dt><dt>Carrier</dt><dt>Flight</dt><dt>Class</dt>
+                    <dd>HER</dd><dd>PA</dd><dd>512</dd><dd>Y</dd>
+                  </dl>
+                  <p class="pa-stub-city">Heraklion, Crete</p>
+                </div>
+              </div>
+              <div class="pa-perf"></div>
+              <div class="pa-stub-foot">
+                <span>Fare basis <b>YHG21</b></span>
+                <span>Routing <b>HER PA ATH</b></span>
+                <span>Not transferable</span>
+                <span class="serial"><b>026 8815 03627 5</b></span>
+              </div>
+            </summary>
+            <p class="pa-stub-note">A white chapel above the sea. Blue dome, one bell, nobody else up there.</p>
+          </details>
+          <details class="pa-stub">
+            <summary>
+              <div class="pa-stub-top">
+                <span class="pa-stub-edge"></span>
+                <figure><img src="assets/images/travel/crete-chania.webp" alt="A portrait in evening light beside a dry stone wall, the sea just visible past it" width="900" height="1200" loading="lazy" decoding="async"></figure>
+                <div class="pa-stub-body">
+                  <p class="pa-stub-terms">Passenger Ticket and Baggage Check &middot; Issued subject to conditions of contract</p>
+                  <dl>
+                    <dt>To</dt><dt>Carrier</dt><dt>Flight</dt><dt>Class</dt>
+                    <dd>CHQ</dd><dd>PA</dd><dd>516</dd><dd>Y</dd>
+                  </dl>
+                  <p class="pa-stub-city">Chania, Crete</p>
+                </div>
+              </div>
+              <div class="pa-perf"></div>
+              <div class="pa-stub-foot">
+                <span>Fare basis <b>YHG21</b></span>
+                <span>Routing <b>CHQ PA ATH</b></span>
+                <span>Not transferable</span>
+                <span class="serial"><b>026 3360 97251 8</b></span>
+              </div>
+            </summary>
+            <p class="pa-stub-note">Warm stone, low sun, the sea just past the wall.</p>
+          </details>
+        </div>
+      </div>
+    </div>
+
+    <div class="pa-hobby">
+      <svg><use href="assets/icons.svg#pa-clock"></use></svg>
+      <p>Watches</p>
+      <div>
+        <div class="pa-watches">
+      <details>
+        <summary>
+          <img src="assets/images/watches/jlc-reverso.webp" alt="Jaeger-LeCoultre Reverso in yellow gold with a red guilloche dial" width="800" height="800" loading="lazy" decoding="async">
+          <span>Stamp +</span>
+        </summary>
+        <div class="pa-stamp-card">
+          <dl>
+            <div><dt>Origin</dt><dd>Switzerland &mdash; Vall&eacute;e de Joux</dd></div>
+            <div><dt>Founded</dt><dd class="pa-data">1833</dd><dd>Maison founded. The Reverso itself dates to 1931.</dd></div>
+            <div><dt>Made for</dt><dd>Polo. The case pivots in its carrier so the crystal can be turned face-down against a mallet strike.</dd></div>
+          </dl>
+        </div>
+      </details>
+      <details>
+        <summary>
+          <img src="assets/images/watches/rolex-polar-explorer-ii.webp" alt="Rolex Explorer II with a white polar dial and orange 24-hour hand" width="800" height="800" loading="lazy" decoding="async">
+          <span>Stamp +</span>
+        </summary>
+        <div class="pa-stamp-card">
+          <dl>
+            <div><dt>Origin</dt><dd>Switzerland &mdash; Geneva</dd></div>
+            <div><dt>Founded</dt><dd class="pa-data">1905</dd><dd>Founded in London; Geneva from 1919.</dd></div>
+            <div><dt>Made for</dt><dd>Caving. A fixed 24-hour bezel and a second hour hand to tell day from night underground.</dd></div>
+          </dl>
+        </div>
+      </details>
+      <details>
+        <summary>
+          <img src="assets/images/watches/glashutte-original.webp" alt="Glashutte Original chronograph with a green dial and cushion case" width="800" height="800" loading="lazy" decoding="async">
+          <span>Stamp +</span>
+        </summary>
+        <div class="pa-stamp-card">
+          <dl>
+            <div><dt>Origin</dt><dd>Germany &mdash; Glash&uuml;tte, Saxony</dd></div>
+            <div><dt>Founded</dt><dd class="pa-data">1845</dd><dd>Watchmaking in the town. The brand name is far younger.</dd></div>
+            <div><dt>Made for</dt><dd>Precision timing. A chronograph built to measure elapsed intervals, not to be worn underwater.</dd></div>
+          </dl>
+        </div>
+      </details>
+        </div>
+        <p class="pa-note">Three Cravings: JLC Reverso, Rolex Polar Explorer II, Glash&uuml;tte Original.</p>
+      </div>
+    </div>
+  </section>
+</main>
+
+<footer class="pa-footer">
+  <div class="pa-shell">
+    <dl>
+      <div><dt class="pa-label">Issued</dt><dd>2026</dd></div>
+      <div><dt class="pa-label">Revision</dt><dd>02</dd></div>
+      <div><dt class="pa-label">Carrier</dt><dd>HG AM</dd></div>
+    </dl>
+    <svg class="pa-globe"><use href="assets/icons.svg#pa-globe"></use></svg>
   </div>
 </footer>
-
+<script src="js/route-map.js" defer></script>
 </body>
 </html>

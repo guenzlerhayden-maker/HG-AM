@@ -3,96 +3,166 @@
 <head>
 <meta charset="utf-8">
 <meta name="viewport" content="width=device-width, initial-scale=1">
-<title>Contact</title>
-<meta name="description" content="Contact - Hayden Guenzler.">
+<title>Contact &mdash; Hayden Guenzler</title>
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link href="https://fonts.googleapis.com/css2?family=News+Cycle:wght@400;700&family=Archivo:wght@400;500;600;700&family=Courier+Prime:wght@400;700&display=swap" rel="stylesheet">
 <link rel="stylesheet" href="css/tokens.css">
 <link rel="stylesheet" href="css/base.css">
 <link rel="stylesheet" href="css/layout.css">
 <link rel="stylesheet" href="css/components.css">
 </head>
-<body class="page">
-
-<!-- The skip link is the first thing in the tab order on every page. -->
-<a class="skip-link" href="#main">Skip to content</a>
-
-<!-- Icons live in assets/icons.svg and are referenced with
-     <use href="assets/icons.svg#pa-globe"/>. One definition, five pages.
-     Note this only resolves over HTTP - opening these files directly from the
-     file system will silently render no icons. Always preview via the local
-     server (see .claude/launch.json). -->
-
-<nav class="site-nav" aria-label="Main">
-  <div class="container site-nav__inner">
-    <a class="site-nav__brand" href="index.html" aria-label="Home">
-      <svg class="globe globe--md globe--solid-invert globe--simple" aria-hidden="true"><use href="assets/icons.svg#pa-globe"/></svg>
+<body>
+<nav class="pa-nav">
+  <div class="pa-shell">
+    <a class="pa-nav-mark" href="index.html" aria-label="Home">
+      <svg><use href="assets/icons.svg#pa-globe"></use></svg>
     </a>
-    <ul class="site-nav__list">
-      <li class="site-nav__item">
-        <a class="site-nav__link" href="index.html">
-          <span class="site-nav__num">01</span>
-          <span class="t-label">Home</span>
-        </a>
-      </li>
-      <li class="site-nav__item">
-        <a class="site-nav__link" href="about.html">
-          <span class="site-nav__num">02</span>
-          <span class="t-label">About</span>
-        </a>
-      </li>
-      <li class="site-nav__item">
-        <a class="site-nav__link" href="contact.html" aria-current="page">
-          <span class="site-nav__num">03</span>
-          <span class="t-label">Contact</span>
-        </a>
-      </li>
+    <ul>
+      <li><a data-section href="index.html"><span class="num">01</span><span class="name">Home</span></a></li>
+      <li><a data-section href="about.html"><span class="num">02</span><span class="name">About</span></a></li>
+      <li><a data-section href="contact.html" aria-current="page"><span class="num">03</span><span class="name">Contact</span></a></li>
     </ul>
   </div>
 </nav>
 
-<main class="page__main" id="main">
+<header>
+  <div class="pa-masthead">
+    <div class="pa-inkwash"></div>
+    <div class="pa-shell">
+      <p class="pa-eyebrow">Reservations &middot; Ticket office</p>
+      <h1>Contact</h1>
+    </div>
+  </div>
+</header>
 
-  <!-- CONTACT is the TAG document type: a baggage tag. Narrow, heavy rules top
-       and bottom, a punched hole. The one place stamp red carries an element. -->
-  <div class="container section">
-    <div class="cover cover--tag">
-      <p class="t-label" style="color: var(--color-accent)">Destination</p>
-      <h1 class="t-display">Contact</h1>
-      <p class="t-caption">Routed via any of the below.</p>
+<main class="pa-shell" style="padding-top:40px">
+  <div class="pa-form-card pa-textured">
+    <div class="pa-mottle"></div>
+    <div class="pa-grain"></div>
+
+    <svg class="pa-scratches" viewBox="0 0 736 420" preserveAspectRatio="none" aria-hidden="true">
+      <defs>
+        <filter id="cwarp" x="-15%" y="-15%" width="130%" height="130%">
+          <feTurbulence type="fractalNoise" baseFrequency="0.045" numOctaves="4" seed="23" result="t"></feTurbulence>
+          <feDisplacementMap in="SourceGraphic" in2="t" scale="8" xChannelSelector="R" yChannelSelector="G"></feDisplacementMap>
+        </filter>
+      </defs>
+      <g filter="url(#cwarp)" opacity="0.34" fill="none" stroke="#5E4620" stroke-linecap="round">
+        <path d="M28 66 Q120 50 212 34" stroke-width="0.6"></path>
+        <path d="M556 390 Q634 374 712 356" stroke-width="0.55"></path>
+        <path d="M52 322 Q92 350 130 380" stroke-width="0.7"></path>
+      </g>
+      <g opacity="0.4" fill="#5E4620">
+        <circle cx="188" cy="368" r="1.9"></circle>
+        <circle cx="642" cy="74" r="1.5"></circle>
+        <circle cx="96" cy="196" r="1.2"></circle>
+      </g>
+    </svg>
+
+    <div class="pa-inner">
+      <div class="pa-form-head">
+        <p class="pa-label">Passenger enquiry form &middot; Issued subject to conditions of contract</p>
+        <svg><use href="assets/icons.svg#pa-globe"></use></svg>
+      </div>
+
+      <div class="pa-form-grid">
+        <div>
+          <div class="pa-station">
+            <svg viewBox="0 0 200 250" role="img" aria-label="Location pin marking Tulsa, Oklahoma">
+              <defs>
+                <linearGradient id="pinfill" x1="0" y1="0" x2="0.35" y2="1">
+                  <stop offset="0%" stop-color="#8FBBD6"></stop>
+                  <stop offset="46%" stop-color="#6E9DBE"></stop>
+                  <stop offset="100%" stop-color="#1F4364"></stop>
+                </linearGradient>
+                <radialGradient id="pinsheen" cx="34%" cy="26%" r="52%">
+                  <stop offset="0%" stop-color="#EFE6CE" stop-opacity="0.5"></stop>
+                  <stop offset="100%" stop-color="#EFE6CE" stop-opacity="0"></stop>
+                </radialGradient>
+              </defs>
+              <ellipse cx="100" cy="232" rx="42" ry="8" fill="#1F4364" opacity="0.16"></ellipse>
+              <path d="M 100 226 C 100 226 22 138 22 90 A 78 78 0 1 1 178 90 C 178 138 100 226 100 226 Z" fill="#A8342F" opacity="0.14" transform="translate(3 2)"></path>
+              <path d="M 100 226 C 100 226 22 138 22 90 A 78 78 0 1 1 178 90 C 178 138 100 226 100 226 Z" fill="url(#pinfill)" stroke="#1F4364" stroke-width="3"></path>
+              <path d="M 100 226 C 100 226 22 138 22 90 A 78 78 0 1 1 178 90 C 178 138 100 226 100 226 Z" fill="url(#pinsheen)"></path>
+              <g fill="none" stroke="#EFE6CE" stroke-width="3.6" stroke-linecap="round">
+                <circle cx="100" cy="90" r="40"></circle>
+                <line x1="100" y1="50" x2="100" y2="130"></line>
+                <ellipse cx="100" cy="90" rx="19" ry="40"></ellipse>
+                <line x1="60" y1="90" x2="140" y2="90"></line>
+                <path d="M 68 68 Q 100 76 132 68"></path>
+                <path d="M 68 112 Q 100 120 132 112"></path>
+              </g>
+            </svg>
+            <div>
+              <span class="pa-label">Station</span>
+              <span class="name">Tulsa</span>
+              <span class="sub">Oklahoma, U.S.A.</span>
+            </div>
+          </div>
+          <dl class="pa-coords">
+            <div><dt class="pa-label">Code</dt><dd class="pa-data">TUL</dd></div>
+            <div><dt class="pa-label">Lat</dt><dd class="pa-data">36.15N</dd></div>
+            <div><dt class="pa-label">Long</dt><dd class="pa-data">95.99W</dd></div>
+          </dl>
+        </div>
+
+        <div>
+          <p class="pa-label pa-route-head">How to route a message</p>
+
+          <a class="pa-route-row" href="https://www.linkedin.com/in/hayden-guenzler/" target="_blank" rel="noopener noreferrer">
+            <svg><use href="assets/icons.svg#pa-people"></use></svg>
+            <span class="body">
+              <span class="pa-label">Direct</span>
+              <span class="pa-caps">LinkedIn</span>
+              <span class="sub">in/hayden-guenzler</span>
+            </span>
+            <span class="cue open">Open</span>
+          </a>
+
+          <div class="pa-route-row">
+            <svg><use href="assets/icons.svg#pa-tag"></use></svg>
+            <span class="body">
+              <span class="pa-label">Post</span>
+              <span class="pa-caps">Written enquiry</span>
+              <span class="sub">Address on request</span>
+            </span>
+            <span class="cue">On request</span>
+          </div>
+
+          <div class="pa-route-row">
+            <svg><use href="assets/icons.svg#pa-signal"></use></svg>
+            <span class="body">
+              <span class="pa-label">Cable office</span>
+              <span class="pa-caps">Telephone</span>
+              <span class="sub">Number on request &middot; Central time</span>
+            </span>
+            <span class="cue">On request</span>
+          </div>
+        </div>
+      </div>
+
+      <div class="pa-form-foot">
+        <span>Form <b>C-114</b></span>
+        <span>Routed via cable office</span>
+        <span>Not transferable</span>
+        <span class="serial"><b>026 4471 90338 1</b></span>
+      </div>
     </div>
 
-    <ul class="manifest manifest--list manifest--nodate"
-        style="--mark-stroke: 3.5; margin-block-start: var(--space-7); max-inline-size: 26rem">
-      <li class="manifest__item">
-        <svg class="globe manifest__mark" aria-hidden="true"><use href="assets/icons.svg#pa-people"/></svg>
-        <p class="manifest__fact">
-          <a href="https://www.linkedin.com/in/hayden-guenzler/" target="_blank" rel="noopener noreferrer">LinkedIn</a>
-        </p>
-      </li>
-    </ul>
+    <div class="pa-rubber-stamp">Enquiries</div>
   </div>
-
-
 </main>
 
-<footer class="site-footer">
-  <div class="container site-footer__inner">
-    <div class="site-footer__fields">
-      <div class="site-footer__field">
-        <p class="t-label t-muted">Issued</p>
-        <p class="t-caption t-data">2026</p>
-      </div>
-      <div class="site-footer__field">
-        <p class="t-label t-muted">Revision</p>
-        <p class="t-caption t-data">01</p>
-      </div>
-      <div class="site-footer__field">
-        <p class="t-label t-muted">Reference</p>
-        <p class="t-caption"><a href="styleguide.html">Style guide</a></p>
-      </div>
-    </div>
-    <svg class="globe globe--md globe--simple" aria-hidden="true"><use href="assets/icons.svg#pa-globe"/></svg>
+<footer class="pa-footer" style="margin-top:64px">
+  <div class="pa-shell">
+    <dl>
+      <div><dt class="pa-label">Issued</dt><dd>2026</dd></div>
+      <div><dt class="pa-label">Revision</dt><dd>01</dd></div>
+      <div><dt class="pa-label">Carrier</dt><dd>HG AM</dd></div>
+    </dl>
+    <svg class="pa-globe"><use href="assets/icons.svg#pa-globe"></use></svg>
   </div>
 </footer>
-
 </body>
 </html>
