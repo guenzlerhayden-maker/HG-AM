@@ -36,10 +36,6 @@
   transform: translate(-100%, -50%);
 }
 
-/* Projected through the same Albers transform as the chart itself, recovered
-   from the two pins above, so this sits where New Glarus actually is. */
-.pa-pin[data-station="new-glarus"] { top: 33.12%; left: 62.31%; transform: translate(0, -50%); }
-
 .pa-pin .dot {
   width: 14px;
   height: 14px;
@@ -61,18 +57,6 @@
 }
 
 .pa-pin.is-active .dot { background: var(--pa-stamp); box-shadow: 0 0 0 3px var(--pa-chart), 0 0 0 4px var(--pa-stamp); }
-
-/* An origin, not a home base: the dot is hollow so the two solid pins still
-   read as the pair the route line joins. Same size and ring, so it belongs to
-   the same family of marks. */
-.pa-pin--origin .dot {
-  background: var(--pa-chart);
-  box-shadow: inset 0 0 0 3px var(--pa-globe-blue), 0 0 0 3px var(--pa-chart), 0 0 0 4px var(--pa-globe-blue);
-}
-.pa-pin--origin.is-active .dot {
-  background: var(--pa-chart);
-  box-shadow: inset 0 0 0 3px var(--pa-stamp), 0 0 0 3px var(--pa-chart), 0 0 0 4px var(--pa-stamp);
-}
 
 /* The inactive pin hides while a log is open so the card never sits under an
    irrelevant marker. */
@@ -119,7 +103,6 @@
 
   .pa-log[data-station="quad-cities"] { left: 3%; }
   .pa-log[data-station="tulsa"] { right: 3%; }
-  .pa-log[data-station="new-glarus"] { left: 3%; }
 }
 
 /* Below 640px the card stacks under the chart at full width, unconstrained
