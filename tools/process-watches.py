@@ -35,6 +35,10 @@ brightness threshold. A threshold would eat the Rolex's white dial and the
 Glashutte's polished highlights, which are as bright as the backdrop. A flood
 fill only touches background actually connected to the frame edge.
 
+Sources are webp, not png. They are inputs for re-cropping rather than
+anything that ships, so they only need to be good enough to crop from - which
+took 5MB of PNG down to a few hundred KB with no practical loss.
+
 Re-run:  python tools/process-watches.py
 """
 from PIL import Image, ImageDraw
@@ -125,7 +129,7 @@ def head_box(im):
 
 
 def process(name):
-    im = strip_background(Image.open(SRC + name + '.png').convert('RGB'))
+    im = strip_background(Image.open(SRC + name + '.webp').convert('RGB'))
     box = CROPS.get(name) or head_box(im)
     head = im.crop(box)
 
