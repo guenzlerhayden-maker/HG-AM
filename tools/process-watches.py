@@ -58,16 +58,18 @@ NAMES = ['jlc-reverso', 'seiko-alpinist', 'glashutte-original']
 #
 # The detector assumes a strap or bracelet is narrower than the case it hangs
 # from, and finds the case as the bulge in the row-width profile. The Seiko
-# shot breaks both halves of that assumption: it was photographed on a soft
-# grey backdrop rather than pure white, so the corner flood fill cannot clear
-# the background, and its bracelet is nearly as wide as the case anyway. The
-# row profile comes out flat between 636 and 1117 pixels with no bulge at all,
-# and the detector picked a thin horizontal band across the dial.
+# shot breaks it for a different reason than the framing: it was photographed
+# three-quarter on a soft grey gradient backdrop running from about 128 to 158,
+# so a corner-seeded subject test reads the gradient itself as subject and the
+# whole frame comes back as "watch".
 #
-# Measured off the source rather than eyeballed: bezel spans roughly x 140 to
-# 1010, the two crowns reach x 1120, and the case runs y 190 to 960.
+# Measured by detecting on saturation and luminance instead, since the backdrop
+# is perfectly neutral and the watch is not: case plus both crowns spans x 406
+# to 1340, and the widest band of the case sits at y 618 to 1162. The crop below
+# opens that out to include the lugs and a little bracelet at each end, which is
+# how the other two are framed, and was checked by eye before being committed.
 CROPS = {
-    'seiko-alpinist': (140, 190, 1120, 960),
+    'seiko-alpinist': (380, 330, 1400, 1440),
 }
 
 

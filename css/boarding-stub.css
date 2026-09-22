@@ -6,7 +6,9 @@
 
 .pa-stubs {
   display: grid;
-  grid-template-columns: repeat(auto-fit, minmax(310px, 1fr));
+  /* Wider floor: at 310px the stubs packed three-up and the photograph inside
+     each one shrank to a thumbnail. 400px gives two per row on a laptop. */
+  grid-template-columns: repeat(auto-fit, minmax(400px, 1fr));
   gap: 32px 24px;
   align-items: start;
 }
@@ -19,14 +21,20 @@
 
 .pa-stub > summary { display: block; cursor: pointer; list-style: none; }
 
-.pa-stub-top { display: grid; grid-template-columns: 14px minmax(0, .8fr) minmax(0, 1.35fr); }
+/* The photograph is the subject of the stub, so it takes the larger share.
+   It was the other way round, which gave the printed boilerplate more room
+   than the picture it was describing. */
+.pa-stub-top { display: grid; grid-template-columns: 14px minmax(0, 1.3fr) minmax(0, 1fr); }
 
 .pa-stub-edge { background: var(--pa-ink); }
 
 .pa-stub figure {
   position: relative;
   margin: 0;
-  aspect-ratio: 5 / 4;
+  /* The sources are 3:4 portrait. A 5:4 landscape window discarded about
+     half of each frame; 1:1 keeps far more of the picture while still
+     reading as a ticket window rather than a portrait print. */
+  aspect-ratio: 1 / 1;
   overflow: hidden;
 }
 
