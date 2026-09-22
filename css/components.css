@@ -120,6 +120,9 @@
   text-decoration: underline;
   text-decoration-thickness: 1px;
   text-underline-offset: 3px;
+  /* The eyebrow is set in caps, but i2E is a wordmark and its lowercase i is
+     part of the mark, so this one word opts out of the transform. */
+  text-transform: none;
 }
 .pa-eyebrow-link:hover,
 .pa-eyebrow-link:focus-visible { text-decoration-thickness: 2px; }
