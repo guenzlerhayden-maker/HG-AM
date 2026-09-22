@@ -36,122 +36,38 @@
   </div>
 </header>
 
-<main class="pa-shell" style="padding-top:40px">
-  <div class="pa-form-card pa-textured">
-    <div class="pa-mottle"></div>
-    <div class="pa-grain"></div>
+<main>
 
-    <svg class="pa-scratches" viewBox="0 0 736 420" preserveAspectRatio="none" aria-hidden="true">
-      <defs>
-        <filter id="cwarp" x="-15%" y="-15%" width="130%" height="130%">
-          <feTurbulence type="fractalNoise" baseFrequency="0.045" numOctaves="4" seed="23" result="t"></feTurbulence>
-          <feDisplacementMap in="SourceGraphic" in2="t" scale="8" xChannelSelector="R" yChannelSelector="G"></feDisplacementMap>
-        </filter>
-      </defs>
-      <g filter="url(#cwarp)" opacity="0.34" fill="none" stroke="#5E4620" stroke-linecap="round">
-        <path d="M28 66 Q120 50 212 34" stroke-width="0.6"></path>
-        <path d="M556 390 Q634 374 712 356" stroke-width="0.55"></path>
-        <path d="M52 322 Q92 350 130 380" stroke-width="0.7"></path>
-      </g>
-      <g opacity="0.4" fill="#5E4620">
-        <circle cx="188" cy="368" r="1.9"></circle>
-        <circle cx="642" cy="74" r="1.5"></circle>
-        <circle cx="96" cy="196" r="1.2"></circle>
-      </g>
-    </svg>
+  <!-- TICKET JACKET (canvas option 1a). The globe is the link: the object you
+       would pick up is the thing you press. Everything decorative is
+       pointer-events: none so nothing swallows the click. -->
+  <section class="pa-jacket">
+    <span class="pa-jacket__crease" aria-hidden="true"></span>
 
-    <div class="pa-inner">
-      <div class="pa-form-head">
-        <p class="pa-label">Passenger enquiry form &middot; Issued subject to conditions of contract</p>
-        <svg><use href="assets/icons.svg#pa-globe"></use></svg>
-      </div>
+    <a class="pa-jacket__mark"
+       href="https://www.linkedin.com/in/hayden-guenzler/"
+       target="_blank" rel="noopener noreferrer">
+      <svg class="pa-jacket__plane" viewBox="0 0 100 40" aria-hidden="true"><path d="M48 4h4l2 13 26 7v4l-26-3 1 9 8 5v3l-11-3-11 3v-3l8-5 1-9-26 3v-4l26-7z"/></svg>
+      <svg class="pa-jacket__globe" viewBox="0 0 100 100" aria-hidden="true"><circle cx="50" cy="50" r="46"/><line x1="50" y1="4" x2="50" y2="96"/><ellipse cx="50" cy="50" rx="17.6" ry="46"/><ellipse cx="50" cy="50" rx="32.5" ry="46"/><ellipse cx="50" cy="50" rx="42.5" ry="46"/><line x1="4" y1="50" x2="96" y2="50"/><path d="M 10.2 27 Q 50 37 89.8 27"/><path d="M 10.2 73 Q 50 83 89.8 73"/><path d="M 21.4 14 Q 50 20 78.6 14"/><path d="M 21.4 86 Q 50 92 78.6 86"/></svg>
+      <span class="pa-jacket__band">LinkedIn</span>
+      <!-- The band reads "LinkedIn", so the link already names itself. This
+           only adds what a sighted user gets from context: that it leaves. -->
+      <span class="visually-hidden">Hayden Guenzler on LinkedIn, opens in a new tab</span>
+    </a>
 
-      <div class="pa-form-grid">
-        <div>
-          <div class="pa-station">
-            <svg viewBox="0 0 200 250" role="img" aria-label="Location pin marking Tulsa, Oklahoma">
-              <defs>
-                <linearGradient id="pinfill" x1="0" y1="0" x2="0.35" y2="1">
-                  <stop offset="0%" stop-color="#8FBBD6"></stop>
-                  <stop offset="46%" stop-color="#6E9DBE"></stop>
-                  <stop offset="100%" stop-color="#1F4364"></stop>
-                </linearGradient>
-                <radialGradient id="pinsheen" cx="34%" cy="26%" r="52%">
-                  <stop offset="0%" stop-color="#EFE6CE" stop-opacity="0.5"></stop>
-                  <stop offset="100%" stop-color="#EFE6CE" stop-opacity="0"></stop>
-                </radialGradient>
-              </defs>
-              <ellipse cx="100" cy="232" rx="42" ry="8" fill="#1F4364" opacity="0.16"></ellipse>
-              <path d="M 100 226 C 100 226 22 138 22 90 A 78 78 0 1 1 178 90 C 178 138 100 226 100 226 Z" fill="#A8342F" opacity="0.14" transform="translate(3 2)"></path>
-              <path d="M 100 226 C 100 226 22 138 22 90 A 78 78 0 1 1 178 90 C 178 138 100 226 100 226 Z" fill="url(#pinfill)" stroke="#1F4364" stroke-width="3"></path>
-              <path d="M 100 226 C 100 226 22 138 22 90 A 78 78 0 1 1 178 90 C 178 138 100 226 100 226 Z" fill="url(#pinsheen)"></path>
-              <g fill="none" stroke="#EFE6CE" stroke-width="3.6" stroke-linecap="round">
-                <circle cx="100" cy="90" r="40"></circle>
-                <line x1="100" y1="50" x2="100" y2="130"></line>
-                <ellipse cx="100" cy="90" rx="19" ry="40"></ellipse>
-                <line x1="60" y1="90" x2="140" y2="90"></line>
-                <path d="M 68 68 Q 100 76 132 68"></path>
-                <path d="M 68 112 Q 100 120 132 112"></path>
-              </g>
-            </svg>
-            <div>
-              <span class="pa-label">Station</span>
-              <span class="name">Tulsa</span>
-              <span class="sub">Oklahoma, U.S.A.</span>
-            </div>
-          </div>
-          <dl class="pa-coords">
-            <div><dt class="pa-label">Code</dt><dd class="pa-data">TUL</dd></div>
-            <div><dt class="pa-label">Lat</dt><dd class="pa-data">36.15N</dd></div>
-            <div><dt class="pa-label">Long</dt><dd class="pa-data">95.99W</dd></div>
-          </dl>
-        </div>
-
-        <div>
-          <p class="pa-label pa-route-head">How to route a message</p>
-
-          <a class="pa-route-row" href="https://www.linkedin.com/in/hayden-guenzler/" target="_blank" rel="noopener noreferrer">
-            <svg><use href="assets/icons.svg#pa-people"></use></svg>
-            <span class="body">
-              <span class="pa-label">Direct</span>
-              <span class="pa-caps">LinkedIn</span>
-              <span class="sub">in/hayden-guenzler</span>
-            </span>
-            <span class="cue open">Open</span>
-          </a>
-
-          <div class="pa-route-row">
-            <svg><use href="assets/icons.svg#pa-tag"></use></svg>
-            <span class="body">
-              <span class="pa-label">Post</span>
-              <span class="pa-caps">Written enquiry</span>
-              <span class="sub">Address on request</span>
-            </span>
-            <span class="cue">On request</span>
-          </div>
-
-          <div class="pa-route-row">
-            <svg><use href="assets/icons.svg#pa-signal"></use></svg>
-            <span class="body">
-              <span class="pa-label">Cable office</span>
-              <span class="pa-caps">Telephone</span>
-              <span class="sub">Number on request &middot; Central time</span>
-            </span>
-            <span class="cue">On request</span>
-          </div>
-        </div>
-      </div>
-
-      <div class="pa-form-foot">
-        <span>Form <b>C-114</b></span>
-        <span>Routed via cable office</span>
-        <span>Not transferable</span>
-        <span class="serial"><b>026 4471 90338 1</b></span>
+    <div class="pa-jacket__card">
+      <span class="pa-label">Passenger enquiry</span>
+      <div style="display:flex;gap:28px;border-top:1px solid rgba(31,67,100,.5);padding-top:8px">
+        <span class="pa-field"><span class="pa-label">Origin</span><span class="pa-data">TUL</span></span>
+        <span class="pa-field"><span class="pa-label">Routing</span><span class="pa-data">LNKD</span></span>
       </div>
     </div>
 
-    <div class="pa-rubber-stamp">Enquiries</div>
-  </div>
+    <span class="pa-jacket__grommet pa-jacket__grommet--a" aria-hidden="true"></span>
+    <span class="pa-jacket__grommet pa-jacket__grommet--b" aria-hidden="true"></span>
+    <span class="pa-jacket__dogear" aria-hidden="true"></span>
+  </section>
+
 </main>
 
 <footer class="pa-footer" style="margin-top:64px">

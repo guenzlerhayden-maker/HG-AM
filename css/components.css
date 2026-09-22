@@ -296,3 +296,190 @@ a.pa-route-row:hover { background: #E4D9BB; }
   letter-spacing: var(--pa-track-label);
   text-transform: uppercase;
 }
+
+/* ============================================================================
+   TICKET JACKET  —  Contact cover (canvas option 1a)
+   ----------------------------------------------------------------------------
+   Lifted from the 1a artboard in the design canvas: flat sky field, white
+   line-art globe, cream wordmark band across the equator, fold crease,
+   grommets, dog-eared corner.
+
+   The globe is the link. That is the whole idea here — the object you would
+   actually pick up is the thing you press, rather than a labelled button
+   sitting next to a picture of one.
+
+   Two things that makes necessary:
+   - the band reads LINKEDIN, not HG AM. If the mark is the control, it has to
+     say where it goes; a wordmark would leave the destination unguessable.
+   - every decorative layer is pointer-events: none, so the textures and the
+     crease cannot swallow the click. They sit above the field and below the
+     link, and without that the hit area silently dies.
+
+   The nav stays the site's blue bar rather than 1a's cream form strip. The
+   cream strip belongs to that artboard's own system, and swapping the nav on
+   one page only would make the shell inconsistent across three pages to gain
+   nothing the cover does not already carry.
+   ========================================================================== */
+
+.pa-jacket {
+  position: relative;
+  overflow: hidden;
+  background: var(--pa-sky);
+  min-block-size: clamp(24rem, 62vh, 34rem);
+  display: grid;
+  place-items: center;
+}
+
+/* Paper and ink noise, plus the vignette. Stacked in the canvas's own order:
+   mottle multiplies down, grain overlays, ink screens back up. */
+.pa-jacket::before,
+.pa-jacket::after {
+  content: "";
+  position: absolute;
+  inset: 0;
+  pointer-events: none;
+}
+
+.pa-jacket::before {
+  background-image: var(--pa-mottle);
+  background-size: 420px;
+  mix-blend-mode: multiply;
+  opacity: .45;
+}
+
+.pa-jacket::after {
+  background-image:
+    radial-gradient(ellipse 60% 40% at 20% 15%, rgba(255,255,255,.10), transparent 70%),
+    radial-gradient(ellipse 44% 34% at 88% 78%, rgba(31,67,100,.17), transparent 72%);
+}
+
+/* The fold. A jacket was folded in half and carried in a pocket; the crease is
+   a highlight and a shadow a few pixels apart, nothing more. */
+.pa-jacket__crease {
+  position: absolute;
+  inset-block: 0;
+  inset-inline-start: 50%;
+  inline-size: 14px;
+  transform: translateX(-50%);
+  pointer-events: none;
+  background: linear-gradient(90deg,
+    transparent,
+    rgba(255,255,255,.22) 42%,
+    rgba(20,24,29,.16) 52%,
+    transparent);
+}
+
+/* --- The mark, which is the link ----------------------------------------- */
+
+.pa-jacket__mark {
+  position: relative;
+  z-index: 2;
+  display: grid;
+  justify-items: center;
+  /* Full width, so the band it contains can run to both trim edges the way a
+     printed wordmark band does. The GLOBE is what gets constrained, not the
+     link — constraining the link was the first attempt and it stopped the band
+     at the globe's edge, which made it look like a label stuck on the mark
+     rather than ink laid across the card. */
+  inline-size: 100%;
+  text-decoration: none;
+  transition: transform var(--duration-fast, 120ms) ease;
+}
+
+/* Out of flow, deliberately. In flow the plane sits above the globe and makes
+   the link's box taller than the globe, so the band's 50% landed 14px above
+   the equator - close enough to look like a mistake rather than a band. Taking
+   the plane out means the mark's box IS the globe's box, and the band lands on
+   the equator by construction rather than by a magic offset. */
+.pa-jacket__plane {
+  position: absolute;
+  inset-block-end: 100%;
+  inset-inline-start: 50%;
+  transform: translateX(-50%);
+  margin-block-end: .5rem;
+  inline-size: 3.25rem;
+  fill: var(--pa-card);
+}
+
+.pa-jacket__globe {
+  inline-size: min(78vw, 20rem);
+  block-size: auto;
+  aspect-ratio: 1;
+  fill: none;
+  stroke: var(--pa-card);
+  stroke-width: 1.15;
+  stroke-linecap: round;
+  opacity: .95;
+}
+
+/* The band sits across the equator, running the full width of the page the way
+   the wordmark band does on a real jacket — it is printed on the card, not on
+   the globe, so it must not stop at the globe's edge. */
+.pa-jacket__band {
+  position: absolute;
+  inset-inline: 0;
+  inset-block-start: 50%;
+  transform: translateY(-50%);
+  background: var(--pa-stock);
+  padding-block: .7rem;
+  text-align: center;
+  box-shadow: 0 1px 0 rgba(20,24,29,.12);
+  font: 700 clamp(1.25rem, 4vw, 1.875rem)/1 "News Cycle", Helvetica, Arial, sans-serif;
+  letter-spacing: .22em;
+  padding-inline-start: .22em;
+  color: var(--pa-globe-blue);
+}
+
+.pa-jacket__mark:hover .pa-jacket__band,
+.pa-jacket__mark:focus-visible .pa-jacket__band { color: var(--pa-stamp); }
+
+.pa-jacket__mark:focus-visible {
+  outline: 3px solid var(--pa-stock);
+  outline-offset: 6px;
+}
+
+/* --- Field card, grommets, dog-ear --------------------------------------- */
+
+.pa-jacket__card {
+  position: absolute;
+  inset-inline-start: clamp(1rem, 4vw, 2.125rem);
+  inset-block-end: 1.875rem;
+  z-index: 2;
+  display: grid;
+  gap: .55rem;
+  background: var(--pa-stock);
+  padding: .7rem 1.125rem .8rem;
+  box-shadow: 0 1px 3px rgba(20,24,29,.18);
+}
+
+.pa-jacket__grommet {
+  position: absolute;
+  inset-block-end: 2.125rem;
+  inline-size: 15px;
+  block-size: 15px;
+  border-radius: 50%;
+  background: #C9C2B2;
+  box-shadow: inset 0 1px 2px rgba(0,0,0,.5), 0 0 0 3px rgba(239,228,204,.9);
+  pointer-events: none;
+}
+
+.pa-jacket__grommet--a { inset-inline-end: 2.375rem; }
+.pa-jacket__grommet--b { inset-inline-end: 4.875rem; }
+
+.pa-jacket__dogear {
+  position: absolute;
+  inset-block-start: 0;
+  inset-inline-end: 0;
+  inline-size: 60px;
+  block-size: 56px;
+  pointer-events: none;
+  clip-path: polygon(100% 0, 100% 97%, 86% 79%, 77% 72%, 58% 41%, 44% 31%, 31% 12%, 16% 8%, 0 0);
+  background: linear-gradient(216deg, #E4DAC0 0 34%, #CFC4A9 72%, #BFB399 100%);
+  box-shadow: -2px 2px 6px rgba(0,0,0,.22);
+}
+
+@media (max-width: 560px) {
+  /* The card and the grommets fight for the same corner once the field is
+     narrow. The grommets go; they are the more decorative of the two. */
+  .pa-jacket__grommet { display: none; }
+}

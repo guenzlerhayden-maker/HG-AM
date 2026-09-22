@@ -32,23 +32,28 @@ def check():
             fails.append('%s: %d open vs %d close' % (tag, opened, closed))
 
     # One of each part per ticket. A mismatch means a regeneration left debris.
-    tickets = s.count('<details class="stub"')
-    for name, count in [('summary', s.count('class="stub__summary"')),
-                        ('photo', s.count('class="stub__photo"')),
-                        ('perforation', s.count('class="stub__perf"')),
-                        ('counterfoil', s.count('class="stub__counterfoil"')),
-                        ('caption', s.count('class="stub__caption"'))]:
+    #
+    # These selectors moved once already: the design pass renamed everything to
+    # a pa- namespace, and this check went on reporting "structure OK" while
+    # counting zero tickets. A validator that passes because it is looking for
+    # markup that no longer exists is worse than no validator, so it now asserts
+    # a non-zero count before checking the parts.
+    tickets = s.count('class="pa-stub"')
+    if tickets == 0:
+        fails.append('found no tickets at all - selectors are probably stale')
+    for name, count in [('perforation', s.count('class="pa-perf"')),
+                        ('body', s.count('class="pa-stub-body"')),
+                        ('city line', s.count('class="pa-stub-city"'))]:
         if count != tickets:
             fails.append('%d tickets but %d %s' % (tickets, count, name))
 
-    # Every caption must live inside a ticket, not stranded after one.
-    for m in re.finditer(r'<p class="stub__caption">', s):
-        before = s[:m.start()]
-        if before.count('<details') <= before.count('</details>'):
-            fails.append('a stub__caption sits outside any <details>')
-            break
+    # Every watch must carry its stamp card, and the trio must be a trio.
+    watches = s.count('<details>', s.index('pa-watches')) if 'pa-watches' in s else 0
+    stamps = s.count('class="pa-stamp-card"')
+    if 'pa-watches' in s and stamps != 3:
+        fails.append('expected 3 watch stamp cards, found %d' % stamps)
 
-    print('tickets %d' % tickets)
+    print('tickets %d, watch stamps %d' % (tickets, s.count('class="pa-stamp-card"')))
     if fails:
         print('\nFAIL')
         for f in fails:

@@ -25,3 +25,6 @@ _*.html
 
 # Design-pass download, kept locally but not versioned
 *.zip
+
+# Claude Design canvas documents, kept locally for reference
+_dc/

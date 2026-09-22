@@ -47,7 +47,24 @@ TOL = 26                         # how far from paper counts as subject
 
 SRC = 'assets/images/watches/_source/'
 OUT = 'assets/images/watches/'
-NAMES = ['jlc-reverso', 'rolex-polar-explorer-ii', 'glashutte-original']
+NAMES = ['jlc-reverso', 'seiko-alpinist', 'glashutte-original']
+
+# Manual crop overrides, in source pixels, for photographs the automatic head
+# detection cannot read.
+#
+# The detector assumes a strap or bracelet is narrower than the case it hangs
+# from, and finds the case as the bulge in the row-width profile. The Seiko
+# shot breaks both halves of that assumption: it was photographed on a soft
+# grey backdrop rather than pure white, so the corner flood fill cannot clear
+# the background, and its bracelet is nearly as wide as the case anyway. The
+# row profile comes out flat between 636 and 1117 pixels with no bulge at all,
+# and the detector picked a thin horizontal band across the dial.
+#
+# Measured off the source rather than eyeballed: bezel spans roughly x 140 to
+# 1010, the two crowns reach x 1120, and the case runs y 190 to 960.
+CROPS = {
+    'seiko-alpinist': (140, 190, 1120, 960),
+}
 
 
 def strip_background(im):
@@ -109,7 +126,7 @@ def head_box(im):
 
 def process(name):
     im = strip_background(Image.open(SRC + name + '.png').convert('RGB'))
-    box = head_box(im)
+    box = CROPS.get(name) or head_box(im)
     head = im.crop(box)
 
     target = int(CANVAS * SUBJECT_HEIGHT)
