@@ -111,4 +111,9 @@
   .pa-log { position: relative; margin: 18px 0 2px; }
 }
 
-.pa-map-hint { margin-top: 14px; }
+/* The hint now sits above the chart, so it must not collapse when a log opens
+   or the map would jump upward under the pointer. The hidden attribute is only
+   display:none from the UA sheet, and any author rule outranks it, so the
+   element keeps its box and only loses its ink. */
+.pa-map-hint { margin: 0 0 10px; }
+.pa-map-hint[hidden] { display: block; visibility: hidden; }
