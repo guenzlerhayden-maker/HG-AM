@@ -107,6 +107,23 @@
 
 .pa-cover-inner .pa-eyebrow { font-size: 10px; letter-spacing: .3em; line-height: 1.4; }
 
+/* The cover grid's 26px gap spaces major elements (badge, byline). The two
+   byline lines are one block, so they group into a single grid child and set
+   their own tighter rhythm rather than inheriting that gap. */
+.pa-byline { display: grid; gap: 7px; justify-items: center; }
+
+/* Colour alone cannot signal a link, so the underline is permanent. Offset
+   clears the descenders on wide-tracked caps; hover thickens rather than
+   recolours, keeping stamp red reserved. */
+.pa-eyebrow-link {
+  color: inherit;
+  text-decoration: underline;
+  text-decoration-thickness: 1px;
+  text-underline-offset: 3px;
+}
+.pa-eyebrow-link:hover,
+.pa-eyebrow-link:focus-visible { text-decoration-thickness: 2px; }
+
 /* Grommets */
 .pa-grommet {
   position: absolute;
