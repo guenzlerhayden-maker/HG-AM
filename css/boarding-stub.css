@@ -45,17 +45,11 @@
   filter: sepia(.3) saturate(.72) contrast(1.06);
 }
 
-/* Halftone dot screen over the photograph */
-.pa-stub figure::after {
-  content: "";
-  position: absolute;
-  inset: 0;
-  background-image: radial-gradient(circle at 50% 50%, rgba(36, 37, 43, .55) 0 .85px, transparent 1.05px);
-  background-size: 3px 3px;
-  mix-blend-mode: multiply;
-  opacity: .5;
-  pointer-events: none;
-}
+/* The halftone dot screen that used to sit here was removed once the stub
+   photographs were enlarged. On a 3px grid it read as period texture at 127px
+   wide; at 272px the same grid covered five times the area and turned into a
+   mesh over the picture. The sepia on the image itself is kept, since that is
+   what stops a modern photograph looking pasted onto aged stock. */
 
 .pa-stub-body { padding: 12px 12px 8px; display: grid; align-content: start; gap: 8px; }
 
