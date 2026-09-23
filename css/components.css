@@ -199,10 +199,7 @@
 
 .pa-hobby {
   display: grid;
-  /* Two columns since the category label was removed: the camera now sits
-     against the line about the photographs rather than against a word
-     repeating what the pictures already show. */
-  grid-template-columns: 20px minmax(0, 1fr);
+  grid-template-columns: 20px 7.5rem minmax(0, 1fr);
   gap: 16px;
   align-items: start;
   padding-block: 16px;
@@ -210,6 +207,12 @@
 }
 
 .pa-hobby > svg { width: 20px; height: 20px; color: var(--pa-blue); margin-top: .15em; flex: none; }
+
+/* A row that carries no category label, where the icon sits straight against
+   the content. The base row keeps its three columns, because the watches row
+   still uses them - a shared component takes a modifier here, not a new
+   definition, or changing it for one instance breaks the other. */
+.pa-hobby--nolabel { grid-template-columns: 20px minmax(0, 1fr); }
 
 .pa-hobby > p {
   margin-top: .35em;
