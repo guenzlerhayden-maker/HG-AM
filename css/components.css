@@ -199,7 +199,10 @@
 
 .pa-hobby {
   display: grid;
-  grid-template-columns: 20px 7.5rem 1fr;
+  /* Two columns since the category label was removed: the camera now sits
+     against the line about the photographs rather than against a word
+     repeating what the pictures already show. */
+  grid-template-columns: 20px minmax(0, 1fr);
   gap: 16px;
   align-items: start;
   padding-block: 16px;
