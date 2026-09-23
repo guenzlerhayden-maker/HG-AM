@@ -91,14 +91,24 @@
 
 /* Width is deliberate: 40%/22rem clears both pin coordinates on the chart.
    Anything wider and the card box spans a marker. */
-@media (min-width: 640px) {
+/* The card only overlays the chart where the chart is tall enough to hold it.
+   The chart keeps a fixed aspect ratio, so its height follows its width, and
+   below about 960px the Tulsa log no longer fits and was clipping its last
+   entry. Above this the card floats; below it, it stacks under the chart at
+   full width, where nothing can be cut off. */
+@media (min-width: 960px) {
+  /* The card is sized against the chart, and the chart's height follows its
+     width, so a narrower window gave the card less room while its text wrapped
+     to more lines. The Tulsa log fit at 1440px with nothing to spare and was
+     silently clipping its last entry below that. Wider card, less wrapping,
+     and the full height of the chart to sit in. */
   .pa-log {
     position: absolute;
     z-index: 3;
-    top: 5%;
-    width: min(40%, 22rem);
-    max-height: 90%;
-    overflow: hidden;
+    top: 2%;
+    width: min(46%, 25rem);
+    max-height: 96%;
+    overflow-y: auto;
   }
 
   .pa-log[data-station="quad-cities"] { left: 3%; }
@@ -107,8 +117,8 @@
 
 /* Below 640px the card stacks under the chart at full width, unconstrained
    height — an overlay that narrow is unreadable. */
-@media (max-width: 639px) {
-  .pa-log { position: relative; margin: 18px 0 2px; }
+@media (max-width: 959px) {
+  .pa-log { position: relative; margin: 18px 0 2px; max-height: none; overflow: visible; }
 }
 
 /* The hint now sits above the chart, so it must not collapse when a log opens
