@@ -145,7 +145,17 @@
 
 /* ---- Watch stamps -------------------------------------------------------- */
 
-.pa-watches { display: grid; grid-template-columns: repeat(3, minmax(0, 14rem)); gap: var(--pa-gap-sm); margin-bottom: 16px; }
+/* Three fixed columns kept three watches side by side at any width, which on
+   a phone left each one about 46px across and pushed their detail cards off
+   the screen. auto-fit with a 9rem floor still gives three across on a
+   laptop, and lets them fall to fewer when there is no room. The min() keeps
+   the floor from becoming a hard minimum wider than the container. */
+.pa-watches {
+  display: grid;
+  grid-template-columns: repeat(auto-fit, minmax(min(9rem, 100%), 14rem));
+  gap: var(--pa-gap-sm);
+  margin-bottom: 16px;
+}
 
 .pa-watches summary { display: grid; gap: 8px; cursor: pointer; list-style: none; }
 
@@ -568,3 +578,14 @@ a.pa-route-row:hover { background: #E4D9BB; }
 .pa-nav--jacket a[data-section][aria-current="page"] { background: var(--pa-stamp); }
 .pa-nav--jacket a[data-section][aria-current="page"] .name,
 .pa-nav--jacket a[data-section][aria-current="page"] .num { color: var(--pa-stock); }
+
+/* ---- Hobby rows on narrow screens ---------------------------------------
+   The row holds 7.5rem open for its category label. On a 375px screen that
+   left roughly 163px for the content beside it, which is not enough for a
+   row of watches or a stub. Below this the label sits above the content
+   instead, and both share the full width next to the icon. */
+@media (max-width: 560px) {
+  .pa-hobby { grid-template-columns: 20px minmax(0, 1fr); }
+  .pa-hobby > p,
+  .pa-hobby > div { grid-column: 2; }
+}
