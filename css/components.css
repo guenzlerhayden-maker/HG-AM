@@ -630,3 +630,32 @@ a.pa-route-row:hover { background: #E4D9BB; }
   .pa-watches summary img { transition: none; }
   .pa-watches summary:hover img { transform: none; }
 }
+
+/* ---- Split-flap cells ----------------------------------------------------
+   One span per character, written by js/splitflap.js. inline-block with a
+   tabular width so a glyph swap can never nudge its neighbours sideways
+   mid-flap; Courier Prime is already monospace, but font-variant-numeric
+   makes the intent explicit and survives a future font change.
+
+   The landing tint is the existing stamp red at low strength, gone in 400ms.
+   It reads as the flap catching the light rather than as a new colour in the
+   palette, and because it is transient it does not count against the
+   one-or-two-uses-of-red rule the system is built on. */
+.pa-flap {
+  display: inline-block;
+  font-variant-numeric: tabular-nums;
+}
+
+.pa-flap.is-set {
+  animation: pa-flap-land 400ms ease-out;
+}
+
+@keyframes pa-flap-land {
+  0%   { transform: translateY(-9%) scaleY(.88); color: var(--pa-stamp); }
+  55%  { transform: none; }
+  100% { color: inherit; }
+}
+
+@media (prefers-reduced-motion: reduce) {
+  .pa-flap.is-set { animation: none; }
+}
