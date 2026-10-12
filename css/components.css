@@ -589,3 +589,44 @@ a.pa-route-row:hover { background: #E4D9BB; }
   .pa-hobby > p,
   .pa-hobby > div { grid-column: 2; }
 }
+
+/* ---- Watches settling in -------------------------------------------------
+   Deliberately a different motion from the ticket stubs. Paper falls; objects
+   get set down. These come from slightly above and slightly oversize and
+   settle to rest, which reads as placement rather than drift, and keeps the
+   two rows from feeling like the same effect applied twice.
+
+   Same reasoning as the stubs on fill-mode: "backwards" and no "forwards", so
+   the finished animation does not outrank the hover transform below. */
+.js .pa-watches:not(.is-set) > details { opacity: 0; }
+
+.js .pa-watches.is-set > details {
+  animation: pa-watch-set 560ms cubic-bezier(.2, .72, .28, 1) backwards;
+}
+.js .pa-watches.is-set > details:nth-child(1) { animation-delay: 0ms; }
+.js .pa-watches.is-set > details:nth-child(2) { animation-delay: 120ms; }
+.js .pa-watches.is-set > details:nth-child(3) { animation-delay: 240ms; }
+
+@keyframes pa-watch-set {
+  from { opacity: 0; transform: translateY(-10px) scale(1.035); }
+  to   { opacity: 1; transform: none; }
+}
+
+/* These open a stamp card on click, so they should answer the pointer. */
+@media (hover: hover) {
+  .pa-watches summary img {
+    transition: transform 200ms cubic-bezier(.2, .7, .3, 1),
+                box-shadow 200ms cubic-bezier(.2, .7, .3, 1);
+  }
+  .pa-watches summary:hover img {
+    transform: translateY(-3px) scale(1.015);
+    box-shadow: 0 8px 18px rgba(20, 24, 29, .14);
+  }
+}
+
+@media (prefers-reduced-motion: reduce) {
+  .js .pa-watches:not(.is-set) > details,
+  .js .pa-watches.is-set > details { opacity: 1; animation: none; }
+  .pa-watches summary img { transition: none; }
+  .pa-watches summary:hover img { transform: none; }
+}
