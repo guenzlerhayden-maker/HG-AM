@@ -145,6 +145,59 @@
 
 @keyframes pa-route-draw { to { transform: scaleX(1); } }
 
+/* The aircraft flies the same 820ms as the reveal, so it sits on the leading
+   edge of the line rather than chasing one already drawn.
+
+   The path here is the route REVERSED. offset-distance always runs from the
+   path's start to its end, and the route is authored Tulsa to Quad Cities,
+   so reversing the data lets the plane travel 0 to 100 percent in the
+   direction the move actually happened. Animating 100 to 0 instead would
+   have left offset-rotate pointing the nose backwards.
+
+   offset-rotate "auto 90deg" because the silhouette is drawn nose-up, while
+   auto alone aligns an element's +X axis to the path. */
+.pa-route-plane {
+  offset-path: path("M 608.2 238.1 Q 546 295 511.1 371.9");
+  offset-rotate: auto 90deg;
+  offset-distance: 0%;
+  opacity: 0;
+}
+
+.pa-map-wrap.is-drawn .pa-route-plane {
+  /* A 5s cycle with the flight compressed into the first 16.4% of it, which
+     is the original 820ms. CSS has no delay BETWEEN iterations, only before
+     the first, so the pause is built into the keyframes: the plane reaches
+     the end at 16.4% and simply holds there, invisible, until the cycle
+     restarts.
+
+     Two animations rather than one because they need different timing. The
+     easing belongs to the flight alone, so it is declared on the 0% keyframe
+     of pa-plane-fly; the overall animation runs linear so that easing is not
+     applied twice over the full five seconds. */
+  animation: pa-plane-fly 5s linear infinite,
+             pa-plane-fade 5s linear infinite;
+}
+
+/* A plane crossing underneath an open station log looks like a glitch, and
+   that card is the one moment someone is reading rather than glancing. */
+.pa-map-wrap.has-open .pa-route-plane { animation-play-state: paused; }
+
+/* Fades out on arrival instead of parking on top of the Tulsa pin. What the
+   chart is left with is the static composition the page was designed around. */
+@keyframes pa-plane-fly {
+  0%     { offset-distance: 0%;   animation-timing-function: cubic-bezier(.33, 0, .2, 1); }
+  16.4%  { offset-distance: 100%; }
+  100%   { offset-distance: 100%; }
+}
+
+@keyframes pa-plane-fade {
+  0%     { opacity: 0; }
+  2.4%   { opacity: 1; }
+  13.5%  { opacity: 1; }
+  16.4%  { opacity: 0; }
+  100%   { opacity: 0; }
+}
+
 /* The dots pop after the line reaches them. The pin itself carries the
    positioning transform, so the animation goes on the dot inside it, which
    has none of its own to fight. backwards holds the start state through the
@@ -165,4 +218,6 @@
   .pa-route-wipe,
   .pa-map-wrap.is-drawn .pa-route-wipe { transform: scaleX(1); animation: none; }
   .pa-map-wrap.is-drawn .pa-pin .dot { animation: none; }
+  .pa-route-plane,
+  .pa-map-wrap.is-drawn .pa-route-plane { animation: none; opacity: 0; }
 }

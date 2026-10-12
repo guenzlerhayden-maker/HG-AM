@@ -71,6 +71,14 @@
             <path d="M 511.1 371.9 Q 546 295 608.2 238.1" fill="none" stroke="#A8342F" stroke-width="3" stroke-dasharray="10 8" stroke-linecap="round"></path>
             <polygon points="11,0 -7,6.5 -7,-6.5" fill="#A8342F" transform="translate(552.8 300) rotate(126)"></polygon>
           </g>
+          <!-- Rides the leading edge of the reveal, so the aircraft appears to
+               draw the route rather than follow a line already there. Same
+               silhouette as the Contact jacket. Centred on its own origin
+               because offset-path puts the element origin on the path. -->
+          <g class="pa-route-plane" aria-hidden="true">
+            <path d="M48 4h4l2 13 26 7v4l-26-3 1 9 8 5v3l-11-3-11 3v-3l8-5 1-9-26 3v-4l26-7z"
+                  fill="#A8342F" transform="scale(.52) translate(-51 -20.5)"></path>
+          </g>
         </svg>
 
         <a class="pa-pin" data-station="quad-cities" href="#log-quad-cities" aria-expanded="false">
