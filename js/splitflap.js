@@ -33,11 +33,16 @@
   var DIGITS = "0123456789";
   var LETTERS = "ABCDEFGHIJKLMNOPQRSTUVWXYZ";
 
-  var STEP = 55;          // ms a single flap is held
-  var BASE = 8;           // flaps before the leftmost character lands
-  var PER_CHAR = 5;       // each character to the right runs this many more
-  var CELL_STAGGER = 190; // between one cell and the next
-  var PERIOD = 5000;      // start of one pass to the start of the next
+  // A real Solari board flips fast and for a while. The first pass of this was
+  // too settled: the leftmost character landed after 8 flaps and the row then
+  // sat still for roughly 4.5 of every 5 seconds, which read as slow even
+  // though each individual flap was quick. More flaps, held for less time
+  // each, and a shorter gap between passes.
+  var STEP = 36;          // ms a single flap is held  (~28 a second)
+  var BASE = 18;          // flaps before the leftmost character lands
+  var PER_CHAR = 8;       // each character to the right runs this many more
+  var CELL_STAGGER = 120; // between one cell and the next
+  var PERIOD = 4200;      // start of one pass to the start of the next
 
   function glyphsFor(ch) {
     if (/[0-9]/.test(ch)) return DIGITS;
