@@ -140,7 +140,7 @@
 .pa-route-wipe { transform: scaleX(0); transform-origin: 624px 0; }
 
 .pa-map-wrap.is-drawn .pa-route-wipe {
-  animation: pa-route-draw 820ms cubic-bezier(.33, 0, .2, 1) forwards;
+  animation: pa-route-draw 820ms cubic-bezier(.33, 0, .2, 1) 2000ms forwards;
 }
 
 @keyframes pa-route-draw { to { transform: scaleX(1); } }
@@ -174,8 +174,8 @@
      easing belongs to the flight alone, so it is declared on the 0% keyframe
      of pa-plane-fly; the overall animation runs linear so that easing is not
      applied twice over the full five seconds. */
-  animation: pa-plane-fly 5s linear infinite,
-             pa-plane-fade 5s linear infinite;
+  animation: pa-plane-fly 5s linear 2000ms infinite,
+             pa-plane-fade 5s linear 2000ms infinite;
 }
 
 /* A plane crossing underneath an open station log looks like a glitch, and
@@ -205,8 +205,8 @@
 .pa-map-wrap.is-drawn .pa-pin .dot {
   animation: pa-dot-in 380ms cubic-bezier(.2, 1.5, .4, 1) backwards;
 }
-.pa-map-wrap.is-drawn .pa-pin[data-station="quad-cities"] .dot { animation-delay: 240ms; }
-.pa-map-wrap.is-drawn .pa-pin[data-station="tulsa"] .dot { animation-delay: 700ms; }
+.pa-map-wrap.is-drawn .pa-pin[data-station="quad-cities"] .dot { animation-delay: 2240ms; }
+.pa-map-wrap.is-drawn .pa-pin[data-station="tulsa"] .dot { animation-delay: 2700ms; }
 
 @keyframes pa-dot-in { from { transform: scale(0); } }
 
@@ -220,4 +220,65 @@
   .pa-map-wrap.is-drawn .pa-pin .dot { animation: none; }
   .pa-route-plane,
   .pa-map-wrap.is-drawn .pa-route-plane { animation: none; opacity: 0; }
+}
+
+/* ---- Drawing the chart ---------------------------------------------------
+   The three map layers are single paths, so a dash pattern runs continuously
+   through their subpaths and the chart traces like one pen rather than every
+   piece appearing at once. Each layer needs its OWN dash length, measured with
+   getTotalLength, or they draw at wildly different rates: the graticule is
+   11268 units, the coastline 5959, the rivers 646.
+
+   stroke-dasharray and stroke-dashoffset are inherited SVG properties, which
+   is what makes this possible at all - set on the <use>, they reach the paths
+   inside the external sprite, which an ordinary selector could not.
+
+   The blank state is scoped to .js. Without scripting the chart is simply
+   finished, and nothing here ever runs. It also removes a flash the route
+   reveal had on its own: previously the finished line was visible until the
+   observer fired, then jumped back to blank to animate. */
+.js .pa-map-grid   { stroke-dasharray: 11268; stroke-dashoffset: 11268; }
+.js .pa-map-land   { stroke-dasharray: 5959;  stroke-dashoffset: 5959; fill-opacity: 0; }
+.js .pa-map-rivers { stroke-dasharray: 646;   stroke-dashoffset: 646; }
+.js .pa-route-wipe { transform: scaleX(0); }
+
+/* Drawn the way a chart is actually made: reference frame, then coastline and
+   borders, then water, then the land fills in behind it all. */
+.js .pa-map-wrap.is-drawn .pa-map-grid {
+  animation: pa-trace 900ms linear forwards;
+}
+.js .pa-map-wrap.is-drawn .pa-map-land {
+  animation: pa-trace 1450ms cubic-bezier(.4, 0, .5, 1) 250ms forwards,
+             pa-land-fill 450ms ease-out 1500ms forwards;
+}
+.js .pa-map-wrap.is-drawn .pa-map-rivers {
+  animation: pa-trace 450ms ease-out 1400ms forwards;
+}
+
+/* The whole pin, not just its dot. Labels hanging over a half-drawn empty
+   chart look like leftovers rather than part of the composition, so the plate
+   arrives with the station it names. Opacity only: the pin's transform is
+   carrying its position on the chart and must not be touched. */
+.js .pa-pin { opacity: 0; }
+.js .pa-map-wrap.is-drawn .pa-pin { animation: pa-pin-in 300ms ease-out forwards; }
+.js .pa-map-wrap.is-drawn .pa-pin[data-station="quad-cities"] { animation-delay: 2240ms; }
+.js .pa-map-wrap.is-drawn .pa-pin[data-station="tulsa"] { animation-delay: 2700ms; }
+
+@keyframes pa-pin-in { to { opacity: 1; } }
+
+@keyframes pa-trace     { to { stroke-dashoffset: 0; } }
+@keyframes pa-land-fill { to { fill-opacity: 1; } }
+
+@media (prefers-reduced-motion: reduce) {
+  .js .pa-map-grid,
+  .js .pa-map-land,
+  .js .pa-map-rivers {
+    stroke-dasharray: none;
+    stroke-dashoffset: 0;
+    fill-opacity: 1;
+    animation: none;
+  }
+  .js .pa-route-wipe { transform: scaleX(1); }
+  .js .pa-pin,
+  .js .pa-map-wrap.is-drawn .pa-pin { opacity: 1; animation: none; }
 }

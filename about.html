@@ -7,6 +7,10 @@
 <link rel="preconnect" href="https://fonts.googleapis.com">
 <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
 <link href="https://fonts.googleapis.com/css2?family=News+Cycle:wght@400;700&family=Archivo:wght@400;500;600;700&family=Courier+Prime:wght@400;700&display=swap" rel="stylesheet">
+<!-- Before first paint: the drawing animations start from a blank chart, and
+     that blank state is scoped to .js so a visitor without JavaScript gets a
+     finished map instead of an empty one that never fills in. -->
+<script>document.documentElement.className += " js";</script>
 <link rel="stylesheet" href="css/tokens.css?v=2">
 <link rel="stylesheet" href="css/base.css?v=2">
 <link rel="stylesheet" href="css/layout.css?v=2">
@@ -59,9 +63,9 @@
     <div class="pa-map-wrap" data-route-map>
       <figure class="pa-chart">
         <svg viewBox="0 0 1000 621" role="img" aria-label="Chart of the continental United States with two marked home bases, Quad Cities in Iowa and Tulsa in Oklahoma, joined by a dashed route line.">
-          <use href="assets/us-outline.svg#us-grid" fill="none" stroke="#3A6584" stroke-width="0.8" opacity="0.18"></use>
-          <use href="assets/us-outline.svg#us" fill="#EFE6CE" stroke="#3A6584" stroke-width="1.8" stroke-linejoin="round" stroke-linecap="round"></use>
-          <use href="assets/us-outline.svg#us-rivers" fill="none" stroke="#6E9DBE" stroke-width="1.4" stroke-linecap="round" stroke-linejoin="round"></use>
+          <use class="pa-map-grid" href="assets/us-outline.svg#us-grid" fill="none" stroke="#3A6584" stroke-width="0.8" opacity="0.18"></use>
+          <use class="pa-map-land" href="assets/us-outline.svg#us" fill="#EFE6CE" stroke="#3A6584" stroke-width="1.8" stroke-linejoin="round" stroke-linecap="round"></use>
+          <use class="pa-map-rivers" href="assets/us-outline.svg#us-rivers" fill="none" stroke="#6E9DBE" stroke-width="1.4" stroke-linecap="round" stroke-linejoin="round"></use>
           <defs>
             <clipPath id="route-reveal">
               <rect class="pa-route-wipe" x="498" y="225" width="126" height="160"></rect>
