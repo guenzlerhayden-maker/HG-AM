@@ -62,8 +62,15 @@
           <use href="assets/us-outline.svg#us-grid" fill="none" stroke="#3A6584" stroke-width="0.8" opacity="0.18"></use>
           <use href="assets/us-outline.svg#us" fill="#EFE6CE" stroke="#3A6584" stroke-width="1.8" stroke-linejoin="round" stroke-linecap="round"></use>
           <use href="assets/us-outline.svg#us-rivers" fill="none" stroke="#6E9DBE" stroke-width="1.4" stroke-linecap="round" stroke-linejoin="round"></use>
-          <path d="M 511.1 371.9 Q 546 295 608.2 238.1" fill="none" stroke="#A8342F" stroke-width="3" stroke-dasharray="10 8" stroke-linecap="round"></path>
-          <polygon points="11,0 -7,6.5 -7,-6.5" fill="#A8342F" transform="translate(552.8 300) rotate(126)"></polygon>
+          <defs>
+            <clipPath id="route-reveal">
+              <rect class="pa-route-wipe" x="498" y="225" width="126" height="160"></rect>
+            </clipPath>
+          </defs>
+          <g clip-path="url(#route-reveal)">
+            <path d="M 511.1 371.9 Q 546 295 608.2 238.1" fill="none" stroke="#A8342F" stroke-width="3" stroke-dasharray="10 8" stroke-linecap="round"></path>
+            <polygon points="11,0 -7,6.5 -7,-6.5" fill="#A8342F" transform="translate(552.8 300) rotate(126)"></polygon>
+          </g>
         </svg>
 
         <a class="pa-pin" data-station="quad-cities" href="#log-quad-cities" aria-expanded="false">

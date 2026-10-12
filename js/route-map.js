@@ -49,4 +49,27 @@
   document.addEventListener("keydown", function (e) {
     if (e.key === "Escape" && open) show(null);
   });
+
+  // Draw the route once, the first time the chart is actually looked at.
+  // Running it on load would spend the animation while the chart is still
+  // below the fold, and the visitor would arrive to a finished line.
+  //
+  // The class is what the stylesheet animates against, and it is added here
+  // rather than being present in the markup so that a visitor without
+  // JavaScript keeps a complete chart instead of an empty one.
+  (function () {
+    var reduced = window.matchMedia && window.matchMedia("(prefers-reduced-motion: reduce)").matches;
+    if (reduced || !("IntersectionObserver" in window)) {
+      wrap.classList.add("is-drawn");
+      return;
+    }
+    var io = new IntersectionObserver(function (entries) {
+      entries.forEach(function (entry) {
+        if (!entry.isIntersecting) return;
+        wrap.classList.add("is-drawn");
+        io.disconnect();            // once, not every time it scrolls past
+      });
+    }, { threshold: 0.35 });
+    io.observe(wrap);
+  })();
 })();

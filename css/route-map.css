@@ -127,3 +127,42 @@
    element keeps its box and only loses its ink. */
 .pa-map-hint { margin: 0 0 10px; }
 .pa-map-hint[hidden] { display: block; visibility: hidden; }
+
+/* ---- Motion --------------------------------------------------------------
+   One idea, not several: the chart draws its route, then the stations report
+   in. Nothing loops, nothing moves while being read.
+
+   The wipe is a transform rather than an animated width attribute, because
+   transforms on SVG elements are the better supported of the two and are
+   composited rather than triggering layout. Its origin is the RIGHT edge, so
+   the reveal travels Quad Cities to Tulsa, the direction the arrowhead on the
+   line already points and the direction the move actually happened. */
+.pa-route-wipe { transform: scaleX(0); transform-origin: 624px 0; }
+
+.pa-map-wrap.is-drawn .pa-route-wipe {
+  animation: pa-route-draw 820ms cubic-bezier(.33, 0, .2, 1) forwards;
+}
+
+@keyframes pa-route-draw { to { transform: scaleX(1); } }
+
+/* The dots pop after the line reaches them. The pin itself carries the
+   positioning transform, so the animation goes on the dot inside it, which
+   has none of its own to fight. backwards holds the start state through the
+   delay so nothing flashes at full size first. */
+.pa-map-wrap.is-drawn .pa-pin .dot {
+  animation: pa-dot-in 380ms cubic-bezier(.2, 1.5, .4, 1) backwards;
+}
+.pa-map-wrap.is-drawn .pa-pin[data-station="quad-cities"] .dot { animation-delay: 240ms; }
+.pa-map-wrap.is-drawn .pa-pin[data-station="tulsa"] .dot { animation-delay: 700ms; }
+
+@keyframes pa-dot-in { from { transform: scale(0); } }
+
+/* Until the observer fires, the chart is simply complete. A visitor whose
+   JavaScript never runs sees the finished route, not an empty one. */
+.pa-map-wrap:not(.is-drawn) .pa-route-wipe { transform: scaleX(1); }
+
+@media (prefers-reduced-motion: reduce) {
+  .pa-route-wipe,
+  .pa-map-wrap.is-drawn .pa-route-wipe { transform: scaleX(1); animation: none; }
+  .pa-map-wrap.is-drawn .pa-pin .dot { animation: none; }
+}
