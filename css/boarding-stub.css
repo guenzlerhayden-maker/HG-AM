@@ -196,20 +196,31 @@
 .js .pa-stubs:not(.is-fallen) .pa-stub { opacity: 0; }
 
 .js .pa-stubs.is-fallen .pa-stub {
-  animation: pa-stub-fall 1150ms cubic-bezier(.19, .78, .3, 1) backwards;
+  animation: pa-stub-fall 2200ms linear backwards;
 }
 
 .js .pa-stubs.is-fallen .pa-stub:nth-child(1) { animation-delay: 0ms; }
-.js .pa-stubs.is-fallen .pa-stub:nth-child(2) { animation-delay: 150ms; }
-.js .pa-stubs.is-fallen .pa-stub:nth-child(3) { animation-delay: 300ms; }
-.js .pa-stubs.is-fallen .pa-stub:nth-child(4) { animation-delay: 450ms; }
-.js .pa-stubs.is-fallen .pa-stub:nth-child(5) { animation-delay: 600ms; }
-.js .pa-stubs.is-fallen .pa-stub:nth-child(6) { animation-delay: 750ms; }
+.js .pa-stubs.is-fallen .pa-stub:nth-child(2) { animation-delay: 240ms; }
+.js .pa-stubs.is-fallen .pa-stub:nth-child(3) { animation-delay: 480ms; }
+.js .pa-stubs.is-fallen .pa-stub:nth-child(4) { animation-delay: 720ms; }
+.js .pa-stubs.is-fallen .pa-stub:nth-child(5) { animation-delay: 960ms; }
+.js .pa-stubs.is-fallen .pa-stub:nth-child(6) { animation-delay: 1200ms; }
 
 @keyframes pa-stub-fall {
-  0%   { opacity: 0; transform: translate(16px, -64px) rotate(calc(var(--stub-tilt, 0deg) + 7deg)); }
-  28%  { opacity: 1; }
-  62%  { transform: translate(-7px, -15px) rotate(calc(var(--stub-tilt, 0deg) - 3deg)); }
+  /* Paced by the keyframes rather than by one easing curve, because a single
+     bezier front-loaded the drop: the card had already covered most of the
+     distance while it was still invisible, so only the last 36px were ever
+     seen. The animation runs linear and the stops below do the shaping.
+
+     Four sway reversals over a near-steady descent, which is what a leaf
+     actually does - it is the side-to-side, not the falling, that reads as
+     air. Only the last segment decelerates, as the card comes to rest. */
+  0%   { opacity: 0; transform: translate(22px, -110px) rotate(calc(var(--stub-tilt, 0deg) + 10deg)); }
+  12%  { opacity: 1; }
+  30%  { transform: translate(-7px, -74px) rotate(calc(var(--stub-tilt, 0deg) - 4deg)); }
+  55%  { transform: translate(15px, -42px) rotate(calc(var(--stub-tilt, 0deg) + 5deg)); }
+  80%  { transform: translate(-6px, -15px) rotate(calc(var(--stub-tilt, 0deg) - 2deg));
+         animation-timing-function: cubic-bezier(.3, .7, .4, 1); }
   100% { opacity: 1; transform: translate(0, 0) rotate(var(--stub-tilt, 0deg)); }
 }
 
